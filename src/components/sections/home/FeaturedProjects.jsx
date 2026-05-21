@@ -18,9 +18,14 @@ export default function FeaturedProjects() {
       <div className="max-w-7xl mx-auto">
         <SectionHeading 
           label="01 / FEATURED ECOSYSTEMS" 
-          title={`Building ventures,
-systems,
-and digital experiences.`}
+          title={
+            <>
+              <span className="block sm:whitespace-nowrap">
+                Building ventures, <span className="block sm:inline">systems,</span>
+              </span>
+              <span className="block">and digital experiences.</span>
+            </>
+          }
           description="A curated collection of startups, platforms, innovation systems, and digital experiences designed across incubation ecosystems, educational initiatives, and modern product environments."
         />
 
