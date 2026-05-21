@@ -1,128 +1,101 @@
 "use client";
 import React, { useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import { motion, useInView } from "framer-motion";
 
 export default function ScrollReveal({
   children,
   baseOpacity = 0,
   enableBlur = true,
   blurStrength = 8,
-  baseRotation = 2,
-  yOffset = 30,
-  stagger = 0.08,
-  duration = 1.4,
-  ease = "power2.out",
-  scrub = 1,
+  baseRotation = 0,
+  yOffset = 20,
+  stagger = 0,
+  duration = 1.0,
+  ease = [0.16, 1, 0.3, 1],
+  scrub = false,
   className = "",
 }) {
-  const containerRef = useRef(null);
+  const ref = useRef(null);
+  
+  // Trigger when 10% of the element is visible in the viewport
+  const isInView = useInView(ref, { once: true, margin: "-10% 0px -10% 0px" });
 
-  useGSAP(
-    () => {
-      if (!containerRef.current) return;
+  // Determine if children contains typical heading elements or uppercase labels
+  const isLabel = typeof children === "string" && (children.trim().startsWith("[") || children.length < 35);
+  const isParagraph = typeof children === "string" && children.length > 80;
 
-      // Select target words. Fallback to direct children if no explicit word spans exist.
-      let targets = containerRef.current.querySelectorAll(".scroll-reveal-word");
-      if (targets.length === 0) {
-        targets = containerRef.current.children;
-      }
-      if (targets.length === 0) return;
+  // Refined values based on design directions
+  let activeYOffset = yOffset;
+  let activeBlur = enableBlur ? blurStrength : 0;
+  let activeDuration = duration;
 
-      // Mobile Responsive Optimizations: programmatically reduce heavy properties
-      let activeBlurStrength = blurStrength;
-      let activeYOffset = yOffset;
-      let activeStagger = stagger;
-      let activeRotation = baseRotation;
+  if (isLabel) {
+    // Labels use soft fade, no motion
+    activeYOffset = 0;
+    activeBlur = 0;
+    activeDuration = 0.8;
+  } else if (isParagraph) {
+    // Paragraphs use softer motion (8px) and lower blur to remain stable
+    activeYOffset = 8;
+    activeBlur = enableBlur ? Math.min(blurStrength, 3) : 0;
+    activeDuration = 1.0;
+  } else {
+    // Headings use premium block translate (15px) and moderate blur
+    activeYOffset = Math.min(yOffset, 15);
+    activeBlur = enableBlur ? Math.min(blurStrength, 6) : 0;
+  }
 
-      if (typeof window !== "undefined" && window.innerWidth < 768) {
-        activeBlurStrength = enableBlur ? Math.min(blurStrength, 4) : 0;
-        activeYOffset = Math.min(yOffset, 15);
-        activeStagger = Math.min(stagger, 0.04);
-        activeRotation = Math.min(baseRotation, 0.5);
-      }
+  // Mobile overrides to guarantee performance
+  if (typeof window !== "undefined" && window.innerWidth < 768) {
+    activeBlur = 0;
+    activeYOffset = Math.min(activeYOffset, 6);
+  }
 
-      gsap.fromTo(
-        targets,
-        {
-          opacity: baseOpacity,
-          filter: enableBlur && activeBlurStrength > 0 ? `blur(${activeBlurStrength}px)` : "none",
-          transformOrigin: "left center",
-          rotate: activeRotation,
-          y: activeYOffset,
-        },
-        {
-          opacity: 1,
-          filter: "blur(0px)",
-          rotate: 0,
-          y: 0,
-          stagger: activeStagger,
-          duration: duration,
-          ease: ease,
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 88%",
-            end: "bottom 60%",
-            scrub: scrub,
-          },
-        }
-      );
-    },
-    { scope: containerRef, dependencies: [baseOpacity, enableBlur, blurStrength, baseRotation, yOffset, stagger, duration, ease, scrub] }
-  );
-
-  // Parse children and split string into words, preserving newlines as block lines
+  // Parse children and split string by newline to preserve layout structures
   const renderContent = () => {
     if (typeof children === "string") {
       const lines = children.split("\n");
-      return lines.map((line, lineIdx) => (
-        <span key={lineIdx} className="block">
-          {line.split(" ").map((word, wordIdx) => {
-            if (!word.trim()) return null;
-            return (
-              <span
-                key={wordIdx}
-                className="scroll-reveal-word inline-block mr-[0.22em] will-change-[transform,opacity,filter]"
-              >
-                {word}
-              </span>
-            );
-          })}
-        </span>
-      ));
+      if (lines.length > 1) {
+        return lines.map((line, lineIdx) => (
+          <span key={lineIdx} className="block">
+            {line}
+          </span>
+        ));
+      }
+      return children;
     }
-
-    if (React.isValidElement(children)) {
-      return React.cloneElement(children, {
-        className: `${children.props.className || ""} scroll-reveal-word`,
-      });
-    }
-
-    // Handle arrays of children (e.g. mixed elements, lists)
-    if (Array.isArray(children)) {
-      return children.map((child, idx) => {
-        if (React.isValidElement(child)) {
-          return React.cloneElement(child, {
-            key: idx,
-            className: `${child.props.className || ""} scroll-reveal-word`,
-          });
-        }
-        return child;
-      });
-    }
-
     return children;
   };
 
   return (
-    <div ref={containerRef} className={`inline-block ${className}`}>
+    <motion.div
+      ref={ref}
+      initial={{ 
+        opacity: baseOpacity, 
+        y: activeYOffset,
+        filter: activeBlur > 0 ? `blur(${activeBlur}px)` : "none"
+      }}
+      animate={isInView ? { 
+        opacity: 1, 
+        y: 0,
+        filter: "blur(0px)"
+      } : { 
+        opacity: baseOpacity, 
+        y: activeYOffset,
+        filter: activeBlur > 0 ? `blur(${activeBlur}px)` : "none"
+      }}
+      transition={{ 
+        duration: activeDuration, 
+        ease: ease 
+      }}
+      className={className}
+      style={{
+        display: className.includes("inline") ? "inline-block" : "block",
+        width: "100%"
+      }}
+    >
       {renderContent()}
-    </div>
+    </motion.div>
   );
 }
 
