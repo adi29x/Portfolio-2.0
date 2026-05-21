@@ -52,9 +52,9 @@ export default function HeroSection() {
               transition={{ duration: 1.2, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="font-display font-bold text-[7.2vw] xs:text-[6.2vw] sm:text-4.5xl lg:text-5.5xl xl:text-6xl tracking-tight text-charcoal leading-[1.05]"
             >
-              Building startup ecosystems,<br />
-              digital products, and<br />
-              next-generation digital experiences.
+              <span className="block whitespace-nowrap">Building startup ecosystems,</span>
+              <span className="block">digital products, and</span>
+              <span className="block">next-generation digital experiences.</span>
             </motion.h1>
           </div>
 
@@ -71,7 +71,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.0, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="text-sm sm:text-base text-soft-gray/90 leading-relaxed max-w-[480px] mb-8"
+            className="text-sm sm:text-base text-soft-gray/90 leading-relaxed max-w-xl sm:max-w-2xl mb-8"
           >
             Founder & CEO at Hexora and Evolve, and Chief Student Advisor at PU-iNCENT — building scalable digital systems, startup ecosystems, modern web platforms, and innovation-driven experiences through technology, design, and strategy.
           </motion.p>
