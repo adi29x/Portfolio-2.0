@@ -20,14 +20,14 @@ export const ecosystemVentures = [
     funding: "University Backed"
   },
   {
-    id: "lakshya-2026",
-    title: "Lakshya 2026",
-    type: "Event System",
-    status: "UX Concept Phase",
-    description: "Immersive typographic event platform designed to explore interactive speaker schedules and spatial motion grids.",
-    metrics: "Experimental Grid",
-    url: "/projects/lakshya-2026",
-    funding: "Student Coordinated"
+    id: "evolve",
+    title: "Evolve",
+    type: "Growth Venture",
+    status: "Scaling Operations",
+    description: "Building modern startup growth systems, creator-focused digital experiences, and scalable innovation frameworks designed for emerging brands, communities, and future-driven ventures.",
+    metrics: "Startup Growth Systems",
+    url: "/projects/evolve",
+    funding: "Self-Sustaining"
   },
   {
     id: "icmmes-2026",

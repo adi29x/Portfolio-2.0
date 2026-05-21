@@ -52,7 +52,9 @@ export default function HeroSection() {
               transition={{ duration: 1.2, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="font-display font-bold text-[7.2vw] xs:text-[6.2vw] sm:text-4.5xl lg:text-5.5xl xl:text-6xl tracking-tight text-charcoal leading-[1.05]"
             >
-              <span className="block whitespace-nowrap">Building startup ecosystems,</span>
+              <span className="block sm:whitespace-nowrap">
+                Building startup <span className="block sm:inline">ecosystems,</span>
+              </span>
               <span className="block">digital products, and</span>
               <span className="block">next-generation digital experiences.</span>
             </motion.h1>

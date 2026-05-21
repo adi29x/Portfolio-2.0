@@ -19,7 +19,7 @@ export const commandMenuItems = [
   
   { id: "project-hexora", title: "View Hexora Project Case Study", category: "Projects", action: "/projects/hexora" },
   { id: "project-pu-incent", title: "View PU-iNCENT Official Website", category: "Projects", action: "/projects/pu-incent" },
-  { id: "project-lakshya", title: "View Lakshya 2026 Platform Concept", category: "Projects", action: "/projects/lakshya-2026" },
+  { id: "project-evolve", title: "View Evolve Growth Systems Concept", category: "Projects", action: "/projects/evolve" },
   { id: "project-icmmes", title: "View ICMMES-2026 Conference Portal", category: "Projects", action: "/projects/icmmes-2026" },
   { id: "project-doodleverse", title: "View Doodleverse Layout Sandbox", category: "Projects", action: "/projects/doodleverse" },
   { id: "project-automation", title: "View Automation Systems Lab", category: "Projects", action: "/projects/automation-systems" },

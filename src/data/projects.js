@@ -42,6 +42,27 @@ export const projects = [
     featured: true
   },
   {
+    id: "evolve",
+    slug: "evolve",
+    title: "Evolve",
+    subtitle: "Startup Growth & Creative Systems",
+    category: "Startup Growth & Creative Systems",
+    tags: ["Startup Systems", "Digital Experiences", "Growth Ecosystem"],
+    image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1200&auto=format&fit=crop",
+    metric: "Startup Growth & Creative Systems",
+    description: "Building modern startup growth systems, creator-focused digital experiences, and scalable innovation frameworks designed for emerging brands, communities, and future-driven ventures.",
+    challenge: "Emerging brands and creator communities struggle to launch high-performance growth systems, resulting in high conversion friction and weak retention profiles.",
+    strategy: "Engineered scalable custom brand pipelines, highly optimized audience acquisition systems, and tactile, high-engagement digital experiences.",
+    process: "Crafted multi-platform growth funnels, integrated analytics dashboards, and built premium, content-driven spatial web portals.",
+    metrics: {
+      "Growth Stage": "Creative Systems Scaling",
+      "Ecosystem Reach": "Emerging Communities",
+      "Operational State": "Growth Optimization Active"
+    },
+    color: "#ECE9E2",
+    featured: true
+  },
+  {
     id: "lakshya-2026",
     slug: "lakshya-2026",
     title: "Lakshya 2026",
@@ -60,7 +81,7 @@ export const projects = [
       "Core Layout": "Interactive Framework"
     },
     color: "#4A4A4A",
-    featured: true
+    featured: false
   },
   {
     id: "icmmes-2026",
