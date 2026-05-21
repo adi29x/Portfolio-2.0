@@ -87,7 +87,7 @@ const ECOSYSTEMS = [
 
 export default function FeaturedProjects() {
   return (
-    <section className="pt-6 pb-8 sm:pt-8 sm:pb-10 px-6 sm:px-12 bg-soft-white relative z-10 overflow-visible">
+    <section className="pt-14 pb-8 sm:pt-20 sm:pb-10 px-6 sm:px-12 bg-soft-white relative z-10 overflow-visible">
       {/* Premium Ambient Background Experience */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
         {/* Soft gradient mesh */}
@@ -156,6 +156,7 @@ export default function FeaturedProjects() {
                 >
                   <Link
                     href={`/projects/${project.slug}`}
+                    style={{ backfaceVisibility: "hidden", transform: "translate3d(0,0,0)", WebkitBackfaceVisibility: "hidden" }}
                     className={`block w-full h-full ${project.bgColor} border ${project.borderColor} rounded-[32px] sm:rounded-[40px] p-5 sm:p-8 lg:p-10 relative overflow-hidden transition-colors duration-500 group cursor-pointer select-none`}
                   >
                     <div className="flex flex-col justify-between h-full relative z-10">

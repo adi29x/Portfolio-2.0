@@ -36,6 +36,8 @@ const ScrollStack = ({
   const cardsRef = useRef([]);
   const lastTransformsRef = useRef(new Map());
   const isUpdatingRef = useRef(false);
+  const cardOffsetsRef = useRef([]);
+  const endElementOffsetRef = useRef(0);
 
   const calculateProgress = useCallback((scrollTop, start, end) => {
     if (scrollTop < start) return 0;
@@ -80,25 +82,62 @@ const ScrollStack = ({
     [useWindowScroll]
   );
 
+  const measureOffsets = useCallback(() => {
+    if (!cardsRef.current.length) return;
+
+    // Save current active transforms and filters
+    const savedTransforms = cardsRef.current.map(card => card ? card.style.transform : '');
+    const savedFilters = cardsRef.current.map(card => card ? card.style.filter : '');
+
+    // Reset styles temporarily to read static, clean layout positions
+    cardsRef.current.forEach(card => {
+      if (card) {
+        card.style.transform = 'none';
+        card.style.filter = 'none';
+      }
+    });
+
+    const endElement = scrollerRef.current?.querySelector('.scroll-stack-end');
+    
+    // Batch read to minimize forced layout recalculations (eliminates layout thrashing)
+    const offsets = cardsRef.current.map(card => {
+      if (!card) return 0;
+      return getElementOffset(card);
+    });
+
+    const endOffset = endElement ? getElementOffset(endElement) : 0;
+
+    // Restore saved styles
+    cardsRef.current.forEach((card, i) => {
+      if (card) {
+        card.style.transform = savedTransforms[i];
+        card.style.filter = savedFilters[i];
+      }
+    });
+
+    cardOffsetsRef.current = offsets;
+    endElementOffsetRef.current = endOffset;
+  }, [getElementOffset]);
+
   const updateCardTransforms = useCallback(() => {
     if (!cardsRef.current.length || isUpdatingRef.current) return;
 
     isUpdatingRef.current = true;
 
+    // Ensure offsets are initialized
+    if (!cardOffsetsRef.current.length || cardOffsetsRef.current.length !== cardsRef.current.length) {
+      measureOffsets();
+    }
+
     const { scrollTop, containerHeight } = getScrollData();
     const stackPositionPx = parsePercentage(stackPosition, containerHeight);
     const scaleEndPositionPx = parsePercentage(scaleEndPosition, containerHeight);
-
-    const endElement = scrollerRef.current?.querySelector('.scroll-stack-end');
-
-    const endElementTop = endElement ? getElementOffset(endElement) : 0;
+    const endElementTop = endElementOffsetRef.current;
 
     cardsRef.current.forEach((card, i) => {
       if (!card) return;
 
-      const lastTransform = lastTransformsRef.current.get(i);
-      const currentTranslateY = lastTransform ? lastTransform.translateY : 0;
-      const cardTop = getElementOffset(card) - currentTranslateY;
+      const cardTop = cardOffsetsRef.current[i] || 0;
 
       const triggerStart = cardTop - stackPositionPx - itemStackDistance * i;
       const triggerEnd = cardTop - scaleEndPositionPx;
@@ -114,10 +153,7 @@ const ScrollStack = ({
       if (blurAmount) {
         let topCardIndex = 0;
         for (let j = 0; j < cardsRef.current.length; j++) {
-          const jLastTransform = lastTransformsRef.current.get(j);
-          const jCurrentTranslateY = jLastTransform ? jLastTransform.translateY : 0;
-          const jCardTop = getElementOffset(cardsRef.current[j]) - jCurrentTranslateY;
-
+          const jCardTop = cardOffsetsRef.current[j] || 0;
           const jTriggerStart = jCardTop - stackPositionPx - itemStackDistance * j;
           if (scrollTop >= jTriggerStart) {
             topCardIndex = j;
@@ -140,18 +176,19 @@ const ScrollStack = ({
       }
 
       const newTransform = {
-        translateY: Math.round(translateY),
+        translateY: Math.round(translateY * 100) / 100,
         scale: Math.round(scale * 1000) / 1000,
         rotation: Math.round(rotation * 100) / 100,
         blur: Math.round(blur * 100) / 100
       };
 
+      const lastTransform = lastTransformsRef.current.get(i);
       const hasChanged =
         !lastTransform ||
-        Math.abs(lastTransform.translateY - newTransform.translateY) > 0.1 ||
-        Math.abs(lastTransform.scale - newTransform.scale) > 0.001 ||
-        Math.abs(lastTransform.rotation - newTransform.rotation) > 0.1 ||
-        Math.abs(lastTransform.blur - newTransform.blur) > 0.1;
+        Math.abs(lastTransform.translateY - newTransform.translateY) > 0.05 ||
+        Math.abs(lastTransform.scale - newTransform.scale) > 0.0005 ||
+        Math.abs(lastTransform.rotation - newTransform.rotation) > 0.05 ||
+        Math.abs(lastTransform.blur - newTransform.blur) > 0.05;
 
       if (hasChanged) {
         const transform = `translate3d(0, ${newTransform.translateY}px, 0) scale(${newTransform.scale}) rotate(${newTransform.rotation}deg)`;
@@ -183,12 +220,11 @@ const ScrollStack = ({
     baseScale,
     rotationAmount,
     blurAmount,
-    useWindowScroll,
     onStackComplete,
     calculateProgress,
     parsePercentage,
     getScrollData,
-    getElementOffset
+    measureOffsets
   ]);
 
   const handleScroll = useCallback(() => {
@@ -209,19 +245,24 @@ const ScrollStack = ({
       }
     };
 
+    const handleResize = () => {
+      measureOffsets();
+      handleThrottledScroll();
+    };
+
     window.addEventListener('scroll', handleThrottledScroll, { passive: true });
-    window.addEventListener('resize', handleThrottledScroll, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
     
     // Run an initial sync
-    handleThrottledScroll();
+    handleResize();
 
     return {
       destroy: () => {
         window.removeEventListener('scroll', handleThrottledScroll);
-        window.removeEventListener('resize', handleThrottledScroll);
+        window.removeEventListener('resize', handleResize);
       }
     };
-  }, [updateCardTransforms]);
+  }, [updateCardTransforms, measureOffsets]);
 
   const setupLenis = useCallback(() => {
     if (useWindowScroll) {
@@ -301,6 +342,7 @@ const ScrollStack = ({
       }
       stackCompletedRef.current = false;
       cardsRef.current = [];
+      cardOffsetsRef.current = [];
       transformsCache.clear();
       isUpdatingRef.current = false;
     };
