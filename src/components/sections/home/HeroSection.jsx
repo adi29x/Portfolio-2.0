@@ -3,13 +3,17 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronRight } from "lucide-react";
-import { AnimatedText } from "@/components/ui/AnimatedText";
 import { ThreeCanvas } from "@/components/three/ThreeCanvas";
 import { HeroScene } from "@/components/three/HeroScene";
-import { GradualBlur } from "@/components/ui/GradualBlur";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export default function HeroSection() {
+  const stats = [
+    { val: "50+", label: "Founders Guided" },
+    { val: "150+", label: "Innovation Events" },
+    { val: "Founder", label: "@ Hexora" },
+    { val: "Leader", label: "PU-iNCENT" }
+  ];
+
   return (
     <section className="relative w-full min-h-screen flex items-center justify-center pt-28 pb-12 px-6 sm:px-12 bg-soft-white overflow-hidden">
       {/* Background soft spatial highlights */}
@@ -31,55 +35,53 @@ export default function HeroSection() {
           />
 
           {/* Small Label Indicator */}
-          <ScrollReveal
-            baseOpacity={0.3}
-            enableBlur={false}
-            baseRotation={0}
-            className="text-xs font-mono font-bold tracking-widest text-soft-gray uppercase mb-4"
+          <motion.span
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="text-xs font-mono font-bold tracking-widest text-soft-gray uppercase mb-4 block"
           >
             [ FOUNDER ECOSYSTEM / DIGITAL BUILDER ]
-          </ScrollReveal>
+          </motion.span>
 
           {/* Large Cinematic Title */}
           <div className="mb-4 max-w-xl sm:max-w-2xl lg:max-w-3xl">
-            <ScrollReveal
-              baseOpacity={0}
-              enableBlur={true}
-              blurStrength={10}
-              baseRotation={1}
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="font-display font-bold text-[7.2vw] xs:text-[6.2vw] sm:text-4.5xl lg:text-5.5xl xl:text-6xl tracking-tight text-charcoal leading-[1.05]"
             >
-              {`Building startup ecosystems,
-digital products, and
-immersive experiences`}
-            </ScrollReveal>
+              Building startup ecosystems,<br />
+              digital products, and<br />
+              immersive experiences
+            </motion.h1>
           </div>
 
           {/* Editorial Sub-line Divider Below Heading */}
           <motion.div 
             initial={{ scaleX: 0, originX: 0 }}
             animate={{ scaleX: 0.15 }}
-            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="w-full h-[1.5px] bg-accent-blue my-6"
           />
 
           {/* Immersive Subtext */}
-          <ScrollReveal
-            baseOpacity={0.2}
-            enableBlur={true}
-            blurStrength={4}
-            baseRotation={0}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.0, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="text-sm sm:text-base text-soft-gray/90 leading-relaxed max-w-[440px] mb-8"
           >
             Founder of Hexora and startup ecosystem leader at PU-iNCENT building modern digital systems, immersive experiences, and innovation-driven platforms.
-          </ScrollReveal>
+          </motion.p>
 
           {/* CTA buttons */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-wrap items-center gap-4 sm:gap-6 mb-12"
+            transition={{ duration: 0.8, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-wrap items-center gap-4 sm:gap-6 mb-4"
           >
             <Link href="/ecosystem" passHref legacyBehavior>
               <button
@@ -96,34 +98,42 @@ immersive experiences`}
             </Link>
           </motion.div>
 
-          {/* Supporting Metrics Panel Row */}
-          <ScrollReveal
-            baseOpacity={0}
-            enableBlur={true}
-            blurStrength={5}
-            stagger={0.1}
-            className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-charcoal/5 w-full"
+          {/* Premium Ecosystem Status Bar */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.0, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full mt-12 p-6 sm:p-8 rounded-2xl border border-charcoal/[0.06] bg-soft-white/60 backdrop-blur-md shadow-premium-sm relative overflow-hidden"
           >
-            {[
-              { val: "50+", label: "Founders Guided" },
-              { val: "150+", label: "Innovation Events" },
-              { val: "Hexora", label: "Founder & CEO" },
-              { val: "PU-iNCENT", label: "Ecosystem Leader" }
-            ].map((metric, idx) => (
-              <div key={idx} className="flex flex-col">
-                <span className="text-xl font-bold text-charcoal leading-none mb-1">{metric.val}</span>
-                <span className="text-[10px] font-mono text-soft-gray uppercase tracking-wider font-bold leading-tight">{metric.label}</span>
-              </div>
-            ))}
-          </ScrollReveal>
+            {/* Ambient internal gradients */}
+            <div className="absolute inset-0 bg-gradient-to-r from-accent-sand/5 via-transparent to-accent-blue/5 pointer-events-none" />
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 relative z-10">
+              {stats.map((stat, idx) => (
+                <div 
+                  key={idx} 
+                  className={`flex flex-col items-center md:items-start text-center md:text-left ${
+                    idx !== 0 ? "md:border-l md:border-charcoal/[0.08] md:pl-6 lg:pl-8" : ""
+                  }`}
+                >
+                  <span className="text-2xl font-bold font-display tracking-tight text-charcoal leading-none mb-1.5">
+                    {stat.val}
+                  </span>
+                  <span className="text-[10px] font-mono text-soft-gray uppercase tracking-widest font-bold leading-tight">
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
 
-        {/* Right Layout Column: Interactive Dotted Globe (floating naturally, borderless and vertically balanced) */}
+        {/* Right Layout Column: Interactive Dotted Globe (aligned upward on desktop) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-5 h-[400px] lg:h-[500px] w-full relative flex items-center justify-center cursor-grab active:cursor-grabbing lg:-translate-y-12 lg:-mt-6"
+          className="lg:col-span-5 h-[400px] lg:h-[500px] w-full relative flex items-center justify-center cursor-grab active:cursor-grabbing lg:-translate-y-24 lg:-mt-8"
         >
           <ThreeCanvas className="w-full h-full">
             <HeroScene />
@@ -136,18 +146,8 @@ immersive experiences`}
           </div>
         </motion.div>
       </div>
-
-      {/* Atmospheric cinematic gradual blur at the bottom boundary */}
-      <GradualBlur
-        position="bottom"
-        height="8rem"
-        strength={1}
-        divCount={6}
-        curve="bezier"
-        opacity={0.7}
-        animated="scroll"
-      />
     </section>
   );
 }
+
 export { HeroSection };
