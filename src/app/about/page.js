@@ -59,7 +59,7 @@ export default function AboutPage() {
               baseRotation={0}
               className="text-base sm:text-lg text-soft-gray leading-relaxed block"
             >
-              I operate as an entrepreneur, ecosystem leader, and creative developer. As the Chief Secretary at PU-iNCENT Incubation Centre, I have had the privilege of guiding 50+ student founders across 20+ active startup cohorts and leading over 150 community events.
+              I operate as an entrepreneur, ecosystem leader, and creative developer. As the Chief Student Advisor at PU-iNCENT Incubation Centre, I have had the privilege of guiding 50+ student founders across 20+ active startup cohorts and leading over 150 community events.
             </ScrollReveal>
             <ScrollReveal
               baseOpacity={0.4}

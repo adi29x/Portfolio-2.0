@@ -8,10 +8,10 @@ import { HeroScene } from "@/components/three/HeroScene";
 
 export default function HeroSection() {
   const stats = [
-    { val: "50+", label: "Founders Guided" },
-    { val: "150+", label: "Innovation Events" },
-    { val: "Founder", label: "@ Hexora" },
-    { val: "Leader", label: "PU-iNCENT" }
+    { val: "50+", label: "Startup Founders Guided" },
+    { val: "150+", label: "Innovation & Startup Events" },
+    { val: "Founder & CEO", label: "Hexora / Evolve" },
+    { val: "Chief Student Advisor", label: "PU-iNCENT" }
   ];
 
   return (
@@ -41,7 +41,7 @@ export default function HeroSection() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="text-xs font-mono font-bold tracking-widest text-soft-gray uppercase mb-4 block"
           >
-            [ FOUNDER ECOSYSTEM / DIGITAL BUILDER ]
+            [ FOUNDER ECOSYSTEM / STARTUP BUILDER ]
           </motion.span>
 
           {/* Large Cinematic Title */}
@@ -54,7 +54,7 @@ export default function HeroSection() {
             >
               Building startup ecosystems,<br />
               digital products, and<br />
-              immersive experiences
+              next-generation digital experiences.
             </motion.h1>
           </div>
 
@@ -71,9 +71,9 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.0, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="text-sm sm:text-base text-soft-gray/90 leading-relaxed max-w-[440px] mb-8"
+            className="text-sm sm:text-base text-soft-gray/90 leading-relaxed max-w-[480px] mb-8"
           >
-            Founder of Hexora and startup ecosystem leader at PU-iNCENT building modern digital systems, immersive experiences, and innovation-driven platforms.
+            Founder & CEO at Hexora and Evolve, and Chief Student Advisor at PU-iNCENT — building scalable digital systems, startup ecosystems, modern web platforms, and innovation-driven experiences through technology, design, and strategy.
           </motion.p>
 
           {/* CTA buttons */}
@@ -116,7 +116,9 @@ export default function HeroSection() {
                     idx !== 0 ? "md:border-l md:border-charcoal/[0.08] md:pl-6 lg:pl-8" : ""
                   }`}
                 >
-                  <span className="text-2xl font-bold font-display tracking-tight text-charcoal leading-none mb-1.5">
+                  <span className={`font-bold font-display tracking-tight text-charcoal leading-none mb-1.5 ${
+                    stat.val.length > 12 ? "text-base sm:text-lg" : stat.val.length > 8 ? "text-lg sm:text-xl" : "text-2xl"
+                  }`}>
                     {stat.val}
                   </span>
                   <span className="text-[10px] font-mono text-soft-gray uppercase tracking-widest font-bold leading-tight">

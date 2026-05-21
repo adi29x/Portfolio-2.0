@@ -1,7 +1,7 @@
 export const timelineData = [
   {
     year: "2026 — Present",
-    role: "Chief Secretary",
+    role: "Chief Student Advisor",
     company: "PU-iNCENT Incubation Centre",
     description: "Orchestrating university incubation strategy, coordinating student startup intakes, and managing external mentor networks. Led 150+ startup & student community events, guiding 50+ student founders.",
     tags: ["Venture Incubation", "Leadership", "Community Operations"]
