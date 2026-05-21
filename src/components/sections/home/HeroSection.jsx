@@ -15,7 +15,7 @@ export default function HeroSection() {
   ];
 
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center pt-28 pb-12 px-6 sm:px-12 bg-soft-white overflow-hidden">
+    <section className="relative w-full min-h-screen flex items-center justify-center pt-36 pb-12 px-6 sm:px-12 bg-soft-white overflow-hidden">
       {/* Background soft spatial highlights */}
       <div className="absolute top-[-5%] left-[-5%] w-[60%] h-[60%] rounded-full bg-gradient-to-br from-accent-blue/5 to-transparent blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-5%] right-[-5%] w-[60%] h-[60%] rounded-full bg-gradient-to-tr from-accent-sand/5 to-transparent blur-[120px] pointer-events-none" />
