@@ -15,7 +15,7 @@ export default function HeroSection() {
   ];
 
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center pt-36 pb-12 px-6 sm:px-12 bg-soft-white overflow-hidden">
+    <section className="relative w-full min-h-screen flex items-center justify-center pt-36 pb-6 px-6 sm:px-12 bg-soft-white overflow-hidden">
       {/* Background soft spatial highlights */}
       <div className="absolute top-[-5%] left-[-5%] w-[60%] h-[60%] rounded-full bg-gradient-to-br from-accent-blue/5 to-transparent blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-5%] right-[-5%] w-[60%] h-[60%] rounded-full bg-gradient-to-tr from-accent-sand/5 to-transparent blur-[120px] pointer-events-none" />
@@ -105,7 +105,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.0, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full mt-12 p-6 sm:p-8 rounded-2xl border border-charcoal/[0.06] bg-soft-white/60 backdrop-blur-md shadow-premium-sm relative overflow-hidden"
+            className="w-full mt-8 sm:mt-10 p-6 sm:p-8 rounded-2xl border border-charcoal/[0.06] bg-soft-white/60 backdrop-blur-md shadow-premium-sm relative overflow-hidden"
           >
             {/* Ambient internal gradients */}
             <div className="absolute inset-0 bg-gradient-to-r from-accent-sand/5 via-transparent to-accent-blue/5 pointer-events-none" />

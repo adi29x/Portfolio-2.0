@@ -1,150 +1,241 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
-import { ScrollStack, ScrollStackItem } from "@/components/ui/ScrollStack";
+import ScrollStack, { ScrollStackItem } from "@/components/ui/ScrollStack";
 
 const ECOSYSTEMS = [
   {
     id: "hexora",
     title: "HEXORA",
-    category: "Digital Systems & Brand Engineering",
-    description: "Building modern websites, startup systems, branding frameworks, and immersive digital experiences for startups, organizations, and future-driven ventures.",
-    tags: ["Founder-Led", "Digital Experiences", "Startup Systems"],
+    category: "DIGITAL ARCHITECTURE & SYSTEMS",
+    bgColor: "bg-[#F4F3EF]",
+    borderColor: "border-charcoal/[0.08] hover:border-accent-blue/30",
+    theme: "light",
+    status: "SYSTEMS COHORT // ONLINE",
+    blueprint: [
+      {
+        label: "01 / THE FOUNDRY",
+        value: "Architecting custom, high-fidelity frontends, tailored WebGL spaces, and light-speed core systems that elevate brand authority."
+      },
+      {
+        label: "02 / TECH ENGINE",
+        value: "Next.js 15.2 App Router • React 19 • WebGL Physics • GSAP ScrollTrigger • Tailwind CSS 4.0."
+      },
+      {
+        label: "03 / IMPACT METRIC",
+        value: "100/100 Lighthouse performance score paired with lightning-fast sprint delivery."
+      }
+    ],
+    description: "An elite digital engineering engine crafting premium frontends and immersive WebGL platforms. We bridge high-performance code with luxury design to scale digital presence for visionary brands.",
+    tags: ["SYSTEMS FOUNDRY", "WEBGL PLATFORMS", "VENTURE SCALE"],
     slug: "hexora",
-    indexStr: "01",
   },
   {
     id: "pu-incent",
     title: "PU-iNCENT",
-    category: "Startup Ecosystem & Innovation Platform",
-    description: "Leading and supporting innovation-driven startup ecosystems through founder mentorship, incubation programs, institutional systems, and entrepreneurial initiatives.",
-    tags: ["50+ Founders Guided", "Innovation Ecosystem", "Leadership Platform"],
+    category: "VENTURE INCUBATION & PORTALS",
+    bgColor: "bg-[#F4F3EF]",
+    borderColor: "border-charcoal/[0.08] hover:border-accent-blue/30",
+    theme: "light",
+    status: "INCUBATOR SYSTEM // ACTIVE",
+    blueprint: [
+      {
+        label: "01 / PORTALS",
+        value: "Structuring administrative workflows, mentor databases, and interactive milestones to track founder trajectories."
+      },
+      {
+        label: "02 / FOUNDER NETWORK",
+        value: "Uniting over 50 early-stage student ventures, seasoned mentors, and institutional talent into a singular ecosystem."
+      },
+      {
+        label: "03 / CAPITAL BRIDGES",
+        value: "Building digital bridges that connect raw university innovation with regional angel hubs and pre-seed capital."
+      }
+    ],
+    description: "Fostering entrepreneurial energy by building cohesive digital portals, connecting academic talent with angel investors, and nurturing early-stage startups.",
+    tags: ["50+ FOUNDERS COHORT", "INCUBATION OS", "ANGEL BRIDGE"],
     slug: "pu-incent",
-    indexStr: "02",
   },
   {
     id: "evolve",
     title: "EVOLVE",
-    category: "Startup Growth & Creative Systems",
-    description: "Building creator-focused growth systems, immersive brand experiences, and scalable digital frameworks designed for modern communities and emerging ventures.",
-    tags: ["Growth Systems", "Creative Ecosystem", "Digital Innovation"],
+    category: "CREATOR ECONOMY & BRAND SYSTEMS",
+    bgColor: "bg-[#F4F3EF]",
+    borderColor: "border-charcoal/[0.08] hover:border-accent-blue/30",
+    theme: "light",
+    status: "GROWTH CORE // SCALING",
+    blueprint: [
+      {
+        label: "01 / RETENTION FUNNELS",
+        value: "Architecting highly tailored audience loops, dynamic analytics dashboard layouts, and low-latency interaction mechanics."
+      },
+      {
+        label: "02 / CINEMATIC UX",
+        value: "Blending premium modern typography, high-velocity motion assets, and lazy-loaded immersive showcases."
+      },
+      {
+        label: "03 / GROWTH IMPACT",
+        value: "Engineered for 10x community acceleration, global Edge distribution, and high-dwell interaction index."
+      }
+    ],
+    description: "Designing creator-focused growth systems and community-led digital environments. We combine high-retention analytics dashboards with rich spatial design to scale communities.",
+    tags: ["10X COMMUNITY SCALE", "CREATOR SYSTEMS", "EDGE METRICS"],
     slug: "evolve",
-    indexStr: "03",
   }
 ];
 
 export default function FeaturedProjects() {
   return (
-    <section className="py-16 sm:py-24 px-6 sm:px-12 bg-soft-white relative z-10 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <SectionHeading 
-          label="01 / FEATURED ECOSYSTEMS" 
-          title={
-            <>
-              <span className="block sm:whitespace-nowrap">
-                Building ventures, <span className="block sm:inline">systems,</span>
-              </span>
-              <span className="block">and digital experiences.</span>
-            </>
-          }
-          description="A curated collection of startups, platforms, innovation systems, and digital experiences designed across incubation ecosystems, educational initiatives, and modern product environments."
+    <section className="pt-6 pb-8 sm:pt-8 sm:pb-10 px-6 sm:px-12 bg-soft-white relative z-10 overflow-visible">
+      {/* Premium Ambient Background Experience */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+        {/* Soft gradient mesh */}
+        <div className="absolute top-1/4 left-1/4 w-[60vw] h-[60vw] rounded-full bg-gradient-to-br from-accent-blue/4 to-transparent blur-[140px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[50vw] h-[50vw] rounded-full bg-gradient-to-tl from-accent-sand/3 to-transparent blur-[160px]" />
+        
+        {/* Subtle grid texture */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.012)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.012)_1px,transparent_1px)] bg-[size:3.5rem_3.5rem]" />
+        
+        {/* Ambient glow */}
+        <div className="absolute top-0 right-0 w-[45vw] h-[45vw] rounded-full bg-gradient-to-bl from-accent-blue/5 to-transparent blur-[120px]" />
+        
+        {/* Noise overlay */}
+        <div 
+          className="absolute inset-0 opacity-[0.02]" 
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`
+          }}
         />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        <ScrollReveal
+          baseOpacity={0.2}
+          enableBlur={false}
+        >
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-16 gap-6">
+            <div className="max-w-3xl">
+              <span className="text-[10px] sm:text-xs font-mono font-bold tracking-widest text-soft-gray uppercase block mb-4">
+                [ 01 / FEATURED ECOSYSTEMS ]
+              </span>
+              <h2 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-charcoal leading-[1.05]">
+                Building ventures, systems,<br className="sm:hidden" /> and digital experiences.
+              </h2>
+            </div>
+            <div className="flex flex-col gap-4 max-w-sm shrink-0">
+              <p className="text-soft-gray text-xs sm:text-sm lg:text-base leading-relaxed font-light">
+                A curated collection of startups, platforms, incubation systems, and digital experiences designed across modern product environments.
+              </p>
+              <Link href="/projects" className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-charcoal hover:text-accent-blue transition-colors duration-300 w-fit">
+                Explore All Projects
+                <span className="h-[1px] w-6 bg-charcoal group-hover:bg-accent-blue group-hover:w-8 transition-colors duration-300" />
+              </Link>
+            </div>
+          </div>
+        </ScrollReveal>
 
         {/* High-Performance Scroll Stack Interaction System */}
-        <div className="relative mt-8 sm:mt-12 w-full">
+        <div className="relative w-full">
           <ScrollStack
-            itemDistance={70}
+            itemDistance={550}
             itemScale={0.02}
-            itemStackDistance={24}
-            stackPosition="18%"
-            scaleEndPosition="10%"
-            baseScale={0.94}
+            itemStackDistance={35}
+            stackPosition="10%"
+            scaleEndPosition="4%"
+            baseScale={0.95}
             rotationAmount={0}
             blurAmount={0}
             useWindowScroll={true}
           >
             {ECOSYSTEMS.map((project, index) => {
               return (
-                <ScrollStackItem key={project.id}>
+                <ScrollStackItem 
+                  key={project.id}
+                  itemClassName="h-[70vh] min-h-[420px] sm:min-h-[460px] lg:min-h-[500px] max-w-5xl w-full"
+                >
                   <Link
                     href={`/projects/${project.slug}`}
-                    className="block w-full h-full min-h-[350px] sm:min-h-[400px] lg:min-h-[480px] bg-warm-white/20 backdrop-blur-xl border border-charcoal/10 hover:border-accent-blue/20 rounded-[2rem] p-8 sm:p-12 lg:p-14 relative overflow-hidden shadow-premium-sm hover:shadow-premium-md transition-all duration-500 ease-out hover:-translate-y-[3px] hover:bg-warm-white/40 group cursor-pointer select-none"
+                    className={`block w-full h-full ${project.bgColor} border ${project.borderColor} rounded-[32px] sm:rounded-[40px] p-5 sm:p-8 lg:p-10 relative overflow-hidden transition-colors duration-500 group cursor-pointer select-none`}
                   >
-                    {/* Background ambient editorial grid */}
-                    <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.01)_1px,transparent_1px)] bg-[size:2rem_2rem] opacity-25 pointer-events-none" />
-                    
-                    {/* Soft glowing ambient lighting in top-right corner */}
-                    <div className="absolute top-0 right-0 w-[450px] h-[450px] rounded-full bg-gradient-to-bl from-accent-blue/5 to-transparent blur-[90px] pointer-events-none" />
-
-                    <div className="h-full flex flex-col justify-between relative z-10">
-                      {/* TOP ROW: Ecosystem Category & Small Label */}
-                      <div className="flex items-center justify-between">
-                        <ScrollReveal
-                          baseOpacity={0.4}
-                          enableBlur={false}
-                          className="flex items-center gap-2"
-                        >
-                          <span className="h-1.5 w-1.5 rounded-full bg-accent-blue animate-pulse" />
-                          <span className="text-[10px] sm:text-xs font-mono font-bold tracking-widest text-accent-blue uppercase">
-                            {project.category}
+                    <div className="flex flex-col justify-between h-full relative z-10">
+                      {/* TOP ROW: Category & Minimal Index */}
+                      <div className="w-full">
+                        <div className="flex justify-between items-start pb-4">
+                          <div className="flex items-center gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-accent-blue animate-pulse" />
+                            <span className="text-[10px] sm:text-xs font-mono font-bold tracking-widest uppercase text-accent-navy">
+                              {project.category}
+                            </span>
+                          </div>
+                          <div className="hidden md:flex items-center gap-4">
+                            <span className="text-[9px] font-mono tracking-widest text-charcoal/50">
+                              {project.status}
+                            </span>
+                          </div>
+                          <span className="text-[10px] sm:text-xs font-mono font-medium tracking-widest text-charcoal/60">
+                            / 0{index + 1}
                           </span>
-                        </ScrollReveal>
-                        <ScrollReveal
-                          baseOpacity={0.3}
-                          enableBlur={false}
-                          className="text-[10px] sm:text-xs font-mono font-bold tracking-widest text-soft-gray"
-                        >
-                          [ {project.indexStr} ]
-                        </ScrollReveal>
-                      </div>
-
-                      {/* Editorial Divider */}
-                      <div className="w-full h-[1px] bg-charcoal/5 my-6 sm:my-8" />
-
-                      {/* CENTER ROW: Large Title with Editorial Typography */}
-                      <div className="flex-grow flex items-center py-4">
-                        <ScrollReveal
-                          baseOpacity={0}
-                          enableBlur={true}
-                          blurStrength={8}
-                          className="w-full"
-                        >
-                          <h3 className="font-display font-bold text-4xl sm:text-5xl lg:text-7xl tracking-tight text-charcoal group-hover:text-accent-blue transition-colors duration-500 leading-[1.05]">
-                            {project.title}
-                          </h3>
-                        </ScrollReveal>
-                      </div>
-
-                      {/* Editorial Divider */}
-                      <div className="w-full h-[1px] bg-charcoal/5 my-6 sm:my-8" />
-
-                      {/* BOTTOM ROW: Description & Strategy Tags */}
-                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-end">
-                        <div className="lg:col-span-8">
-                          <ScrollReveal
-                            baseOpacity={0.4}
-                            blurStrength={3}
-                            className="text-soft-gray text-xs sm:text-sm lg:text-base leading-relaxed max-w-2xl"
-                          >
-                            {project.description}
-                          </ScrollReveal>
                         </div>
-                        <div className="lg:col-span-4 flex flex-wrap justify-start lg:justify-end gap-2">
-                          {project.tags.map((tag, idx) => (
-                            <ScrollReveal
-                              key={idx}
-                              baseOpacity={0.3}
-                              enableBlur={false}
-                              delay={idx * 0.05}
+                        <div className="w-full h-[1px] bg-charcoal/10" />
+                      </div>
+
+                      {/* MAIN ASYMMETRIC GRID AREA */}
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 py-4 sm:py-6">
+                        {/* Left Column: Brand & Editorial Intro */}
+                        <div className="lg:col-span-5 flex flex-col justify-between h-full">
+                          <div>
+                            <h3 
+                              style={{ fontFamily: "'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" }}
+                              className="font-bold tracking-tight text-charcoal group-hover:text-accent-blue text-3xl sm:text-4xl lg:text-5xl uppercase transition-colors duration-500 mb-4 sm:mb-6"
                             >
-                              <span className="px-3.5 py-1.5 rounded-full bg-charcoal/5 text-[9px] font-mono font-bold tracking-widest text-charcoal uppercase border border-charcoal/5 group-hover:border-accent-blue/10 group-hover:bg-accent-blue/5 transition-all duration-500">
+                              {project.title}
+                            </h3>
+                            <p className="text-xs sm:text-sm font-light leading-relaxed text-charcoal/70 max-w-sm">
+                              {project.description}
+                            </p>
+                          </div>
+                          
+                          <div className="flex flex-wrap gap-2 mt-6 lg:mt-8">
+                            {project.tags.map((tag, idx) => (
+                              <span 
+                                key={idx}
+                                className="px-3 py-1.5 rounded-full text-[9px] font-mono font-bold tracking-widest uppercase border border-charcoal/10 bg-charcoal/[0.03] text-charcoal/80 group-hover:border-accent-blue/30 group-hover:bg-accent-blue/5 group-hover:text-accent-navy transition-colors duration-300"
+                              >
                                 {tag}
                               </span>
-                            </ScrollReveal>
-                          ))}
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Right Column: Blueprint Details */}
+                        <div className="lg:col-span-7 flex flex-col justify-center border-t lg:border-t-0 lg:border-l border-charcoal/10 pt-6 lg:pt-0 lg:pl-10">
+                          <div className="space-y-3 sm:space-y-4">
+                            {project.blueprint.map((spec, sIdx) => (
+                              <div key={sIdx} className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-4 border-b border-charcoal/[0.08] pb-3 last:border-0 last:pb-0">
+                                <span className="text-[9px] font-mono font-bold tracking-widest uppercase text-accent-navy sm:w-36 shrink-0 pt-0.5">
+                                  {spec.label}
+                                </span>
+                                <p className="text-xs sm:text-[13px] font-light leading-relaxed tracking-wide text-charcoal/80">
+                                  {spec.value}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+
+                      {/* BOTTOM ROW: Immersive interactive indicator */}
+                      <div className="w-full">
+                        <div className="w-full h-[1px] bg-charcoal/10 mb-4" />
+                        <div className="flex justify-between items-center">
+                          <span className="text-[9px] font-mono tracking-widest text-charcoal/40 uppercase">
+                            Click to explore thesis
+                          </span>
+                          <span className="group-hover:translate-x-2 transition-transform duration-300 text-charcoal group-hover:text-accent-blue text-sm">
+                            →
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -154,21 +245,11 @@ export default function FeaturedProjects() {
             })}
           </ScrollStack>
         </div>
-
-        <div className="flex justify-center mt-8 sm:mt-12">
-          <ScrollReveal
-            baseOpacity={0.3}
-            enableBlur={false}
-          >
-            <Link href="/projects" className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-charcoal hover:text-accent-blue transition-colors duration-300">
-              Explore All Projects
-              <span className="h-[1px] w-6 bg-charcoal group-hover:bg-accent-blue group-hover:w-8 transition-all duration-300" />
-            </Link>
-          </ScrollReveal>
-        </div>
       </div>
     </section>
   );
 }
 
 export { FeaturedProjects };
+
+
