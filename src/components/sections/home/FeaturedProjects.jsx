@@ -1,20 +1,44 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { projects } from "@/data/projects";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { ScrollStack, ScrollStackItem } from "@/components/ui/ScrollStack";
+
+const ECOSYSTEMS = [
+  {
+    id: "hexora",
+    title: "HEXORA",
+    category: "Digital Systems & Brand Engineering",
+    description: "Building modern websites, startup systems, branding frameworks, and immersive digital experiences for startups, organizations, and future-driven ventures.",
+    tags: ["Founder-Led", "Digital Experiences", "Startup Systems"],
+    slug: "hexora",
+    indexStr: "01",
+  },
+  {
+    id: "pu-incent",
+    title: "PU-iNCENT",
+    category: "Startup Ecosystem & Innovation Platform",
+    description: "Leading and supporting innovation-driven startup ecosystems through founder mentorship, incubation programs, institutional systems, and entrepreneurial initiatives.",
+    tags: ["50+ Founders Guided", "Innovation Ecosystem", "Leadership Platform"],
+    slug: "pu-incent",
+    indexStr: "02",
+  },
+  {
+    id: "evolve",
+    title: "EVOLVE",
+    category: "Startup Growth & Creative Systems",
+    description: "Building creator-focused growth systems, immersive brand experiences, and scalable digital frameworks designed for modern communities and emerging ventures.",
+    tags: ["Growth Systems", "Creative Ecosystem", "Digital Innovation"],
+    slug: "evolve",
+    indexStr: "03",
+  }
+];
 
 export default function FeaturedProjects() {
-  const featuredIds = ["hexora", "pu-incent", "evolve"];
-  const featuredProjects = projects
-    .filter((p) => featuredIds.includes(p.id))
-    .sort((a, b) => featuredIds.indexOf(a.id) - featuredIds.indexOf(b.id));
-
   return (
-    <section className="py-12 sm:py-16 px-6 sm:px-12 bg-soft-white relative z-10">
+    <section className="py-16 sm:py-24 px-6 sm:px-12 bg-soft-white relative z-10 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <SectionHeading 
           label="01 / FEATURED ECOSYSTEMS" 
@@ -29,137 +53,109 @@ export default function FeaturedProjects() {
           description="A curated collection of startups, platforms, innovation systems, and digital experiences designed across incubation ecosystems, educational initiatives, and modern product environments."
         />
 
-        {/* Unified Bento Grid of Projects */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-16 sm:mt-20">
-          {featuredProjects.map((project, index) => {
-            const displayTitle = project.id === "pu-incent" ? "PU-iNCENT" : project.title;
-            const indexStr = `0${index + 1}`;
-            
-            return (
-              <Link
-                key={project.id}
-                href={`/projects/${project.slug}`}
-                className="lg:col-span-12 group block p-8 sm:p-12 bg-warm-white/10 hover:bg-warm-white/40 border border-charcoal/5 hover:border-accent-blue/20 rounded-premium-xl transition-all duration-500 ease-out hover:-translate-y-[3px] shadow-premium-sm hover:shadow-premium-md relative overflow-hidden"
-              >
-                {/* Background ambient editorial grid */}
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.015)_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] opacity-30 pointer-events-none" />
-                
-                {/* Subtle radial highlights in top-right corner */}
-                <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-accent-blue/5 to-transparent blur-[80px] pointer-events-none" />
+        {/* High-Performance Scroll Stack Interaction System */}
+        <div className="relative mt-8 sm:mt-12 w-full">
+          <ScrollStack
+            itemDistance={70}
+            itemScale={0.02}
+            itemStackDistance={24}
+            stackPosition="18%"
+            scaleEndPosition="10%"
+            baseScale={0.94}
+            rotationAmount={0}
+            blurAmount={0}
+            useWindowScroll={true}
+          >
+            {ECOSYSTEMS.map((project, index) => {
+              return (
+                <ScrollStackItem key={project.id}>
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className="block w-full h-full min-h-[350px] sm:min-h-[400px] lg:min-h-[480px] bg-warm-white/20 backdrop-blur-xl border border-charcoal/10 hover:border-accent-blue/20 rounded-[2rem] p-8 sm:p-12 lg:p-14 relative overflow-hidden shadow-premium-sm hover:shadow-premium-md transition-all duration-500 ease-out hover:-translate-y-[3px] hover:bg-warm-white/40 group cursor-pointer select-none"
+                  >
+                    {/* Background ambient editorial grid */}
+                    <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.01)_1px,transparent_1px)] bg-[size:2rem_2rem] opacity-25 pointer-events-none" />
+                    
+                    {/* Soft glowing ambient lighting in top-right corner */}
+                    <div className="absolute top-0 right-0 w-[450px] h-[450px] rounded-full bg-gradient-to-bl from-accent-blue/5 to-transparent blur-[90px] pointer-events-none" />
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start relative z-10">
-                  {/* Left: Text Content */}
-                  <div className="lg:col-span-6 flex flex-col items-start">
-                    <ScrollReveal
-                      baseOpacity={0.3}
-                      enableBlur={false}
-                      baseRotation={0}
-                      className="flex items-center gap-3 mb-4"
-                    >
-                      <span className="text-xs font-mono font-bold tracking-widest text-accent-blue">[ {indexStr} ]</span>
-                      <span className="text-[10px] font-mono font-bold tracking-widest text-soft-gray uppercase">
-                        {project.category}
-                      </span>
-                    </ScrollReveal>
-
-                    <ScrollReveal
-                      baseOpacity={0}
-                      enableBlur={true}
-                      blurStrength={6}
-                      baseRotation={0.5}
-                      className="font-display font-bold text-3xl sm:text-4xl text-charcoal group-hover:text-accent-blue transition-colors duration-300 leading-tight mb-4 tracking-tight block"
-                    >
-                      {displayTitle}
-                    </ScrollReveal>
-
-                    <ScrollReveal
-                      baseOpacity={0.4}
-                      blurStrength={3}
-                      baseRotation={0}
-                      className="text-soft-gray text-sm sm:text-base leading-relaxed mb-6 block"
-                    >
-                      {project.description}
-                    </ScrollReveal>
-
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag, idx) => (
-                        <span key={idx} className="px-3 py-1 rounded-full bg-charcoal/5 text-[9px] font-mono font-bold tracking-widest text-charcoal uppercase">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Right: Technical Spec Panel (Typography Focused Grid) */}
-                  <div className="lg:col-span-6 w-full h-full flex flex-col justify-between p-6 sm:p-8 rounded-premium-lg border border-charcoal/5 bg-soft-white/60 backdrop-blur-md relative overflow-hidden">
-                    {/* Technical frame corners */}
-                    <div className="absolute top-2.5 left-2.5 w-1.5 h-1.5 border-t border-l border-charcoal/15 pointer-events-none" />
-                    <div className="absolute top-2.5 right-2.5 w-1.5 h-1.5 border-t border-r border-charcoal/15 pointer-events-none" />
-                    <div className="absolute bottom-2.5 left-2.5 w-1.5 h-1.5 border-b border-l border-charcoal/15 pointer-events-none" />
-                    <div className="absolute bottom-2.5 right-2.5 w-1.5 h-1.5 border-b border-r border-charcoal/15 pointer-events-none" />
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
-                      {/* Left half: Metrics */}
-                      <div className="flex flex-col gap-4">
-                        <span className="text-[9px] font-mono font-bold tracking-widest text-soft-gray uppercase border-b border-charcoal/5 pb-2 block">
-                          SYSTEM METRICS
-                        </span>
+                    <div className="h-full flex flex-col justify-between relative z-10">
+                      {/* TOP ROW: Ecosystem Category & Small Label */}
+                      <div className="flex items-center justify-between">
                         <ScrollReveal
                           baseOpacity={0.4}
-                          blurStrength={3}
-                          className="flex flex-col gap-3"
+                          enableBlur={false}
+                          className="flex items-center gap-2"
                         >
-                          {Object.entries(project.metrics).map(([key, val]) => (
-                            <div key={key} className="flex flex-col">
-                              <span className="text-[10px] font-mono text-soft-gray/70 uppercase tracking-wider leading-none">{key}</span>
-                              <span className="text-xs font-bold text-charcoal mt-1 leading-normal">{val}</span>
-                            </div>
+                          <span className="h-1.5 w-1.5 rounded-full bg-accent-blue animate-pulse" />
+                          <span className="text-[10px] sm:text-xs font-mono font-bold tracking-widest text-accent-blue uppercase">
+                            {project.category}
+                          </span>
+                        </ScrollReveal>
+                        <ScrollReveal
+                          baseOpacity={0.3}
+                          enableBlur={false}
+                          className="text-[10px] sm:text-xs font-mono font-bold tracking-widest text-soft-gray"
+                        >
+                          [ {project.indexStr} ]
+                        </ScrollReveal>
+                      </div>
+
+                      {/* Editorial Divider */}
+                      <div className="w-full h-[1px] bg-charcoal/5 my-6 sm:my-8" />
+
+                      {/* CENTER ROW: Large Title with Editorial Typography */}
+                      <div className="flex-grow flex items-center py-4">
+                        <ScrollReveal
+                          baseOpacity={0}
+                          enableBlur={true}
+                          blurStrength={8}
+                          className="w-full"
+                        >
+                          <h3 className="font-display font-bold text-4xl sm:text-5xl lg:text-7xl tracking-tight text-charcoal group-hover:text-accent-blue transition-colors duration-500 leading-[1.05]">
+                            {project.title}
+                          </h3>
+                        </ScrollReveal>
+                      </div>
+
+                      {/* Editorial Divider */}
+                      <div className="w-full h-[1px] bg-charcoal/5 my-6 sm:my-8" />
+
+                      {/* BOTTOM ROW: Description & Strategy Tags */}
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-end">
+                        <div className="lg:col-span-8">
+                          <ScrollReveal
+                            baseOpacity={0.4}
+                            blurStrength={3}
+                            className="text-soft-gray text-xs sm:text-sm lg:text-base leading-relaxed max-w-2xl"
+                          >
+                            {project.description}
+                          </ScrollReveal>
+                        </div>
+                        <div className="lg:col-span-4 flex flex-wrap justify-start lg:justify-end gap-2">
+                          {project.tags.map((tag, idx) => (
+                            <ScrollReveal
+                              key={idx}
+                              baseOpacity={0.3}
+                              enableBlur={false}
+                              delay={idx * 0.05}
+                            >
+                              <span className="px-3.5 py-1.5 rounded-full bg-charcoal/5 text-[9px] font-mono font-bold tracking-widest text-charcoal uppercase border border-charcoal/5 group-hover:border-accent-blue/10 group-hover:bg-accent-blue/5 transition-all duration-500">
+                                {tag}
+                              </span>
+                            </ScrollReveal>
                           ))}
-                        </ScrollReveal>
-                      </div>
-
-                      {/* Right half: Strategy */}
-                      <div className="flex flex-col gap-4">
-                        <span className="text-[9px] font-mono font-bold tracking-widest text-soft-gray uppercase border-b border-charcoal/5 pb-2 block">
-                          CORE STRATEGY
-                        </span>
-                        <ScrollReveal
-                          baseOpacity={0.4}
-                          blurStrength={3}
-                          className="flex flex-col gap-3"
-                        >
-                          <div>
-                            <span className="text-[10px] font-mono text-soft-gray/70 uppercase tracking-wider block">OBJECTIVE</span>
-                            <p className="text-[11px] text-soft-gray leading-relaxed mt-1">
-                              {project.strategy}
-                            </p>
-                          </div>
-                          <div>
-                            <span className="text-[10px] font-mono text-soft-gray/70 uppercase tracking-wider block">EXECUTION</span>
-                            <p className="text-[11px] text-soft-gray leading-relaxed mt-1">
-                              {project.process}
-                            </p>
-                          </div>
-                        </ScrollReveal>
+                        </div>
                       </div>
                     </div>
-
-                    {/* Reveal indicator in right corner */}
-                    <div className="flex items-center justify-between border-t border-charcoal/5 pt-4 mt-6 w-full">
-                      <span className="text-[9px] font-mono text-accent-blue uppercase tracking-widest font-bold">SYSTEM LOG LOCKED</span>
-                      <div className="flex items-center gap-1.5 text-[10px] font-mono text-charcoal group-hover:text-accent-blue transition-colors duration-300 font-bold">
-                        SYSTEM ARCHITECTURE
-                        <ArrowUpRight className="h-3 w-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
+                  </Link>
+                </ScrollStackItem>
+              );
+            })}
+          </ScrollStack>
         </div>
 
-        <div className="flex justify-center mt-12 sm:mt-16">
+        <div className="flex justify-center mt-8 sm:mt-12">
           <ScrollReveal
             baseOpacity={0.3}
             enableBlur={false}
