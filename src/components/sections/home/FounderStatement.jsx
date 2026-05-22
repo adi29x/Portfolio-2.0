@@ -40,7 +40,7 @@ export default function FounderStatement() {
             baseRotation={1}
             yOffset={35}
             stagger={0.06}
-            className="font-display font-bold text-[clamp(2rem,4.2vw,4.5rem)] tracking-tight text-charcoal leading-[0.98] lg:leading-[0.95] mb-10 sm:mb-12 max-w-4xl block"
+            className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-charcoal leading-[0.98] lg:leading-[0.95] mb-10 sm:mb-12 max-w-4xl block"
           >
             <span className="block md:whitespace-nowrap">
               Technology,

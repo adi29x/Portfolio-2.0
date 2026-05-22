@@ -372,7 +372,7 @@ export default function RetroComputer({ isHovered = false }) {
         color={isHovered ? "#34D399" : "#6B7280"} // Elegant terminal emerald green when powered on, dim gray when idle
         anchorX="left"
         anchorY="top"
-        font="https://fonts.gstatic.com/s/sharetechmono/v15/J7aUxTGPTR-6LI8IPJ2M4F4T8r4N2A.woff"
+        font="/ShareTechMono.woff"
         lineHeight={1.4}
         maxWidth={1.7}
       >
