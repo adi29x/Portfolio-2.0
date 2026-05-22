@@ -1,14 +1,112 @@
 "use client";
-import React, { useState, Suspense } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { GradualBlur } from "@/components/ui/GradualBlur";
-import { ThreeCanvas } from "@/components/three/ThreeCanvas";
-import RetroComputer from "@/components/three/RetroComputer";
+
+const POOL_LOGS = [
+  { type: "LOG", msg: "Analyzing Innovation Metrics for BCA Batch", time: "787ms" },
+  { type: "LOG", msg: "System Cache Cleared - 1.2GB optimized", time: "355ms" },
+  { type: "SYS", msg: "Ecosystem Kernel Initialized...", time: "0ms" },
+  { type: "NET", msg: "Digital Registry Link Active", time: "+12ms" },
+  { type: "LOG", msg: "Syncing PU-iNCENT startup cohorts...", time: "210ms" },
+  { type: "SYS", msg: "Hexora Agency Pipeline synced successfully", time: "180ms" },
+  { type: "NET", msg: "Jaipur Entrepreneur Node connection established", time: "+4ms" },
+  { type: "LOG", msg: "Advising 50+ student founders in active queue", time: "520ms" },
+  { type: "LOG", msg: "Generating digital experience blueprints", time: "95ms" },
+  { type: "SYS", msg: "FounderOS Dashboard pipeline check complete", time: "15ms" },
+  { type: "NET", msg: "Securing student incubator intake endpoints", time: "+18ms" },
+  { type: "LOG", msg: "Compiling Lakshya 2026 conference schedule", time: "440ms" }
+];
+
+function LiveTerminal() {
+  const [activeLogs, setActiveLogs] = useState([
+    { id: 0, type: "LOG", msg: "Analyzing Innovation Metrics for BCA Batch", time: "787ms" },
+    { id: 1, type: "LOG", msg: "System Cache Cleared - 1.2GB optimized", time: "355ms" },
+    { id: 2, type: "SYS", msg: "Ecosystem Kernel Initialized...", time: "0ms" },
+    { id: 3, type: "NET", msg: "Digital Registry Link Active", time: "+12ms" }
+  ]);
+
+  useEffect(() => {
+    let logCounter = 4;
+    const interval = setInterval(() => {
+      setActiveLogs((prev) => {
+        const next = prev.slice(1);
+        const poolItem = POOL_LOGS[logCounter % POOL_LOGS.length];
+        next.push({
+          id: logCounter++,
+          type: poolItem.type,
+          msg: poolItem.msg,
+          time: poolItem.time
+        });
+        return next;
+      });
+    }, 3200);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="w-full bg-[#0A0B11] border border-white/[0.06] rounded-2xl shadow-premium-lg px-5 py-5 sm:px-8 sm:py-6 flex flex-col justify-between h-[340px] sm:h-[360px] relative overflow-hidden select-none font-mono">
+      {/* Terminal Header */}
+      <div>
+        <div className="flex justify-between items-center border-b border-white/[0.07] pb-4 mb-5">
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] sm:text-xs tracking-[0.25em] text-white/55 font-bold uppercase">
+              LIVE SYSTEM ACTIVITY
+            </span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          </div>
+          {/* macOS window actions */}
+          <div className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F56] border border-[#E0443E]/20" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E] border border-[#DEA123]/20" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#27C93F] border border-[#1AAB29]/20" />
+          </div>
+        </div>
+
+        {/* Dynamic Logs Stack */}
+        <div className="flex flex-col space-y-4">
+          <AnimatePresence initial={false} mode="popLayout">
+            {activeLogs.map((log) => (
+              <motion.div
+                key={log.id}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                className="flex items-center justify-between py-1 text-[11px] sm:text-xs leading-normal"
+              >
+                <div className="flex items-start gap-4 sm:gap-6 min-w-0 flex-1 pr-4">
+                  {/* Tag label (Red, Monospace, Bold) */}
+                  <span className="text-[#FF453A] font-bold w-8 select-none shrink-0 tracking-wider">
+                    {log.type}
+                  </span>
+                  {/* Message (Sleek light silver text) */}
+                  <span className="text-[#E5E7EB]/90 leading-relaxed font-light truncate">
+                    {log.msg}
+                  </span>
+                </div>
+                {/* Time (Dim gray monospace) */}
+                <span className="text-white/40 tracking-tight shrink-0 select-none text-right w-16">
+                  {log.time}
+                </span>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+      </div>
+
+      {/* Terminal Footer Info Overlay */}
+      <div className="flex justify-between items-center border-t border-white/[0.05] pt-4 mt-4 text-[9px] text-white/30 tracking-widest uppercase select-none">
+        <div>STATUS: ACTIVE</div>
+        <div>NODE: JP_IN_COORD_26.9N</div>
+      </div>
+    </div>
+  );
+}
 
 export default function FounderStatement() {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
     <section className="py-16 sm:py-24 px-6 sm:px-12 bg-soft-white border-t border-b border-charcoal/5 relative z-10 overflow-hidden">
       {/* Background elegant grid & spatial depth */}
@@ -19,7 +117,7 @@ export default function FounderStatement() {
       {/* Subtle floating architectural line */}
       <div className="absolute left-12 right-12 top-0 h-[1px] bg-[linear-gradient(to_right,transparent,rgba(0,0,0,0.05)_20%,rgba(0,0,0,0.05)_80%,transparent)] pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 lg:gap-16 items-center relative z-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 lg:gap-16 items-center relative z-10">
         {/* LEFT COLUMN: Editorial Content (55%) */}
         <div className="flex flex-col items-start w-full">
           {/* Label Badge */}
@@ -40,17 +138,19 @@ export default function FounderStatement() {
             baseRotation={1}
             yOffset={35}
             stagger={0.06}
-            className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-charcoal leading-[0.98] lg:leading-[0.95] mb-10 sm:mb-12 max-w-4xl block"
+            className="mb-10 sm:mb-12 max-w-4xl block"
           >
-            <span className="block md:whitespace-nowrap">
-              Technology,
-            </span>
-            <span className="block md:whitespace-nowrap">
-              design and storytelling —
-            </span>
-            <span className="block md:whitespace-nowrap">
-              working seamlessly together.
-            </span>
+            <h2 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-charcoal leading-[1.05]">
+              <span className="block md:whitespace-nowrap">
+                Technology,
+              </span>
+              <span className="block md:whitespace-nowrap">
+                design and storytelling —
+              </span>
+              <span className="block md:whitespace-nowrap">
+                working seamlessly together.
+              </span>
+            </h2>
           </ScrollReveal>
 
           {/* Narrative Description (max 3 lines on desktop, soft opacity) */}
@@ -80,7 +180,7 @@ export default function FounderStatement() {
           </ScrollReveal>
         </div>
 
-        {/* RIGHT COLUMN: Interactive 3D Visual (45%) */}
+        {/* RIGHT COLUMN: Live System Activity Terminal (45%) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -88,31 +188,10 @@ export default function FounderStatement() {
           transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
           className="w-full flex items-center justify-center"
         >
-          <div 
-            className="w-full h-[400px] sm:h-[450px] lg:h-[500px] relative rounded-2xl border border-charcoal/[0.04] bg-charcoal/[0.01] hover:bg-charcoal/[0.02] transition-colors duration-500 overflow-hidden flex items-center justify-center group"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            onTouchStart={() => setIsHovered(true)}
-            onTouchEnd={() => setIsHovered(false)}
-          >
+          <div className="w-full max-w-[550px] relative">
             {/* Dynamic Background glowing ambient circle */}
-            <div className={`absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(194,193,189,0.08)_0%,transparent_70%)] transition-opacity duration-700 pointer-events-none ${isHovered ? "opacity-100" : "opacity-0"}`} />
-            
-            <ThreeCanvas 
-              camera={{ position: [0, 0, 5.2], fov: 45 }}
-              className="w-full h-full"
-            >
-              <ambientLight intensity={0.5} />
-              <Suspense fallback={null}>
-                <RetroComputer isHovered={isHovered} />
-              </Suspense>
-            </ThreeCanvas>
-
-            {/* Elegant interactive floating tooltip in bottom right corner */}
-            <div className={`absolute bottom-6 right-6 font-mono text-[9px] tracking-widest uppercase transition-all duration-500 pointer-events-none flex items-center gap-2 ${isHovered ? "text-emerald-500/80 translate-y-0 opacity-100" : "text-soft-gray translate-y-1 opacity-60"}`}>
-              <span className={`w-1.5 h-1.5 rounded-full ${isHovered ? "bg-emerald-500 animate-pulse" : "bg-soft-gray"}`} />
-              {isHovered ? "SYSTEMS ONLINE" : "INTERACT TO BOOT"}
-            </div>
+            <div className="absolute inset-0 -m-6 bg-gradient-to-br from-charcoal/5 to-transparent blur-[80px] pointer-events-none rounded-full" />
+            <LiveTerminal />
           </div>
         </motion.div>
       </div>
@@ -122,4 +201,5 @@ export default function FounderStatement() {
     </section>
   );
 }
+
 export { FounderStatement };
