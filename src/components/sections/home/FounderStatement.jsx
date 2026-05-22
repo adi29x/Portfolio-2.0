@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { GradualBlur } from "@/components/ui/GradualBlur";
@@ -42,15 +42,13 @@ export default function FounderStatement() {
             stagger={0.06}
             className="font-display font-bold text-[clamp(2rem,4.2vw,4.5rem)] tracking-tight text-charcoal leading-[0.98] lg:leading-[0.95] mb-10 sm:mb-12 max-w-4xl block"
           >
-            <span className="md:whitespace-nowrap">
+            <span className="block md:whitespace-nowrap">
               Technology,
-              <br className="block md:hidden" />{" "}
-              design and
             </span>
-            <br className="hidden md:block" />{" "}
-            <span className="md:whitespace-nowrap">
-              storytelling —
-              <br className="block md:hidden" />{" "}
+            <span className="block md:whitespace-nowrap">
+              design and storytelling —
+            </span>
+            <span className="block md:whitespace-nowrap">
               working seamlessly together.
             </span>
           </ScrollReveal>
@@ -105,7 +103,9 @@ export default function FounderStatement() {
               className="w-full h-full"
             >
               <ambientLight intensity={0.5} />
-              <RetroComputer isHovered={isHovered} />
+              <Suspense fallback={null}>
+                <RetroComputer isHovered={isHovered} />
+              </Suspense>
             </ThreeCanvas>
 
             {/* Elegant interactive floating tooltip in bottom right corner */}
