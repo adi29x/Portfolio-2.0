@@ -31,6 +31,7 @@ export default function GradualBlur({
   opacity = 0.7,
   animated = "none",
   preset,
+  zIndex = 40,
   className = "",
 }) {
   const containerRef = useRef(null);
@@ -44,6 +45,7 @@ export default function GradualBlur({
   let activeDivCount = divCount;
   let activeCurve = curve;
   let activeAnimated = animated;
+  let activeZIndex = zIndex;
 
   if (preset === "smooth") {
     // Smooth preset: dual top and bottom transitions for philosophical pause
@@ -137,7 +139,7 @@ export default function GradualBlur({
   const getContainerStyles = (pos) => {
     const base = {
       position: className && className.includes("fixed") ? "fixed" : "absolute",
-      zIndex: 40,
+      zIndex: activeZIndex,
       pointerEvents: "none",
     };
 
@@ -185,7 +187,7 @@ export default function GradualBlur({
   // If "both" is specified (or preset="smooth"), we render top and bottom overlays
   if (activePosition === "both") {
     return (
-      <div className={`absolute inset-0 pointer-events-none ${className}`}>
+      <div className={`absolute inset-0 pointer-events-none ${className}`} style={{ zIndex: activeZIndex }}>
         {/* Top Boundary Blur */}
         <div
           style={{
@@ -195,7 +197,7 @@ export default function GradualBlur({
             right: 0,
             height: activeHeight,
             opacity: activeOpacity,
-            zIndex: 40,
+            zIndex: activeZIndex,
             pointerEvents: "none",
           }}
         >
@@ -210,7 +212,7 @@ export default function GradualBlur({
             right: 0,
             height: activeHeight,
             opacity: activeOpacity,
-            zIndex: 40,
+            zIndex: activeZIndex,
             pointerEvents: "none",
           }}
         >

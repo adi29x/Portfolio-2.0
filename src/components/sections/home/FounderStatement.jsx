@@ -111,8 +111,15 @@ export default function FounderStatement() {
     <section className="py-16 sm:py-24 px-6 sm:px-12 bg-soft-white border-t border-b border-charcoal/5 relative z-10 overflow-hidden">
       {/* Background elegant grid & spatial depth */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.012)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.012)_1px,transparent_1px)] bg-[size:3rem_3rem] pointer-events-none" />
-      <div className="absolute top-1/2 left-2/3 -translate-y-1/2 w-[550px] h-[550px] rounded-full bg-gradient-to-br from-accent-sand/10 to-transparent blur-[140px] pointer-events-none" />
-      <div className="absolute -bottom-10 left-10 w-[300px] h-[300px] rounded-full bg-gradient-to-tr from-accent-blue/5 to-transparent blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-2/3 -translate-y-1/2 w-[550px] h-[550px] rounded-full bg-gradient-to-br from-accent-sand/15 to-transparent blur-[140px] pointer-events-none" />
+      <div className="absolute -bottom-10 left-10 w-[300px] h-[300px] rounded-full bg-gradient-to-tr from-accent-blue/8 to-transparent blur-[100px] pointer-events-none" />
+
+      {/* Cinematic smooth preset gradual blurs and background blending overlays (sits below content layer) */}
+      <GradualBlur preset="smooth" strength={1.5} opacity={0.7} zIndex={5} />
+      
+      {/* Smooth solid-to-transparent color gradient overlays at boundaries to blend sections beautifully */}
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#F7F7F5] via-[#F7F7F5]/50 to-transparent pointer-events-none z-[5]" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#F7F7F5] via-[#F7F7F5]/50 to-transparent pointer-events-none z-[5]" />
 
       {/* Subtle floating architectural line */}
       <div className="absolute left-12 right-12 top-0 h-[1px] bg-[linear-gradient(to_right,transparent,rgba(0,0,0,0.05)_20%,rgba(0,0,0,0.05)_80%,transparent)] pointer-events-none" />
@@ -187,9 +194,6 @@ export default function FounderStatement() {
           </div>
         </motion.div>
       </div>
-
-      {/* Cinematic smooth preset gradual blurs at top and bottom boundaries */}
-      <GradualBlur preset="smooth" strength={1.2} opacity={0.6} />
     </section>
   );
 }
