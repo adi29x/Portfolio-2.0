@@ -32,7 +32,7 @@ export default function FounderStatement() {
             [ 02 / DIGITAL PHILOSOPHY ]
           </ScrollReveal>
 
-          {/* Cinematic Scroll-Revealed Title */}
+          {/* Cinematic Scroll-Revealed Title with Non-Breaking Spans */}
           <ScrollReveal
             baseOpacity={0}
             enableBlur={true}
@@ -40,15 +40,19 @@ export default function FounderStatement() {
             baseRotation={1}
             yOffset={35}
             stagger={0.06}
-            className="font-display font-bold text-[clamp(2rem,5vw,5rem)] tracking-tight text-charcoal leading-[0.98] lg:leading-[0.95] mb-10 sm:mb-12 max-w-4xl block"
+            className="font-display font-bold text-[clamp(2rem,4.2vw,4.5rem)] tracking-tight text-charcoal leading-[0.98] lg:leading-[0.95] mb-10 sm:mb-12 max-w-4xl block"
           >
-            Technology,
-            <br className="block md:hidden" />{" "}
-            design and
+            <span className="md:whitespace-nowrap">
+              Technology,
+              <br className="block md:hidden" />{" "}
+              design and
+            </span>
             <br className="hidden md:block" />{" "}
-            storytelling —
-            <br className="block md:hidden" />{" "}
-            working seamlessly together.
+            <span className="md:whitespace-nowrap">
+              storytelling —
+              <br className="block md:hidden" />{" "}
+              working seamlessly together.
+            </span>
           </ScrollReveal>
 
           {/* Narrative Description (max 3 lines on desktop, soft opacity) */}
@@ -58,7 +62,7 @@ export default function FounderStatement() {
             baseRotation={0}
             className="font-sans font-light text-base sm:text-lg text-charcoal/70 leading-relaxed max-w-xl mb-12 sm:mb-14 block"
           >
-            Modern digital experiences should feel immersive, intentional, and emotionally connected. I build systems that combine design, motion, storytelling, and technology into experiences that feel alive and future-ready.
+            Modern digital experiences should feel immersive, intentional, and emotionally connected. My focus is on building systems that combine design, motion, storytelling, and technology into experiences that feel alive and future-ready.
           </ScrollReveal>
 
           {/* Signature Block */}
@@ -79,12 +83,11 @@ export default function FounderStatement() {
         </div>
 
         {/* RIGHT COLUMN: Interactive 3D Visual (45%) */}
-        <ScrollReveal
-          baseOpacity={0}
-          enableBlur={true}
-          blurStrength={6}
-          baseRotation={0}
-          yOffset={25}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-10% 0px" }}
+          transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
           className="w-full flex items-center justify-center"
         >
           <div 
@@ -111,7 +114,7 @@ export default function FounderStatement() {
               {isHovered ? "SYSTEMS ONLINE" : "INTERACT TO BOOT"}
             </div>
           </div>
-        </ScrollReveal>
+        </motion.div>
       </div>
 
       {/* Cinematic smooth preset gradual blurs at top and bottom boundaries */}
