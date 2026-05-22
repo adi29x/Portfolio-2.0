@@ -258,11 +258,11 @@ export default function RetroComputer({ isHovered = false }) {
 
     // Lerp material values dynamically based on hover state (boot-up duration look & feel)
     const lerpSpeed = 0.08;
-    const targetOpacity = isHovered ? 0.9 : 0.35;
-    const targetSize = isHovered ? 0.042 : 0.028;
-    const targetLineOpacity = isHovered ? 0.35 : 0.12;
-    const targetScreenOpacity = isHovered ? 0.14 : 0.015;
-    const targetScanlineOpacity = isHovered ? 0.09 : 0.015;
+    const targetOpacity = isHovered ? 0.95 : 0.6;
+    const targetSize = isHovered ? 0.065 : 0.045;
+    const targetLineOpacity = isHovered ? 0.55 : 0.28;
+    const targetScreenOpacity = isHovered ? 0.22 : 0.025;
+    const targetScanlineOpacity = isHovered ? 0.18 : 0.025;
 
     if (pointsMatRef.current) {
       pointsMatRef.current.opacity = THREE.MathUtils.lerp(pointsMatRef.current.opacity, targetOpacity, lerpSpeed);
@@ -304,10 +304,10 @@ export default function RetroComputer({ isHovered = false }) {
         <pointsMaterial
           ref={pointsMatRef}
           color="#FFFFFF"
-          size={0.028}
+          size={0.045}
           sizeAttenuation={true}
           transparent={true}
-          opacity={0.35}
+          opacity={0.6}
         />
       </points>
 
@@ -323,7 +323,7 @@ export default function RetroComputer({ isHovered = false }) {
           ref={linesMatRef}
           color="#C2C1BD"
           transparent={true}
-          opacity={0.12}
+          opacity={0.28}
         />
       </lineSegments>
 
@@ -334,7 +334,7 @@ export default function RetroComputer({ isHovered = false }) {
           ref={screenMatRef}
           color={isHovered ? "#E6F4EA" : "#1A1A1A"} // Warm ivory-green glow when active, transparent when off
           transparent={true}
-          opacity={0.015}
+          opacity={0.025}
         />
       </mesh>
 
@@ -350,7 +350,7 @@ export default function RetroComputer({ isHovered = false }) {
           ref={scanlinesMatRef}
           color="#C2C1BD"
           transparent={true}
-          opacity={0.015}
+          opacity={0.025}
         />
       </lineSegments>
 

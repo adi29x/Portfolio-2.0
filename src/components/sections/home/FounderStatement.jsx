@@ -62,7 +62,7 @@ export default function FounderStatement() {
             baseRotation={0}
             className="font-sans font-light text-base sm:text-lg text-charcoal/70 leading-relaxed max-w-xl mb-12 sm:mb-14 block"
           >
-            Modern digital experiences should feel immersive, intentional, and emotionally connected. My focus is on building systems that combine design, motion, storytelling, and technology into experiences that feel alive and future-ready.
+            Modern digital experiences should feel immersive, intentional, and emotionally connected. I build systems that combine design, motion, storytelling, and technology into experiences that feel alive and future-ready.
           </ScrollReveal>
 
           {/* Signature Block */}
