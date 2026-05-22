@@ -152,17 +152,17 @@ export default function FeaturedProjects() {
               return (
                 <ScrollStackItem 
                   key={project.id}
-                  itemClassName="h-[70vh] min-h-[420px] sm:min-h-[460px] lg:min-h-[500px] max-w-5xl w-full"
+                  itemClassName="h-[82vh] min-h-[520px] sm:h-[75vh] sm:min-h-[480px] md:h-[70vh] md:min-h-[500px] lg:min-h-[500px] max-w-5xl w-full"
                 >
                   <Link
                     href={`/projects/${project.slug}`}
                     style={{ backfaceVisibility: "hidden", transform: "translate3d(0,0,0)", WebkitBackfaceVisibility: "hidden" }}
-                    className={`block w-full h-full ${project.bgColor} border ${project.borderColor} rounded-[32px] sm:rounded-[40px] p-5 sm:p-8 lg:p-10 relative overflow-hidden transition-colors duration-500 group cursor-pointer select-none`}
+                    className={`block w-full h-full ${project.bgColor} border ${project.borderColor} rounded-[32px] sm:rounded-[40px] p-4 sm:p-8 lg:p-10 relative overflow-hidden transition-colors duration-500 group cursor-pointer select-none`}
                   >
                     <div className="flex flex-col justify-between h-full relative z-10">
                       {/* TOP ROW: Category & Minimal Index */}
                       <div className="w-full">
-                        <div className="flex justify-between items-start pb-4">
+                        <div className="flex justify-between items-start pb-3 sm:pb-4">
                           <div className="flex items-center gap-2">
                             <span className="h-1.5 w-1.5 rounded-full bg-accent-blue animate-pulse" />
                             <span className="text-[10px] sm:text-xs font-mono font-bold tracking-widest uppercase text-accent-navy">
@@ -182,26 +182,26 @@ export default function FeaturedProjects() {
                       </div>
 
                       {/* MAIN ASYMMETRIC GRID AREA */}
-                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 py-4 sm:py-6">
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 lg:gap-12 py-1.5 sm:py-6">
                         {/* Left Column: Brand & Editorial Intro */}
                         <div className="lg:col-span-5 flex flex-col justify-between h-full">
                           <div>
                             <h3 
                               style={{ fontFamily: "'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" }}
-                              className="font-bold tracking-tight text-charcoal group-hover:text-accent-blue text-3xl sm:text-4xl lg:text-5xl uppercase transition-colors duration-500 mb-4 sm:mb-6"
+                              className="font-bold tracking-tight text-charcoal group-hover:text-accent-blue text-2xl sm:text-4xl lg:text-5xl uppercase transition-colors duration-500 mb-1.5 sm:mb-6"
                             >
                               {project.title}
                             </h3>
-                            <p className="text-xs sm:text-sm font-light leading-relaxed text-charcoal/70 max-w-sm">
+                            <p className="text-[11px] sm:text-sm font-light leading-relaxed text-charcoal/70 max-w-sm">
                               {project.description}
                             </p>
                           </div>
                           
-                          <div className="flex flex-wrap gap-2 mt-6 lg:mt-8">
+                          <div className="flex flex-wrap gap-1.5 mt-2.5 sm:mt-6 lg:mt-8">
                             {project.tags.map((tag, idx) => (
                               <span 
                                 key={idx}
-                                className="px-3 py-1.5 rounded-full text-[9px] font-mono font-bold tracking-widest uppercase border border-charcoal/10 bg-charcoal/[0.03] text-charcoal/80 group-hover:border-accent-blue/30 group-hover:bg-accent-blue/5 group-hover:text-accent-navy transition-colors duration-300"
+                                className="px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-[8px] sm:text-[9px] font-mono font-bold tracking-widest uppercase border border-charcoal/10 bg-charcoal/[0.03] text-charcoal/80 group-hover:border-accent-blue/30 group-hover:bg-accent-blue/5 group-hover:text-accent-navy transition-colors duration-300"
                               >
                                 {tag}
                               </span>
@@ -210,14 +210,14 @@ export default function FeaturedProjects() {
                         </div>
 
                         {/* Right Column: Blueprint Details */}
-                        <div className="lg:col-span-7 flex flex-col justify-center border-t lg:border-t-0 lg:border-l border-charcoal/10 pt-6 lg:pt-0 lg:pl-10">
-                          <div className="space-y-3 sm:space-y-4">
+                        <div className="lg:col-span-7 flex flex-col justify-center border-t lg:border-t-0 lg:border-l border-charcoal/10 pt-3.5 lg:pt-0 lg:pl-10">
+                          <div className="space-y-2 sm:space-y-4">
                             {project.blueprint.map((spec, sIdx) => (
-                              <div key={sIdx} className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-4 border-b border-charcoal/[0.08] pb-3 last:border-0 last:pb-0">
-                                <span className="text-[9px] font-mono font-bold tracking-widest uppercase text-accent-navy sm:w-36 shrink-0 pt-0.5">
+                              <div key={sIdx} className="flex flex-row items-start gap-2.5 sm:gap-4 border-b border-charcoal/[0.08] pb-1.5 sm:pb-3 last:border-0 last:pb-0">
+                                <span className="text-[8px] sm:text-[9px] font-mono font-bold tracking-widest uppercase text-accent-navy w-[90px] sm:w-36 shrink-0 pt-0.5">
                                   {spec.label}
                                 </span>
-                                <p className="text-xs sm:text-[13px] font-light leading-relaxed tracking-wide text-charcoal/80">
+                                <p className="text-[11px] sm:text-[13px] font-light leading-relaxed tracking-wide text-charcoal/80 flex-1">
                                   {spec.value}
                                 </p>
                               </div>
@@ -229,7 +229,7 @@ export default function FeaturedProjects() {
 
                       {/* BOTTOM ROW: Immersive interactive indicator */}
                       <div className="w-full">
-                        <div className="w-full h-[1px] bg-charcoal/10 mb-4" />
+                        <div className="w-full h-[1px] bg-charcoal/10 mb-2.5 sm:mb-4" />
                         <div className="flex justify-between items-center">
                           <span className="text-[9px] font-mono tracking-widest text-charcoal/40 uppercase">
                             Click to explore thesis
