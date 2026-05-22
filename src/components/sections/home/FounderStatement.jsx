@@ -141,15 +141,7 @@ export default function FounderStatement() {
             className="mb-10 sm:mb-12 max-w-4xl block"
           >
             <h2 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-charcoal leading-[1.05]">
-              <span className="block md:whitespace-nowrap">
-                Technology,
-              </span>
-              <span className="block md:whitespace-nowrap">
-                design and storytelling —
-              </span>
-              <span className="block md:whitespace-nowrap">
-                working seamlessly together.
-              </span>
+              Technology, design and<br className="hidden md:inline" /> storytelling — working seamlessly together.
             </h2>
           </ScrollReveal>
 
