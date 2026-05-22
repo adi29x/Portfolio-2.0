@@ -167,7 +167,7 @@ export default function FounderStatement() {
               Aditya Kapoor
             </span>
             <span className="text-[9px] font-mono font-bold tracking-widest text-soft-gray uppercase mt-1.5 block leading-relaxed">
-              Founder, Designer & <br className="block" />Ecosystem Builder
+              Founder, Designer & Ecosystem Builder
             </span>
           </ScrollReveal>
         </div>
