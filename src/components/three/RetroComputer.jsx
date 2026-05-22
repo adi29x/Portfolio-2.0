@@ -1,8 +1,26 @@
 "use client";
-import React, { useRef, useState, useEffect, useMemo } from "react";
+import React, { useRef, useState, useEffect, useMemo, Suspense } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Text } from "@react-three/drei";
 import * as THREE from "three";
+
+// 0. Standalone Terminal Text component to isolate font Suspense
+function TerminalText({ lines, cursorVisible, isHovered }) {
+  return (
+    <Text
+      position={[-0.85, 0.9, 0.475]}
+      fontSize={0.072}
+      color={isHovered ? "#34D399" : "#6B7280"} // Elegant terminal emerald green when powered on, dim gray when idle
+      anchorX="left"
+      anchorY="top"
+      font="/ShareTechMono.woff"
+      lineHeight={1.4}
+      maxWidth={1.7}
+    >
+      {`${lines[0]}\n${lines[1]}\n${lines[2] ? '\n' + lines[2] : ''}${lines[3] ? '\n' + lines[3] : ''}${lines[4] ? '\n' + lines[4] : ''}${cursorVisible && isHovered ? '_' : ''}`}
+    </Text>
+  );
+}
 
 export default function RetroComputer({ isHovered = false }) {
   const groupRef = useRef();
@@ -258,11 +276,11 @@ export default function RetroComputer({ isHovered = false }) {
 
     // Lerp material values dynamically based on hover state (boot-up duration look & feel)
     const lerpSpeed = 0.08;
-    const targetOpacity = isHovered ? 0.95 : 0.6;
-    const targetSize = isHovered ? 0.065 : 0.045;
-    const targetLineOpacity = isHovered ? 0.55 : 0.28;
-    const targetScreenOpacity = isHovered ? 0.22 : 0.025;
-    const targetScanlineOpacity = isHovered ? 0.18 : 0.025;
+    const targetOpacity = isHovered ? 0.98 : 0.85;
+    const targetSize = isHovered ? 0.075 : 0.055;
+    const targetLineOpacity = isHovered ? 0.75 : 0.45;
+    const targetScreenOpacity = isHovered ? 0.28 : 0.04;
+    const targetScanlineOpacity = isHovered ? 0.24 : 0.04;
 
     if (pointsMatRef.current) {
       pointsMatRef.current.opacity = THREE.MathUtils.lerp(pointsMatRef.current.opacity, targetOpacity, lerpSpeed);
@@ -304,10 +322,10 @@ export default function RetroComputer({ isHovered = false }) {
         <pointsMaterial
           ref={pointsMatRef}
           color="#FFFFFF"
-          size={0.045}
+          size={0.055}
           sizeAttenuation={true}
           transparent={true}
-          opacity={0.6}
+          opacity={0.85}
         />
       </points>
 
@@ -321,9 +339,9 @@ export default function RetroComputer({ isHovered = false }) {
         </bufferGeometry>
         <lineBasicMaterial
           ref={linesMatRef}
-          color="#C2C1BD"
+          color="#B0AFA9"
           transparent={true}
-          opacity={0.28}
+          opacity={0.45}
         />
       </lineSegments>
 
@@ -334,7 +352,7 @@ export default function RetroComputer({ isHovered = false }) {
           ref={screenMatRef}
           color={isHovered ? "#E6F4EA" : "#1A1A1A"} // Warm ivory-green glow when active, transparent when off
           transparent={true}
-          opacity={0.025}
+          opacity={0.04}
         />
       </mesh>
 
@@ -348,9 +366,9 @@ export default function RetroComputer({ isHovered = false }) {
         </bufferGeometry>
         <lineBasicMaterial
           ref={scanlinesMatRef}
-          color="#C2C1BD"
+          color="#B0AFA9"
           transparent={true}
-          opacity={0.025}
+          opacity={0.04}
         />
       </lineSegments>
 
@@ -365,19 +383,10 @@ export default function RetroComputer({ isHovered = false }) {
         />
       )}
 
-      {/* Drei Text Component */}
-      <Text
-        position={[-0.85, 0.9, 0.475]}
-        fontSize={0.072}
-        color={isHovered ? "#34D399" : "#6B7280"} // Elegant terminal emerald green when powered on, dim gray when idle
-        anchorX="left"
-        anchorY="top"
-        font="/ShareTechMono.woff"
-        lineHeight={1.4}
-        maxWidth={1.7}
-      >
-        {`${lines[0]}\n${lines[1]}\n${lines[2] ? '\n' + lines[2] : ''}${lines[3] ? '\n' + lines[3] : ''}${lines[4] ? '\n' + lines[4] : ''}${cursorVisible && isHovered ? '_' : ''}`}
-      </Text>
+      {/* Drei Text Component wrapped in local Suspense boundary */}
+      <Suspense fallback={null}>
+        <TerminalText lines={lines} cursorVisible={cursorVisible} isHovered={isHovered} />
+      </Suspense>
     </group>
   );
 }
