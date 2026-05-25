@@ -54,21 +54,21 @@ export default function EcosystemPreview() {
           enableBlur={false}
           className="block"
         >
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-20 gap-6">
-            <div className="max-w-3xl">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 sm:mb-20 gap-8">
+            <div className="lg:max-w-[65%] w-full">
               <span className="text-[10px] sm:text-xs font-mono font-bold tracking-widest text-soft-gray uppercase block mb-4">
                 [ 03 / VENTURE ECOSYSTEM ]
               </span>
-              <h2 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-charcoal leading-[1.05]">
-                Building startup ecosystems,<br className="hidden md:inline" /> digital systems and<br className="hidden md:inline" /> modern experiences.
+              <h2 className="font-display font-bold text-3xl sm:text-5xl lg:text-6xl tracking-tight text-charcoal leading-[1.05]">
+                Building startup ecosystems,<br className="hidden sm:inline" /> digital systems and<br className="hidden sm:inline" /> modern experiences.
               </h2>
             </div>
-            <div className="flex flex-col gap-4 max-w-sm shrink-0">
+            <div className="flex flex-col gap-4 lg:max-w-[30%] shrink-0 w-full mb-1">
               <p className="text-soft-gray text-xs sm:text-sm lg:text-base leading-relaxed font-light">
                 From startup incubation and founder mentorship to digital products and growth-focused ventures, I build ecosystems that connect people, ideas, technology, and execution into meaningful real-world impact.
               </p>
-              <Link href="/ecosystem" className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-charcoal hover:text-accent-blue transition-colors duration-300 w-fit">
-                Explore All Ventures
+              <Link href="/projects" className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-charcoal hover:text-accent-blue transition-colors duration-300 w-fit">
+                Explore All Projects
                 <span className="h-[1px] w-6 bg-charcoal group-hover:bg-accent-blue group-hover:w-8 transition-colors duration-300" />
               </Link>
             </div>
