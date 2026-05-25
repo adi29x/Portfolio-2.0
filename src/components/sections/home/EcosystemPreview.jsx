@@ -47,7 +47,7 @@ export default function EcosystemPreview() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-10% 0px" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full lg:sticky lg:top-28 self-start p-8 sm:p-10 md:p-12 border border-charcoal/[0.06] bg-warm-white/40 hover:bg-warm-white/60 transition-all duration-500 rounded-[32px] shadow-premium-sm hover:shadow-premium-md hover:border-charcoal/20 relative overflow-hidden flex flex-col justify-between min-h-[500px] lg:min-h-[560px]"
+          className="w-full lg:sticky lg:top-28 self-start p-6 sm:p-8 md:p-9 border border-charcoal/[0.06] bg-warm-white/40 hover:bg-warm-white/60 transition-all duration-500 rounded-[32px] shadow-premium-sm hover:shadow-premium-md hover:border-charcoal/20 relative overflow-hidden flex flex-col justify-between min-h-[420px] lg:min-h-[460px]"
         >
           <div>
             {/* Label Badge (Identical to Section 02) */}
@@ -55,7 +55,7 @@ export default function EcosystemPreview() {
               baseOpacity={0.3}
               enableBlur={false}
               baseRotation={0}
-              className="text-[10px] sm:text-xs font-mono font-bold tracking-widest text-soft-gray uppercase mb-6 sm:mb-8 block"
+              className="text-[10px] sm:text-xs font-mono font-bold tracking-widest text-soft-gray uppercase mb-4 sm:mb-5 block"
             >
               [ 03 / VENTURE ECOSYSTEM ]
             </ScrollReveal>
@@ -68,7 +68,7 @@ export default function EcosystemPreview() {
               baseRotation={1}
               yOffset={35}
               stagger={0.06}
-              className="mb-8 sm:mb-10 max-w-4xl block"
+              className="mb-6 sm:mb-8 max-w-4xl block"
             >
               <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl tracking-tight text-charcoal leading-[1.05]">
                 Building startup ecosystems,<br />digital systems and<br />modern experiences.
@@ -80,7 +80,7 @@ export default function EcosystemPreview() {
               baseOpacity={0.4}
               blurStrength={3}
               baseRotation={0}
-              className="font-sans font-light text-sm sm:text-base text-charcoal/70 leading-relaxed max-w-xl mb-8 sm:mb-10 block"
+              className="font-sans font-light text-sm sm:text-base text-charcoal/70 leading-relaxed max-w-xl mb-6 sm:mb-8 block"
             >
               From startup incubation and founder mentorship to digital products and growth-focused ventures, I build ecosystems that connect people, ideas, technology, and execution into meaningful real-world impact.
             </ScrollReveal>
