@@ -171,10 +171,9 @@ export default function Preloader({ onComplete }) {
     // Body scroll lock during preloading
     document.body.style.overflow = "hidden";
 
-    // Timing sequence orchestrator
-    // Step 1: ADITYA KAPOOR Intro text fades in.
-    const t1 = setTimeout(() => {
-      setStep(2); // Step 2: Dots appear.
+    // Step 2: Dots appear
+    const t2 = setTimeout(() => {
+      setStep(2);
       let currentDots = 0;
       const dotsInterval = setInterval(() => {
         currentDots += 0.15;
@@ -185,10 +184,10 @@ export default function Preloader({ onComplete }) {
           setDotsOpacity(currentDots);
         }
       }, 50);
-    }, 600);
+    }, 400);
 
-    // Step 3: Connections draw.
-    const t2 = setTimeout(() => {
+    // Step 3: Connections draw
+    const t3 = setTimeout(() => {
       setStep(3);
       let currentLines = 0;
       const linesInterval = setInterval(() => {
@@ -200,68 +199,62 @@ export default function Preloader({ onComplete }) {
           setLinesOpacity(currentLines);
         }
       }, 50);
-    }, 1200);
+    }, 900);
 
-    // Step 5: Phrases display one line at a time
-    const t3 = setTimeout(() => {
+    // Step 5: Phrases display
+    const t5 = setTimeout(() => {
       setStep(5);
-    }, 1800);
+    }, 1400);
+
+    // Phrase cycling
+    const tp1 = setTimeout(() => setPhraseIndex(1), 1900);
+    const tp2 = setTimeout(() => setPhraseIndex(2), 2400);
+
+    // Step 6: ADITYA_KAPOOR.OS is ONLINE
+    const t6 = setTimeout(() => {
+      setStep(6);
+    }, 2900);
+
+    // Step 7: Dissolve & Fade Out start
+    const t7 = setTimeout(() => {
+      setDissolveActive(true);
+      // Fade out lines & dots smoothly
+      let currentDots = 0.9;
+      let currentLines = 0.16;
+      const fadeInterval = setInterval(() => {
+        currentDots -= 0.08;
+        currentLines -= 0.02;
+        if (currentDots <= 0) {
+          setDotsOpacity(0);
+          setLinesOpacity(0);
+          clearInterval(fadeInterval);
+        } else {
+          setDotsOpacity(currentDots);
+          setLinesOpacity(Math.max(0, currentLines));
+        }
+      }, 40);
+
+      setStep(7);
+    }, 3600);
+
+    // Complete exit preloader completely
+    const t8 = setTimeout(() => {
+      setPreloaderActive(false);
+      document.body.style.overflow = "unset";
+      if (onComplete) onComplete();
+    }, 4200);
 
     return () => {
-      clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(t3);
+      clearTimeout(t5);
+      clearTimeout(tp1);
+      clearTimeout(tp2);
+      clearTimeout(t6);
+      clearTimeout(t7);
+      clearTimeout(t8);
     };
   }, []);
-
-  // Handle cycling of phrases
-  useEffect(() => {
-    if (step !== 5) return;
-
-    if (phraseIndex < phrases.length) {
-      const pTimer = setTimeout(() => {
-        setPhraseIndex((prev) => prev + 1);
-      }, 650); // Fast, premium pacing
-      return () => clearTimeout(pTimer);
-    } else {
-      // Step 6: ADITYA_KAPOOR.OS is ONLINE
-      setStep(6);
-      const tState = setTimeout(() => {
-        // Step 7: Dissolve & Fade
-        setDissolveActive(true);
-        // Fade out lines & dots smoothly
-        let currentDots = 0.9;
-        let currentLines = 0.16;
-        const fadeInterval = setInterval(() => {
-          currentDots -= 0.08;
-          currentLines -= 0.02;
-          if (currentDots <= 0) {
-            setDotsOpacity(0);
-            setLinesOpacity(0);
-            clearInterval(fadeInterval);
-          } else {
-            setDotsOpacity(currentDots);
-            setLinesOpacity(Math.max(0, currentLines));
-          }
-        }, 40);
-
-        setStep(7);
-        // Exit preloader completely
-        const tComplete = setTimeout(() => {
-          setPreloaderActive(false);
-          document.body.style.overflow = "unset";
-          if (onComplete) onComplete();
-        }, 600);
-
-        return () => {
-          clearTimeout(tComplete);
-          clearInterval(fadeInterval);
-        };
-      }, 900);
-
-      return () => clearTimeout(tState);
-    }
-  }, [step, phraseIndex]);
 
   if (!preloaderActive) return null;
 
