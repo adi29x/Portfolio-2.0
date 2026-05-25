@@ -183,19 +183,21 @@ export default function Footer() {
         <ScrollReveal
           baseOpacity={0.4}
           blurStrength={3}
-          className="border-t border-border-gray/50 mt-8 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 w-full text-[12px] sm:text-[13px]"
+          className="border-t border-border-gray/50 mt-8 pt-6 w-full"
         >
-          <div className="flex flex-col gap-1 text-center md:text-left">
-            <p className="text-soft-gray font-semibold">
-              &copy; {currentYear} Aditya Kapoor. Designed & Developed by HEXORA.
-            </p>
-            <p className="text-[11px] text-soft-gray font-mono italic max-w-xl">
-              Building immersive digital ecosystems through design, motion, storytelling, and scalable web systems.
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 w-full text-[12px] sm:text-[13px]">
+            <div className="flex flex-col gap-1 text-center md:text-left">
+              <p className="text-soft-gray font-semibold">
+                &copy; {currentYear} Aditya Kapoor. Designed & Developed by HEXORA.
+              </p>
+              <p className="text-[11px] text-soft-gray font-mono italic max-w-xl">
+                Building immersive digital ecosystems through design, motion, storytelling, and scalable web systems.
+              </p>
+            </div>
+            <p className="text-soft-gray font-mono tracking-widest">
+              [ 26.9124° N, 75.7873° E ]
             </p>
           </div>
-          <p className="text-soft-gray font-mono tracking-widest">
-            [ 26.9124° N, 75.7873° E ]
-          </p>
         </ScrollReveal>
       </div>
     </footer>
