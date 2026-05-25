@@ -1,11 +1,73 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { Mail, Calendar, ArrowRight, Target, Briefcase } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
+// Custom inline SVG for LinkedIn icon to prevent deprecation issues in newer lucide versions
+const Linkedin = (props) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
+
+
 export default function CTASection() {
+  const containerRef = React.useRef(null);
+  const [maxDrag, setMaxDrag] = React.useState(180);
+  const [isSwiped, setIsSwiped] = React.useState(false);
+  const x = useMotionValue(0);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (containerRef.current) {
+        setMaxDrag(containerRef.current.offsetWidth - 56 - 16);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const textColor = useTransform(x, [0, maxDrag * 0.8], ["#111111", "#ffffff"]);
+  const subtextColor = useTransform(x, [0, maxDrag * 0.8], ["rgba(17,17,17,0.6)", "rgba(255,255,255,0.85)"]);
+  const indicatorOpacity = useTransform(x, [0, maxDrag * 0.5], [1, 0]);
+  const indicatorX = useTransform(x, [0, maxDrag * 0.5], [0, 8]);
+  const fillWidth = useTransform(x, (val) => `${val + 56 + 16}px`);
+  const iconScale = useTransform(x, [0, maxDrag], [1, 1.08]);
+  const arrowOffset = useTransform(x, [0, maxDrag * 0.5], [0, 4]);
+
+  const handleDragEnd = (event, info) => {
+    const currentX = x.get();
+    const threshold = maxDrag * 0.8;
+    
+    if (currentX >= threshold) {
+      setIsSwiped(true);
+      animate(x, maxDrag, { type: "spring", stiffness: 200, damping: 25 });
+      
+      setTimeout(() => {
+        window.open("https://www.linkedin.com/in/aditya-kapoor-168914290", "_blank");
+        setTimeout(() => {
+          setIsSwiped(false);
+          animate(x, 0, { type: "tween", duration: 0.3 });
+        }, 1000);
+      }, 500);
+    } else {
+      animate(x, 0, { type: "spring", stiffness: 250, damping: 22 });
+    }
+  };
+
   return (
     <section id="contact" className="py-16 sm:py-24 px-6 sm:px-12 bg-soft-white border-b border-charcoal/5 relative z-10 overflow-hidden">
       {/* Background elegant grid & spatial depth (Identical to previous sections) */}
@@ -126,6 +188,97 @@ export default function CTASection() {
                 <span className="font-sans text-charcoal font-normal">Chief Student Advisor</span>
                 <span className="font-mono text-[10px] font-bold tracking-widest text-soft-gray uppercase">PU-iNCENT</span>
               </div>
+            </div>
+          </motion.div>
+
+          {/* CARD 03: Premium LinkedIn Connection Swipe Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col w-full mt-2"
+          >
+            {/* Draggable Swipe Card Container */}
+            <div 
+              ref={containerRef}
+              className="h-[72px] w-full rounded-full bg-white border border-charcoal/[0.08] relative flex items-center select-none overflow-hidden transition-all duration-300 shadow-premium-sm hover:shadow-premium-md"
+            >
+              {/* Dynamic Blue Fill behind the handle */}
+              <motion.div 
+                className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#0A66C2] to-[#004182] z-10 rounded-full origin-left"
+                style={{ width: fillWidth }}
+              />
+
+              {/* Draggable Handle */}
+              <motion.div
+                drag="x"
+                dragConstraints={{ left: 0, right: maxDrag }}
+                dragElastic={0.02}
+                dragMomentum={false}
+                style={{ x }}
+                onDragEnd={handleDragEnd}
+                className="h-14 w-14 rounded-full bg-white shadow-premium-md border border-charcoal/[0.06] flex items-center justify-center absolute left-2 top-2 cursor-grab active:cursor-grabbing z-30 select-none transition-shadow duration-300 hover:shadow-premium-lg"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98, cursor: "grabbing" }}
+              >
+                <motion.div style={{ scale: iconScale }} className="flex items-center justify-center pointer-events-none">
+                  <Linkedin className="h-5 w-5 text-[#0A66C2]" />
+                </motion.div>
+              </motion.div>
+
+              {/* CENTER: Text Content (Fades out when swiped) */}
+              <div className="absolute inset-0 flex items-center z-20 pointer-events-none pr-20 pl-20">
+                {isSwiped ? (
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.9, y: 5 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                    className="text-white text-xs sm:text-sm font-bold tracking-widest uppercase flex items-center gap-2 mx-auto justify-center"
+                  >
+                    <span className="text-sm">✓</span> Connected
+                  </motion.div>
+                ) : (
+                  <div className="flex flex-col justify-center text-left">
+                    <motion.span 
+                      style={{ color: textColor }} 
+                      className="font-display font-semibold text-xs sm:text-sm tracking-tight leading-none"
+                    >
+                      Connect with me on LinkedIn
+                    </motion.span>
+                    <motion.p 
+                      style={{ color: subtextColor }} 
+                      className="font-sans text-[9px] sm:text-[10px] mt-1 font-light leading-tight whitespace-nowrap overflow-hidden text-ellipsis max-w-[160px] sm:max-w-[240px] md:max-w-none"
+                    >
+                      Follow my startup journey, projects, ecosystem updates & insights.
+                    </motion.p>
+                  </div>
+                )}
+              </div>
+
+              {/* RIGHT: Swipe Indicator (Fades out during swipe) */}
+              {!isSwiped && (
+                <motion.div 
+                  style={{ opacity: indicatorOpacity, x: indicatorX }}
+                  className="absolute right-6 top-1/2 -translate-y-1/2 text-[9px] sm:text-[10px] font-mono font-bold tracking-widest text-[#0A66C2] z-20 flex items-center gap-1.5 pointer-events-none select-none"
+                >
+                  SWIPE
+                  <motion.span style={{ x: arrowOffset }}>→</motion.span>
+                </motion.div>
+              )}
+            </div>
+
+            {/* ACCESSIBILITY: Button Fallback */}
+            <div className="mt-3 text-center">
+              <a 
+                href="https://www.linkedin.com/in/aditya-kapoor-168914290" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-[11px] font-medium text-soft-gray hover:text-[#0A66C2] transition-colors duration-300 flex items-center justify-center gap-1 group"
+              >
+                Prefer clicking? Open LinkedIn
+                <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform duration-300 text-soft-gray/70 group-hover:text-[#0A66C2]" />
+              </a>
             </div>
           </motion.div>
         </div>
