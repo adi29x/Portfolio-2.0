@@ -38,10 +38,7 @@ export default function CTASection() {
             stagger={0.06}
             className="mb-10 sm:mb-12 max-w-4xl block"
           >
-            <h2 
-              className="font-display font-bold text-4xl sm:text-6xl lg:text-7xl tracking-tight text-charcoal leading-[0.95]"
-              style={{ fontSize: "clamp(2.75rem, 6.5vw, 6.5rem)" }}
-            >
+            <h2 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-charcoal leading-[1.05]">
               Let's build meaningful<br />digital experiences<br />together.
             </h2>
           </ScrollReveal>
