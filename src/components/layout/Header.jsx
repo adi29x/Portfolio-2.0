@@ -87,14 +87,14 @@ export default function Header() {
 
   return (
     <>
-      <header 
-        className={`fixed top-0 left-0 w-full z-50 bg-[#FFFFFF] border-b border-black/[0.05] transition-all duration-300 ${
-          scrolled 
-            ? "shadow-[0_4px_20px_rgba(0,0,0,0.05)] backdrop-blur-md" 
-            : "shadow-[0_1px_12px_rgba(0,0,0,0.03)]"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 sm:px-12 py-4">
+      <header className="fixed top-0 left-0 w-full z-40 px-6 sm:px-12 py-6 transition-all duration-500">
+        <div 
+          className={`max-w-7xl mx-auto flex items-center justify-between px-6 py-3.5 rounded-full transition-all duration-500 ${
+            scrolled && !isOpen
+              ? "glass-panel shadow-premium-md py-3 translate-y-2 border-border-gray"
+              : "border-transparent bg-transparent"
+          }`}
+        >
           {/* Brand Logo / Identity */}
           <Link href="/" onClick={() => setIsOpen(false)} className="group flex items-center gap-2 relative z-50">
             <span className="font-display font-bold tracking-tight text-xl text-charcoal">
@@ -104,22 +104,18 @@ export default function Header() {
           </Link>
 
           {/* Center Navigation Links (Desktop Only) */}
-          <nav className="hidden lg:flex items-center gap-1 font-sans">
+          <nav className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
-                <Link 
-                  key={link.href} 
-                  href={link.href} 
-                  className="relative px-4 py-2 text-[14px] font-medium tracking-tight text-[#111111] transition-opacity duration-300 hover:opacity-70"
-                >
-                  <span className={isActive ? "font-semibold" : ""}>
+                <Link key={link.href} href={link.href} className="relative px-4 py-2 text-sm font-medium tracking-tight transition-colors duration-300">
+                  <span className={isActive ? "text-charcoal font-semibold" : "text-soft-gray hover:text-charcoal"}>
                     {link.label}
                   </span>
                   {isActive && (
                     <motion.span
                       layoutId="activeNavUnderline"
-                      className="absolute bottom-0 left-4 right-4 h-[2px] bg-accent-blue rounded-full"
+                      className="absolute bottom-0 left-2 right-2 h-[2px] bg-accent-blue rounded-full"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -133,12 +129,12 @@ export default function Header() {
             {/* Command Palette Trigger */}
             <button 
               onClick={triggerCommandMenu}
-              className="flex items-center gap-2 px-3 py-1.5 text-xs font-semibold rounded-full border border-black/[0.08] bg-[#FAFAF9] hover:bg-black/[0.02] text-charcoal/60 hover:text-charcoal transition-all duration-300 cursor-pointer shadow-premium-sm"
+              className="flex items-center gap-2 px-3 py-1.5 text-xs font-semibold rounded-full border border-border-gray hover:bg-warm-white text-soft-gray hover:text-charcoal transition-all duration-300 cursor-pointer shadow-premium-sm"
               aria-label="Search navigation"
             >
-              <Search className="h-3.5 w-3.5 text-charcoal/50" />
+              <Search className="h-3.5 w-3.5" />
               <span className="hidden sm:inline">Search</span>
-              <kbd className="hidden sm:inline-flex px-1.5 py-0.5 rounded border border-black/[0.08] bg-white text-[10px] font-mono shadow-premium-sm text-charcoal/50">
+              <kbd className="hidden sm:inline-flex px-1.5 py-0.5 rounded border border-border-gray bg-soft-white text-[10px] font-mono shadow-premium-sm">
                 ⌘K
               </kbd>
             </button>
@@ -157,7 +153,7 @@ export default function Header() {
               onClick={() => setIsOpen(!isOpen)}
               aria-expanded={isOpen}
               aria-label="Toggle navigation menu"
-              className="lg:hidden flex items-center justify-center p-2 rounded-full hover:bg-black/[0.03] transition-colors duration-300 cursor-pointer"
+              className="lg:hidden flex items-center justify-center p-2 rounded-full hover:bg-charcoal/5 transition-colors duration-300 cursor-pointer"
             >
               <div className="w-6 h-6 flex items-center justify-center relative">
                 <motion.span
@@ -192,7 +188,7 @@ export default function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 w-full h-screen bg-[#FFFFFF] z-30 flex flex-col justify-between pt-36 pb-12 px-6 sm:px-12"
+            className="fixed inset-0 w-full h-screen bg-soft-white/95 backdrop-blur-[35px] z-30 flex flex-col justify-between pt-36 pb-12 px-6 sm:px-12"
           >
             {/* Grain Texture Overlay */}
             <div className="noise-overlay opacity-[0.12] pointer-events-none" />
