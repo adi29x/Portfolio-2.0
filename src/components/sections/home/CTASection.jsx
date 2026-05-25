@@ -101,48 +101,12 @@ export default function CTASection() {
             </p>
           </motion.div>
 
-          {/* CARD 02: Focus Areas */}
+          {/* CARD 02: Current Positions */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col p-6 sm:p-8 border border-charcoal/[0.06] bg-warm-white/40 rounded-2xl shadow-premium-sm relative overflow-hidden"
-          >
-            <div className="flex items-center gap-2.5 text-xs font-mono font-bold tracking-widest text-soft-gray uppercase select-none border-b border-charcoal/[0.06] pb-3 mb-4">
-              <Target className="h-4 w-4 text-soft-gray" />
-              Focus Areas
-            </div>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-charcoal font-light">
-              <li className="flex items-center gap-2.5">
-                <span className="h-1 w-1 rounded-full bg-accent-blue" />
-                Startup Ecosystems
-              </li>
-              <li className="flex items-center gap-2.5">
-                <span className="h-1 w-1 rounded-full bg-accent-blue" />
-                Digital Products
-              </li>
-              <li className="flex items-center gap-2.5">
-                <span className="h-1 w-1 rounded-full bg-accent-blue" />
-                Modern Websites
-              </li>
-              <li className="flex items-center gap-2.5">
-                <span className="h-1 w-1 rounded-full bg-accent-blue" />
-                Brand Systems
-              </li>
-              <li className="flex items-center gap-2.5 col-span-1 sm:col-span-2">
-                <span className="h-1 w-1 rounded-full bg-accent-blue" />
-                Innovation Platforms
-              </li>
-            </ul>
-          </motion.div>
-
-          {/* CARD 03: Current Positions */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col p-6 sm:p-8 border border-charcoal/[0.06] bg-warm-white/40 rounded-2xl shadow-premium-sm relative overflow-hidden"
           >
             <div className="flex items-center gap-2.5 text-xs font-mono font-bold tracking-widest text-soft-gray uppercase select-none border-b border-charcoal/[0.06] pb-3 mb-4">
