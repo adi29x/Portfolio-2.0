@@ -183,7 +183,7 @@ export default function Footer() {
         <ScrollReveal
           baseOpacity={0.4}
           blurStrength={3}
-          className="border-t border-border-gray/50 mt-8 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 w-full block text-[12px] sm:text-[13px]"
+          className="border-t border-border-gray/50 mt-8 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 w-full text-[12px] sm:text-[13px]"
         >
           <div className="flex flex-col gap-1 text-center md:text-left">
             <p className="text-soft-gray font-semibold">
