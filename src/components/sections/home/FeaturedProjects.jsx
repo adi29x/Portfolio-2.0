@@ -128,7 +128,7 @@ export default function FeaturedProjects() {
                 A curated collection of startups, platforms, incubation systems, and digital experiences designed across modern product environments.
               </p>
               <Link href="/projects" className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-charcoal hover:text-accent-blue transition-colors duration-300 w-fit">
-                Explore All Projects
+                Explore All Ventures
                 <span className="h-[1px] w-6 bg-charcoal group-hover:bg-accent-blue group-hover:w-8 transition-colors duration-300" />
               </Link>
             </div>
