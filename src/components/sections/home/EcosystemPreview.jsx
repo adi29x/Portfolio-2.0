@@ -41,42 +41,50 @@ export default function EcosystemPreview() {
       <div className="absolute left-12 right-12 top-0 h-[1px] bg-[linear-gradient(to_right,transparent,rgba(0,0,0,0.05)_20%,rgba(0,0,0,0.05)_80%,transparent)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 lg:gap-16 items-start relative z-10">
-        {/* LEFT COLUMN: Editorial Content (55%) - Sticky on Desktop */}
-        <div className="flex flex-col items-start w-full lg:sticky lg:top-28 self-start">
-          {/* Label Badge (Identical to Section 02) */}
-          <ScrollReveal
-            baseOpacity={0.3}
-            enableBlur={false}
-            baseRotation={0}
-            className="text-xs font-mono font-bold tracking-widest text-soft-gray uppercase mb-8 block"
-          >
-            [ 03 / VENTURE ECOSYSTEM ]
-          </ScrollReveal>
+        {/* LEFT COLUMN: Editorial Content (55%) - Wrapped in a Bento-styled Card, Sticky on Desktop */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-10% 0px" }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full lg:sticky lg:top-28 self-start p-8 sm:p-10 md:p-12 border border-charcoal/[0.06] bg-warm-white/40 hover:bg-warm-white/60 transition-all duration-500 rounded-[32px] shadow-premium-sm hover:shadow-premium-md hover:border-charcoal/20 relative overflow-hidden flex flex-col justify-between min-h-[500px] lg:min-h-[560px]"
+        >
+          <div>
+            {/* Label Badge (Identical to Section 02) */}
+            <ScrollReveal
+              baseOpacity={0.3}
+              enableBlur={false}
+              baseRotation={0}
+              className="text-[10px] sm:text-xs font-mono font-bold tracking-widest text-soft-gray uppercase mb-6 sm:mb-8 block"
+            >
+              [ 03 / VENTURE ECOSYSTEM ]
+            </ScrollReveal>
 
-          {/* Cinematic Scroll-Revealed Title with Non-Breaking Spans */}
-          <ScrollReveal
-            baseOpacity={0}
-            enableBlur={true}
-            blurStrength={8}
-            baseRotation={1}
-            yOffset={35}
-            stagger={0.06}
-            className="mb-10 sm:mb-12 max-w-4xl block"
-          >
-            <h2 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-charcoal leading-[1.05]">
-              Building startup ecosystems,<br />digital systems and<br />modern experiences.
-            </h2>
-          </ScrollReveal>
+            {/* Cinematic Scroll-Revealed Title with Non-Breaking Spans */}
+            <ScrollReveal
+              baseOpacity={0}
+              enableBlur={true}
+              blurStrength={8}
+              baseRotation={1}
+              yOffset={35}
+              stagger={0.06}
+              className="mb-8 sm:mb-10 max-w-4xl block"
+            >
+              <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl tracking-tight text-charcoal leading-[1.05]">
+                Building startup ecosystems,<br />digital systems and<br />modern experiences.
+              </h2>
+            </ScrollReveal>
 
-          {/* Narrative Description (max 3 lines on desktop, soft opacity) */}
-          <ScrollReveal
-            baseOpacity={0.4}
-            blurStrength={3}
-            baseRotation={0}
-            className="font-sans font-light text-base sm:text-lg text-charcoal/70 leading-relaxed max-w-xl mb-12 sm:mb-14 block"
-          >
-            From startup incubation and founder mentorship to digital products and growth-focused ventures, I build ecosystems that connect people, ideas, technology, and execution into meaningful real-world impact.
-          </ScrollReveal>
+            {/* Narrative Description (max 3 lines on desktop, soft opacity) */}
+            <ScrollReveal
+              baseOpacity={0.4}
+              blurStrength={3}
+              baseRotation={0}
+              className="font-sans font-light text-sm sm:text-base text-charcoal/70 leading-relaxed max-w-xl mb-8 sm:mb-10 block"
+            >
+              From startup incubation and founder mentorship to digital products and growth-focused ventures, I build ecosystems that connect people, ideas, technology, and execution into meaningful real-world impact.
+            </ScrollReveal>
+          </div>
 
           {/* Explore All Ventures CTA Button */}
           <ScrollReveal
@@ -85,13 +93,13 @@ export default function EcosystemPreview() {
             className="block"
           >
             <Link href="/ecosystem" passHref legacyBehavior>
-              <a className="group flex items-center justify-center gap-2.5 px-6 py-3.5 text-xs font-bold uppercase tracking-widest text-charcoal hover:text-accent-blue border border-charcoal/10 hover:border-accent-blue/30 bg-warm-white/20 hover:bg-warm-white/80 rounded-full transition-all duration-300 ease-out shadow-premium-sm hover:shadow-premium-md hover:opacity-95 w-fit">
+              <a className="group flex items-center justify-center gap-2.5 px-6 py-3.5 text-xs font-bold uppercase tracking-widest text-charcoal hover:text-accent-blue border border-charcoal/10 hover:border-accent-blue/30 bg-warm-white/20 hover:bg-warm-white/85 rounded-full transition-all duration-300 ease-out shadow-premium-sm hover:shadow-premium-md hover:opacity-95 w-fit">
                 Explore All Ventures
                 <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform duration-300" />
               </a>
             </Link>
           </ScrollReveal>
-        </div>
+        </motion.div>
 
         {/* RIGHT COLUMN: Ecosystem Grid (45%) */}
         <div className="w-full flex items-center justify-center">
