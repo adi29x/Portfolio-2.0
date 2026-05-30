@@ -258,21 +258,21 @@ const CONNECT_CHANNELS = [
 
 // ─── Current Positions ────────────────────────────────────────────────────────
 const POSITIONS = [
-  { role: "Founder & CEO", org: "HEXORA", tag: "Digital Agency" },
-  { role: "Founder & CEO", org: "EVOLVE", tag: "Venture Studio" },
-  { role: "Chief Student Advisor", org: "PU-iNCENT", tag: "Innovation Program" },
+  { role: "Founder & CEO", org: "HEXORA", tag: "Digital Agency", index: "01", accent: "from-accent-blue/10 to-accent-blue/5" },
+  { role: "Founder & CEO", org: "EVOLVE", tag: "Venture Studio", index: "02", accent: "from-accent-sand/15 to-accent-sand/5" },
+  { role: "Chief Student Advisor", org: "PU-iNCENT", tag: "Innovation Program", index: "03", accent: "from-accent-navy/10 to-accent-navy/5" },
 ];
 
 // ─── Collaboration Areas ──────────────────────────────────────────────────────
 const COLLAB_AREAS = [
-  { title: "Startup Ecosystems", span: "col-span-2 row-span-1" },
-  { title: "Digital Products", span: "col-span-1 row-span-1" },
-  { title: "Modern Websites", span: "col-span-1 row-span-1" },
-  { title: "Brand Systems", span: "col-span-1 row-span-1" },
-  { title: "Innovation Programs", span: "col-span-2 row-span-1" },
-  { title: "Student Communities", span: "col-span-1 row-span-1" },
-  { title: "Founder Mentorship", span: "col-span-1 row-span-1" },
-  { title: "Creative Collaborations", span: "col-span-2 row-span-1" },
+  { title: "Startup Ecosystems", span: "col-span-2 sm:col-span-2 lg:col-span-2", index: "01" },
+  { title: "Digital Products", span: "col-span-2 sm:col-span-1 lg:col-span-1", index: "02" },
+  { title: "Modern Websites", span: "col-span-2 sm:col-span-1 lg:col-span-1", index: "03" },
+  { title: "Brand Systems", span: "col-span-2 sm:col-span-1 lg:col-span-1", index: "04" },
+  { title: "Innovation Programs", span: "col-span-2 sm:col-span-2 lg:col-span-2", index: "05" },
+  { title: "Student Communities", span: "col-span-2 sm:col-span-1 lg:col-span-1", index: "06" },
+  { title: "Founder Mentorship", span: "col-span-2 sm:col-span-1 lg:col-span-2", index: "07" },
+  { title: "Creative Collaborations", span: "col-span-2 sm:col-span-2 lg:col-span-2", index: "08" },
 ];
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
@@ -469,29 +469,49 @@ export default function ContactPage() {
             Where I operate.
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
             {POSITIONS.map((pos, i) => (
               <motion.div
                 key={pos.org}
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-5% 0px" }}
-                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
-                className="group p-6 sm:p-8 rounded-[20px] bg-white border border-charcoal/6 hover:border-charcoal/12 shadow-premium-sm hover:shadow-premium-md transition-all duration-500 ease-out flex flex-col gap-3"
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
+                className="group p-8 sm:p-10 rounded-[32px] bg-white/70 border border-charcoal/[0.06] hover:border-charcoal/15 shadow-premium-sm hover:shadow-premium-xl transition-all duration-500 ease-out flex flex-col justify-between min-h-[260px] relative overflow-hidden backdrop-blur-md"
               >
-                <span className="text-[9px] font-mono font-bold tracking-widest text-soft-gray uppercase">
-                  {pos.tag}
-                </span>
-                <div>
-                  <p className="text-xs font-mono text-soft-gray mb-1">{pos.role}</p>
-                  <h3 className="font-display font-bold text-2xl sm:text-3xl text-charcoal tracking-tight leading-none">
-                    {pos.org}
-                  </h3>
+                {/* Subtle gradient hover glow */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${pos.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`} />
+
+                {/* Big Display Index in background */}
+                <div className="absolute bottom-6 right-8 font-display text-8xl font-black text-charcoal/[0.02] group-hover:text-charcoal/[0.04] select-none pointer-events-none transition-colors duration-500 font-mono">
+                  {pos.index}
                 </div>
-                <div className="mt-auto pt-3 border-t border-charcoal/5">
-                  <span className="inline-flex items-center gap-1.5 text-[10px] font-bold text-emerald-600 uppercase tracking-widest">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    Active
+
+                <div className="relative z-10 flex flex-col gap-5">
+                  <div className="flex items-center justify-between w-full">
+                    <span className="text-[10px] font-mono font-bold tracking-widest text-soft-gray uppercase">
+                      {pos.tag}
+                    </span>
+                    <ArrowUpRight className="h-4 w-4 text-soft-gray/40 group-hover:text-charcoal group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-mono text-soft-gray tracking-wider uppercase mb-1">{pos.role}</p>
+                    <h3 className="font-display font-bold text-3xl sm:text-4xl text-charcoal tracking-tight leading-none">
+                      {pos.org}
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="relative z-10 mt-8 pt-4 border-t border-charcoal/[0.05] flex items-center justify-between">
+                  <span className="inline-flex items-center gap-2 text-[10px] font-bold text-emerald-600 uppercase tracking-widest">
+                    <span className="relative flex h-2.5 w-2.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]"></span>
+                    </span>
+                    Active Node
+                  </span>
+                  <span className="text-[9px] font-mono font-bold tracking-widest text-soft-gray/60 uppercase">
+                    SECURE INTAKE
                   </span>
                 </div>
               </motion.div>
@@ -522,21 +542,39 @@ export default function ContactPage() {
           </ScrollReveal>
 
           {/* Bento Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
             {COLLAB_AREAS.map((area, i) => (
               <motion.div
                 key={area.title}
-                initial={{ opacity: 0, scale: 0.97 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.97, y: 16 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true, margin: "-5% 0px" }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.055 }}
-                whileHover={{ y: -2, transition: { duration: 0.3 } }}
-                className="group p-5 sm:p-6 rounded-[16px] bg-white border border-charcoal/6 hover:border-charcoal/14 shadow-premium-sm hover:shadow-premium-md transition-all duration-400 ease-out cursor-default flex flex-col justify-between min-h-[90px] sm:min-h-[100px]"
+                whileHover={{ y: -4, transition: { duration: 0.3 } }}
+                className={`group p-6 sm:p-8 rounded-[24px] bg-white border border-charcoal/[0.06] hover:border-charcoal/15 shadow-premium-sm hover:shadow-premium-lg transition-all duration-500 ease-out cursor-pointer flex flex-col justify-between min-h-[140px] sm:min-h-[160px] relative overflow-hidden ${area.span}`}
               >
-                <span className="font-display font-semibold text-base sm:text-lg text-charcoal tracking-tight leading-snug group-hover:text-charcoal transition-colors duration-300">
-                  {area.title}
-                </span>
-                <div className="mt-3 w-4 h-[1.5px] bg-charcoal/15 group-hover:w-7 group-hover:bg-accent-blue/60 transition-all duration-400 ease-out" />
+                {/* Subtle light background hover glow */}
+                <div className="absolute inset-0 bg-gradient-to-br from-accent-blue/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+                <div className="flex items-center justify-between w-full relative z-10">
+                  <span className="text-[9px] font-mono font-bold tracking-widest text-soft-gray/50 group-hover:text-accent-blue/85 transition-colors duration-300 uppercase">
+                    [ {area.index} // AREA ]
+                  </span>
+                  <div className="w-1.5 h-1.5 rounded-full bg-charcoal/15 group-hover:bg-accent-blue group-hover:scale-125 transition-all duration-300" />
+                </div>
+
+                <div className="mt-4 relative z-10">
+                  <h3 className="font-display font-bold text-lg sm:text-xl text-charcoal tracking-tight leading-snug group-hover:text-accent-blue transition-colors duration-300">
+                    {area.title}
+                  </h3>
+                </div>
+
+                <div className="mt-6 w-full relative z-10 flex items-center justify-between">
+                  <div className="w-8 h-[1.5px] bg-charcoal/10 group-hover:w-16 group-hover:bg-accent-blue/60 transition-all duration-500 ease-out" />
+                  <span className="text-[9px] font-mono font-bold tracking-widest text-soft-gray/0 group-hover:text-soft-gray/60 transition-all duration-300 uppercase">
+                    COLLABORATE
+                  </span>
+                </div>
               </motion.div>
             ))}
           </div>
