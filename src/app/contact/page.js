@@ -275,20 +275,20 @@ const CENTER_NODE = {
 
 const SURROUNDING_NODES = [
   // Primary Venture Hubs
-  { id: "hexora", label: "HEXORA", type: "Venture", x: 0.52, y: -0.36, desc: "Digital solutions company focused on branding, web systems, automation, and startup growth.", isHub: true, accent: "#6E8FB3" },
-  { id: "evolve", label: "EVOLVE", type: "Venture", x: -0.60, y: 0.05, desc: "Founder-led initiative focused on innovation, growth, and future digital ventures.", isHub: true, accent: "#D9C7A2" },
-  { id: "pu-incent", label: "PU-iNCENT", type: "Ecosystem", x: 0.52, y: 0.36, desc: "University startup incubation ecosystem empowering student founders and innovators.", isHub: true, accent: "#223047" },
+  { id: "hexora", label: "HEXORA", type: "Venture", x: 0.45, y: -0.25, desc: "Digital solutions company focused on branding, web systems, automation, and startup growth.", isHub: true, accent: "#6E8FB3" },
+  { id: "evolve", label: "EVOLVE", type: "Venture", x: -0.50, y: 0.0, desc: "Founder-led initiative focused on innovation, growth, and future digital ventures.", isHub: true, accent: "#D9C7A2" },
+  { id: "pu-incent", label: "PU-iNCENT", type: "Ecosystem", x: 0.45, y: 0.25, desc: "University startup incubation ecosystem empowering student founders and innovators.", isHub: true, accent: "#223047" },
   
   // Secondary Focus Nodes
-  { id: "startup-ecosystems", label: "Startup Ecosystems", type: "Focus", x: -0.42, y: -0.62, desc: "Fostering regional entrepreneurship and scaling incubator models.", accent: "#8A8A8A" },
-  { id: "digital-products", label: "Digital Products", type: "Focus", x: 0.70, y: -0.12, desc: "Designing and engineering robust SaaS, dashboards, and complex web systems.", accent: "#6E8FB3" },
-  { id: "modern-websites", label: "Modern Websites", type: "Focus", x: -0.42, y: 0.62, desc: "Creating high-fidelity, motion-rich editorial web experiences.", accent: "#D9C7A2" },
-  { id: "brand-systems", label: "Brand Systems", type: "Focus", x: 0.76, y: -0.58, desc: "Crafting minimalist corporate identities, type systems, and digital guidelines.", accent: "#6E8FB3" },
-  { id: "innovation-programs", label: "Innovation Programs", type: "Focus", x: 0.28, y: 0.68, desc: "Designing accelerator tracks, hackathons, and cohort operations.", accent: "#223047" },
-  { id: "student-communities", label: "Student Communities", type: "Focus", x: -0.74, y: -0.45, desc: "Mobilizing tech clubs, developers, and collegiate innovation pipelines.", accent: "#8A8A8A" },
-  { id: "founder-mentorship", label: "Founder Mentorship", type: "Focus", x: -0.76, y: 0.40, desc: "Advising early-stage founders on product-market fit and tech architecture.", accent: "#D9C7A2" },
-  { id: "creative-collabs", label: "Creative Collaborations", type: "Focus", x: -0.12, y: 0.72, desc: "Engaging in cross-disciplinary projects at the intersection of design and tech.", accent: "#8A8A8A" },
-  { id: "innovation-events", label: "Innovation Events", type: "Focus", x: 0.15, y: -0.65, desc: "Organizing and producing tech conferences and startup summits.", accent: "#223047" }
+  { id: "startup-ecosystems", label: "Startup Ecosystems", type: "Focus", x: -0.30, y: -0.68, desc: "Fostering regional entrepreneurship and scaling incubator models.", accent: "#8A8A8A" },
+  { id: "digital-products", label: "Digital Products", type: "Focus", x: 0.80, y: -0.05, desc: "Designing and engineering robust SaaS, dashboards, and complex web systems.", accent: "#6E8FB3" },
+  { id: "modern-websites", label: "Modern Websites", type: "Focus", x: -0.45, y: 0.65, desc: "Creating high-fidelity, motion-rich editorial web experiences.", accent: "#D9C7A2" },
+  { id: "brand-systems", label: "Brand Systems", type: "Focus", x: 0.82, y: -0.52, desc: "Crafting minimalist corporate identities, type systems, and digital guidelines.", accent: "#6E8FB3" },
+  { id: "innovation-programs", label: "Innovation Programs", type: "Focus", x: 0.58, y: 0.65, desc: "Designing accelerator tracks, hackathons, and cohort operations.", accent: "#223047" },
+  { id: "student-communities", label: "Student Communities", type: "Focus", x: -0.78, y: -0.42, desc: "Mobilizing tech clubs, developers, and collegiate innovation pipelines.", accent: "#8A8A8A" },
+  { id: "founder-mentorship", label: "Founder Mentorship", type: "Focus", x: -0.80, y: 0.35, desc: "Advising early-stage founders on product-market fit and tech architecture.", accent: "#D9C7A2" },
+  { id: "creative-collabs", label: "Creative Collaborations", type: "Focus", x: 0.05, y: 0.72, desc: "Engaging in cross-disciplinary projects at the intersection of design and tech.", accent: "#8A8A8A" },
+  { id: "innovation-events", label: "Innovation Events", type: "Focus", x: 0.15, y: -0.70, desc: "Organizing and producing tech conferences and startup summits.", accent: "#223047" }
 ];
 
 const CONNECTIONS = [
@@ -612,33 +612,29 @@ export default function ContactPage() {
 
         <div className="max-w-7xl mx-auto flex flex-col items-start w-full relative z-10">
           <ScrollReveal
-            baseOpacity={0.3}
+            baseOpacity={0.2}
             enableBlur={false}
-            className="text-xs font-mono font-bold tracking-widest text-soft-gray uppercase mb-8 block"
+            className="w-full mb-12 sm:mb-16"
           >
-            [ ECOSYSTEM NETWORK ]
-          </ScrollReveal>
-
-          <ScrollReveal
-            baseOpacity={0}
-            enableBlur={true}
-            blurStrength={10}
-            baseRotation={0.5}
-            className="mb-8 block"
-          >
-            <h2 className="font-display font-bold text-charcoal leading-[0.92] tracking-tight mb-6 select-none" style={{ fontSize: "clamp(2.5rem, 5.5vw, 5.5rem)" }}>
-              Building connections<br />
-              between people,<br />
-              systems and ideas.
-            </h2>
-          </ScrollReveal>
-
-          <ScrollReveal
-            baseOpacity={0.4}
-            blurStrength={3}
-            className="font-sans font-light text-base sm:text-lg text-charcoal/70 leading-relaxed max-w-[650px] mb-16 block"
-          >
-            Every venture, initiative, product, and collaboration contributes to a larger ecosystem focused on innovation, learning, technology, and execution.
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 w-full">
+              <div className="max-w-3xl">
+                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-widest text-soft-gray uppercase block mb-4">
+                  [ ECOSYSTEM NETWORK ]
+                </span>
+                <h2 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-charcoal leading-[1.05] select-none">
+                  Building connections<br className="hidden sm:inline" /> between people,<br className="hidden sm:inline" /> systems and ideas.
+                </h2>
+              </div>
+              <div className="flex flex-col gap-4 max-w-sm shrink-0">
+                <p className="text-soft-gray text-xs sm:text-sm lg:text-base leading-relaxed font-light">
+                  Every venture, initiative, product, and collaboration contributes to a larger ecosystem focused on innovation, learning, technology, and execution.
+                </p>
+                <Link href="/ecosystem" className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-charcoal hover:text-accent-blue transition-colors duration-300 w-fit">
+                  Explore Ecosystem
+                  <span className="h-[1px] w-6 bg-charcoal group-hover:bg-accent-blue group-hover:w-8 transition-colors duration-300" />
+                </Link>
+              </div>
+            </div>
           </ScrollReveal>
 
           {/* Interactive Network Graph Frame */}
@@ -701,6 +697,12 @@ export default function ContactPage() {
                       y1={fromY}
                       x2={toX}
                       y2={toY}
+                      initial={{
+                        stroke: "rgba(17, 17, 17, 0.08)",
+                        strokeWidth: 1,
+                        strokeDasharray: "none",
+                        opacity: 0.6
+                      }}
                       animate={{
                         stroke: strokeColor,
                         strokeWidth: isActive ? 2 : 1,
