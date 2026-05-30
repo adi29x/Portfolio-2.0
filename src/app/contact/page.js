@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, ArrowRight, Mail, Calendar, Compass } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -264,19 +264,99 @@ const POSITIONS = [
 ];
 
 // ─── Collaboration Areas ──────────────────────────────────────────────────────
-const COLLAB_AREAS = [
-  { title: "Startup Ecosystems", span: "col-span-2 sm:col-span-2 lg:col-span-2", index: "01" },
-  { title: "Digital Products", span: "col-span-2 sm:col-span-1 lg:col-span-1", index: "02" },
-  { title: "Modern Websites", span: "col-span-2 sm:col-span-1 lg:col-span-1", index: "03" },
-  { title: "Brand Systems", span: "col-span-2 sm:col-span-1 lg:col-span-1", index: "04" },
-  { title: "Innovation Programs", span: "col-span-2 sm:col-span-2 lg:col-span-2", index: "05" },
-  { title: "Student Communities", span: "col-span-2 sm:col-span-1 lg:col-span-1", index: "06" },
-  { title: "Founder Mentorship", span: "col-span-2 sm:col-span-1 lg:col-span-2", index: "07" },
-  { title: "Creative Collaborations", span: "col-span-2 sm:col-span-2 lg:col-span-2", index: "08" },
+// ─── Constellation Graph Data ──────────────────────────────────────────────────
+const CENTER_NODE = {
+  id: "center",
+  label: "ADITYA KAPOOR",
+  subtitle: "Founder Ecosystem",
+  x: 0,
+  y: 0
+};
+
+const SURROUNDING_NODES = [
+  // Primary Venture Hubs
+  { id: "hexora", label: "HEXORA", type: "Venture", x: 0.52, y: -0.36, desc: "Digital solutions company focused on branding, web systems, automation, and startup growth.", isHub: true, accent: "#6E8FB3" },
+  { id: "evolve", label: "EVOLVE", type: "Venture", x: -0.60, y: 0.05, desc: "Founder-led initiative focused on innovation, growth, and future digital ventures.", isHub: true, accent: "#D9C7A2" },
+  { id: "pu-incent", label: "PU-iNCENT", type: "Ecosystem", x: 0.52, y: 0.36, desc: "University startup incubation ecosystem empowering student founders and innovators.", isHub: true, accent: "#223047" },
+  
+  // Secondary Focus Nodes
+  { id: "startup-ecosystems", label: "Startup Ecosystems", type: "Focus", x: -0.42, y: -0.62, desc: "Fostering regional entrepreneurship and scaling incubator models.", accent: "#8A8A8A" },
+  { id: "digital-products", label: "Digital Products", type: "Focus", x: 0.70, y: -0.12, desc: "Designing and engineering robust SaaS, dashboards, and complex web systems.", accent: "#6E8FB3" },
+  { id: "modern-websites", label: "Modern Websites", type: "Focus", x: -0.42, y: 0.62, desc: "Creating high-fidelity, motion-rich editorial web experiences.", accent: "#D9C7A2" },
+  { id: "brand-systems", label: "Brand Systems", type: "Focus", x: 0.76, y: -0.58, desc: "Crafting minimalist corporate identities, type systems, and digital guidelines.", accent: "#6E8FB3" },
+  { id: "innovation-programs", label: "Innovation Programs", type: "Focus", x: 0.28, y: 0.68, desc: "Designing accelerator tracks, hackathons, and cohort operations.", accent: "#223047" },
+  { id: "student-communities", label: "Student Communities", type: "Focus", x: -0.74, y: -0.45, desc: "Mobilizing tech clubs, developers, and collegiate innovation pipelines.", accent: "#8A8A8A" },
+  { id: "founder-mentorship", label: "Founder Mentorship", type: "Focus", x: -0.76, y: 0.40, desc: "Advising early-stage founders on product-market fit and tech architecture.", accent: "#D9C7A2" },
+  { id: "creative-collabs", label: "Creative Collaborations", type: "Focus", x: -0.12, y: 0.72, desc: "Engaging in cross-disciplinary projects at the intersection of design and tech.", accent: "#8A8A8A" },
+  { id: "innovation-events", label: "Innovation Events", type: "Focus", x: 0.15, y: -0.65, desc: "Organizing and producing tech conferences and startup summits.", accent: "#223047" }
+];
+
+const CONNECTIONS = [
+  // Root to Primary Hubs
+  { from: "center", to: "hexora" },
+  { from: "center", to: "evolve" },
+  { from: "center", to: "pu-incent" },
+  
+  // Hexora Connections
+  { from: "hexora", to: "digital-products" },
+  { from: "hexora", to: "modern-websites" },
+  { from: "hexora", to: "brand-systems" },
+  
+  // Evolve Connections
+  { from: "evolve", to: "startup-ecosystems" },
+  { from: "evolve", to: "founder-mentorship" },
+  { from: "evolve", to: "creative-collabs" },
+  
+  // PU-iNCENT Connections
+  { from: "pu-incent", to: "innovation-programs" },
+  { from: "pu-incent", to: "student-communities" },
+  { from: "pu-incent", to: "innovation-events" },
+
+  // Constellation Cross-Connections
+  { from: "startup-ecosystems", to: "innovation-programs" },
+  { from: "founder-mentorship", to: "student-communities" },
+  { from: "creative-collabs", to: "modern-websites" },
+  { from: "brand-systems", to: "innovation-events" }
 ];
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function ContactPage() {
+  const [hoveredNode, setHoveredNode] = useState(null);
+  const [activeTabNode, setActiveTabNode] = useState(null); // Touch support for mobile tap
+  const networkRef = useRef(null);
+  const [parallax, setParallax] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const handleMouseMoveNetwork = (e) => {
+    if (isMobile || !networkRef.current) return;
+    const rect = networkRef.current.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    setParallax({ x: px * 35, y: py * 35 });
+  };
+
+  const handleMouseLeaveNetwork = () => {
+    setParallax({ x: 0, y: 0 });
+  };
+
+  const activeNodeInfo = hoveredNode 
+    ? (hoveredNode === "center" ? CENTER_NODE : SURROUNDING_NODES.find(n => n.id === hoveredNode))
+    : (activeTabNode ? (activeTabNode === "center" ? CENTER_NODE : SURROUNDING_NODES.find(n => n.id === activeTabNode)) : null);
+
+  const virtualWidth = 1000;
+  const virtualHeight = 550;
+  const centerX = virtualWidth / 2;
+  const centerY = virtualHeight / 2;
+  const scaleFactor = 320;
   return (
     <div className="flex flex-col w-full bg-soft-white relative overflow-hidden">
 
@@ -524,63 +604,240 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* ── COLLABORATION AREAS (BENTO) ───────────────────────────────────── */}
-      <section className="py-20 sm:py-28 px-6 sm:px-12 bg-warm-white border-t border-b border-charcoal/5 relative z-10 overflow-hidden">
-        <div className="absolute top-1/3 right-[-5%] w-[35%] h-[50%] rounded-full bg-gradient-to-br from-accent-sand/12 to-transparent blur-[120px] pointer-events-none" />
+      {/* ── ECOSYSTEM NETWORK EXPERIENCE ───────────────────────────────────── */}
+      <section className="py-20 sm:py-28 px-6 sm:px-12 bg-soft-white border-t border-b border-charcoal/5 relative z-10 overflow-hidden">
+        {/* Background Grid Accent */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.012)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.012)_1px,transparent_1px)] bg-[size:3rem_3rem] pointer-events-none" />
+        <div className="absolute top-1/2 left-2/3 -translate-y-1/2 w-[550px] h-[550px] rounded-full bg-gradient-to-br from-accent-blue/5 to-transparent blur-[140px] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto flex flex-col items-start w-full relative z-10">
           <ScrollReveal
             baseOpacity={0.3}
             enableBlur={false}
-            className="text-xs font-mono font-bold tracking-widest text-soft-gray uppercase mb-4 block"
+            className="text-xs font-mono font-bold tracking-widest text-soft-gray uppercase mb-8 block"
           >
-            [ WHAT I&apos;M OPEN TO ]
+            [ ECOSYSTEM NETWORK ]
           </ScrollReveal>
+
           <ScrollReveal
             baseOpacity={0}
             enableBlur={true}
-            blurStrength={6}
-            className="font-display font-bold text-3xl sm:text-4xl text-charcoal tracking-tight mb-12 block"
+            blurStrength={10}
+            baseRotation={0.5}
+            className="mb-8 block"
           >
-            Areas of collaboration.
+            <h2 className="font-display font-bold text-charcoal leading-[0.92] tracking-tight mb-6 select-none" style={{ fontSize: "clamp(2.5rem, 5.5vw, 5.5rem)" }}>
+              Building connections<br />
+              between people,<br />
+              systems and ideas.
+            </h2>
           </ScrollReveal>
 
-          {/* Bento Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
-            {COLLAB_AREAS.map((area, i) => (
+          <ScrollReveal
+            baseOpacity={0.4}
+            blurStrength={3}
+            className="font-sans font-light text-base sm:text-lg text-charcoal/70 leading-relaxed max-w-[650px] mb-16 block"
+          >
+            Every venture, initiative, product, and collaboration contributes to a larger ecosystem focused on innovation, learning, technology, and execution.
+          </ScrollReveal>
+
+          {/* Interactive Network Graph Frame */}
+          <div 
+            ref={networkRef}
+            onMouseMove={handleMouseMoveNetwork}
+            onMouseLeave={handleMouseLeaveNetwork}
+            className="w-full h-[600px] bg-white border border-charcoal/[0.06] rounded-[32px] shadow-premium-lg relative overflow-hidden flex items-center justify-center select-none"
+          >
+            {/* Very subtle graph grid overlay inside */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.015)_1px,transparent_1px)] bg-[size:2rem_2rem] pointer-events-none" />
+            <div className="absolute top-[10%] left-[20%] w-[300px] h-[300px] rounded-full bg-accent-blue/[0.03] blur-[110px] pointer-events-none" />
+            <div className="absolute bottom-[10%] right-[20%] w-[300px] h-[300px] rounded-full bg-accent-sand/[0.03] blur-[110px] pointer-events-none" />
+
+            {/* Float and Parallax Wrapper */}
+            <motion.div
+              drag={isMobile}
+              dragConstraints={{ left: -100, right: 100, top: -50, bottom: 50 }}
+              dragElastic={0.2}
+              animate={isMobile ? undefined : {
+                x: parallax.x,
+                y: parallax.y
+              }}
+              transition={isMobile ? undefined : {
+                type: "spring",
+                stiffness: 75,
+                damping: 20
+              }}
+              className="absolute flex items-center justify-center select-none flex-shrink-0"
+              style={{
+                width: `${virtualWidth}px`,
+                height: `${virtualHeight}px`,
+                cursor: isMobile ? "grab" : "default"
+              }}
+            >
+              {/* SVG Connecting Lines Constellation */}
+              <svg className="absolute inset-0 pointer-events-none w-full h-full z-10">
+                {CONNECTIONS.map((conn, idx) => {
+                  const fromNode = conn.from === "center" ? CENTER_NODE : SURROUNDING_NODES.find(n => n.id === conn.from);
+                  const toNode = SURROUNDING_NODES.find(n => n.id === conn.to);
+                  if (!fromNode || !toNode) return null;
+
+                  const fromX = centerX + fromNode.x * scaleFactor;
+                  const fromY = centerY + fromNode.y * scaleFactor;
+                  const toX = centerX + toNode.x * scaleFactor;
+                  const toY = centerY + toNode.y * scaleFactor;
+
+                  const activeNodeId = hoveredNode || activeTabNode;
+                  const isActive = activeNodeId === fromNode.id || activeNodeId === toNode.id;
+                  
+                  // Get accent line color if active
+                  const strokeColor = isActive 
+                    ? (fromNode.accent || toNode.accent || "#6E8FB3") 
+                    : "rgba(17, 17, 17, 0.08)";
+                  
+                  return (
+                    <motion.line
+                      key={`${conn.from}-${conn.to}-${idx}`}
+                      x1={fromX}
+                      y1={fromY}
+                      x2={toX}
+                      y2={toY}
+                      animate={{
+                        stroke: strokeColor,
+                        strokeWidth: isActive ? 2 : 1,
+                        strokeDasharray: isActive ? "5, 5" : "none",
+                        opacity: activeNodeId ? (isActive ? 1 : 0.25) : 0.6
+                      }}
+                      transition={{ duration: 0.35 }}
+                    />
+                  );
+                })}
+              </svg>
+
+              {/* Center Root Node (Aditya Kapoor) */}
               <motion.div
-                key={area.title}
-                initial={{ opacity: 0, scale: 0.97, y: 16 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                viewport={{ once: true, margin: "-5% 0px" }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.055 }}
-                whileHover={{ y: -4, transition: { duration: 0.3 } }}
-                className={`group p-6 sm:p-8 rounded-[24px] bg-white border border-charcoal/[0.06] hover:border-charcoal/15 shadow-premium-sm hover:shadow-premium-lg transition-all duration-500 ease-out cursor-pointer flex flex-col justify-between min-h-[140px] sm:min-h-[160px] relative overflow-hidden ${area.span}`}
+                onHoverStart={() => setHoveredNode("center")}
+                onHoverEnd={() => setHoveredNode(null)}
+                onClick={() => setActiveTabNode(activeTabNode === "center" ? null : "center")}
+                className="absolute z-20 cursor-pointer"
+                style={{
+                  left: `${centerX}px`,
+                  top: `${centerY}px`,
+                  transform: "translate(-50%, -50%)"
+                }}
+                whileHover={{ scale: 1.08 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
-                {/* Subtle light background hover glow */}
-                <div className="absolute inset-0 bg-gradient-to-br from-accent-blue/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-                <div className="flex items-center justify-between w-full relative z-10">
-                  <span className="text-[9px] font-mono font-bold tracking-widest text-soft-gray/50 group-hover:text-accent-blue/85 transition-colors duration-300 uppercase">
-                    [ {area.index} // AREA ]
+                <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-white border-2 border-charcoal/15 shadow-premium-lg hover:shadow-premium-xl hover:border-accent-blue/40 flex flex-col items-center justify-center text-center p-3 select-none transition-all duration-300">
+                  <span className="font-display font-bold text-xs sm:text-sm text-charcoal tracking-tight leading-none">
+                    ADITYA KAPOOR
                   </span>
-                  <div className="w-1.5 h-1.5 rounded-full bg-charcoal/15 group-hover:bg-accent-blue group-hover:scale-125 transition-all duration-300" />
-                </div>
-
-                <div className="mt-4 relative z-10">
-                  <h3 className="font-display font-bold text-lg sm:text-xl text-charcoal tracking-tight leading-snug group-hover:text-accent-blue transition-colors duration-300">
-                    {area.title}
-                  </h3>
-                </div>
-
-                <div className="mt-6 w-full relative z-10 flex items-center justify-between">
-                  <div className="w-8 h-[1.5px] bg-charcoal/10 group-hover:w-16 group-hover:bg-accent-blue/60 transition-all duration-500 ease-out" />
-                  <span className="text-[9px] font-mono font-bold tracking-widest text-soft-gray/0 group-hover:text-soft-gray/60 transition-all duration-300 uppercase">
-                    COLLABORATE
+                  <span className="text-[7px] sm:text-[8px] font-mono font-bold text-soft-gray uppercase tracking-[0.2em] mt-1.5 leading-none">
+                    Founder Ecosystem
                   </span>
                 </div>
               </motion.div>
-            ))}
+
+              {/* Surrounding Nodes Constellation */}
+              {SURROUNDING_NODES.map((node, i) => {
+                const nodeX = centerX + node.x * scaleFactor;
+                const nodeY = centerY + node.y * scaleFactor;
+                
+                const activeNodeId = hoveredNode || activeTabNode;
+                const isHovered = activeNodeId === node.id;
+                const isDimmed = activeNodeId && activeNodeId !== node.id && activeNodeId !== "center" && !CONNECTIONS.some(c => (c.from === activeNodeId && c.to === node.id) || (c.to === activeNodeId && c.from === node.id));
+
+                return (
+                  <motion.div
+                    key={node.id}
+                    onHoverStart={() => setHoveredNode(node.id)}
+                    onHoverEnd={() => setHoveredNode(null)}
+                    onClick={() => setActiveTabNode(activeTabNode === node.id ? null : node.id)}
+                    className="absolute z-20 cursor-pointer"
+                    style={{
+                      left: `${nodeX}px`,
+                      top: `${nodeY}px`,
+                      transform: "translate(-50%, -50%)"
+                    }}
+                    whileHover={{ scale: 1.08 }}
+                    animate={{
+                      opacity: isDimmed ? 0.35 : 1,
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  >
+                    <div className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-full border bg-white select-none transition-all duration-300 flex items-center justify-center gap-1.5 shadow-premium-sm ${
+                      isHovered 
+                        ? "border-charcoal shadow-premium-md" 
+                        : "border-charcoal/[0.06] hover:border-charcoal/20"
+                    }`}>
+                      {node.isHub && (
+                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                      )}
+                      <span className={`font-display tracking-tight leading-none whitespace-nowrap transition-colors duration-300 text-xs ${
+                        node.isHub 
+                          ? "font-bold text-charcoal" 
+                          : "font-semibold text-charcoal/80"
+                      } ${isHovered ? "text-accent-blue" : ""}`}>
+                        {node.label}
+                      </span>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+
+            {/* Interactive Info Panel Overlay */}
+            <AnimatePresence mode="popLayout">
+              {activeNodeInfo ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 15, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 15, scale: 0.97 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute bottom-6 left-6 right-6 sm:right-auto sm:max-w-sm bg-white/95 border border-charcoal/[0.08] rounded-2xl shadow-premium-xl p-5 backdrop-blur-md z-30 select-none flex flex-col gap-2"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-[9px] font-mono font-bold tracking-widest text-accent-blue uppercase">
+                      [ {activeNodeInfo.type || "DIRECTORY"} ]
+                    </span>
+                    <button 
+                      onClick={() => setActiveTabNode(null)}
+                      className="text-soft-gray hover:text-charcoal text-[10px] font-mono tracking-widest uppercase cursor-pointer"
+                    >
+                      Close
+                    </button>
+                  </div>
+                  <h4 className="font-display font-bold text-xl text-charcoal tracking-tight mt-1">
+                    {activeNodeInfo.label}
+                  </h4>
+                  <p className="text-xs text-soft-gray leading-relaxed font-light mt-1">
+                    {activeNodeInfo.desc || "Root focus node coordinating startups, venture engineering, and collegiate incubator pipelines."}
+                  </p>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="default-directory-card"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute bottom-6 left-6 right-6 sm:right-auto sm:max-w-sm bg-white/95 border border-charcoal/[0.08] rounded-2xl shadow-premium-md p-5 backdrop-blur-md z-30 select-none hidden sm:flex flex-col gap-2"
+                >
+                  <span className="text-[9px] font-mono font-bold tracking-widest text-soft-gray uppercase">
+                    [ CONSTELLATION DIRECTORY ]
+                  </span>
+                  <h4 className="font-display font-bold text-base text-charcoal tracking-tight mt-1">
+                    Ecosystem Constellation
+                  </h4>
+                  <p className="text-xs text-soft-gray leading-relaxed font-light">
+                    Hover over any focus area or venture node in the constellation network map to explore active initiatives and connections.
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Mobile panning overlay info badge */}
+            <div className="absolute top-4 right-4 sm:hidden bg-charcoal/5 px-2.5 py-1 rounded-full text-[9px] font-mono tracking-widest uppercase text-soft-gray pointer-events-none">
+              Swipe to Pan
+            </div>
           </div>
         </div>
       </section>
