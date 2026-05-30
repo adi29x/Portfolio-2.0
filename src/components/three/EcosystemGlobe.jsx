@@ -8,18 +8,18 @@ import * as THREE from "three";
 const SURROUNDING_NODES = [
   // Primary Venture Hubs
   { id: "hexora", label: "HEXORA", type: "Venture", x: 0.45, y: -0.25, desc: "Digital solutions company focused on branding, web systems, automation, and startup growth.", isHub: true, accent: "#6E8FB3" },
-  { id: "evolve", label: "EVOLVE", type: "Venture", x: -0.50, y: 0.0, desc: "Founder-led initiative focused on innovation, growth, and future digital ventures.", isHub: true, accent: "#D9C7A2" },
+  { id: "evolve", label: "EVOLVE", type: "Venture", x: -0.50, y: 0.0, desc: "Founder-led initiative focused on innovation, growth, and future digital ventures.", isHub: true, accent: "#5C7C9E" },
   { id: "pu-incent", label: "PU-iNCENT", type: "Ecosystem", x: 0.45, y: 0.25, desc: "University startup incubation ecosystem empowering student founders and innovators.", isHub: true, accent: "#223047" },
   
   // Secondary Focus Nodes
-  { id: "startup-ecosystems", label: "Startup Ecosystems", type: "Focus", x: -0.30, y: -0.68, desc: "Fostering regional entrepreneurship and scaling incubator models.", accent: "#8A8A8A" },
+  { id: "startup-ecosystems", label: "Startup Ecosystems", type: "Focus", x: -0.30, y: -0.68, desc: "Fostering regional entrepreneurship and scaling incubator models.", accent: "#8EA8C3" },
   { id: "digital-products", label: "Digital Products", type: "Focus", x: 0.80, y: -0.05, desc: "Designing and engineering robust SaaS, dashboards, and complex web systems.", accent: "#6E8FB3" },
-  { id: "modern-websites", label: "Modern Websites", type: "Focus", x: -0.45, y: 0.65, desc: "Creating high-fidelity, motion-rich editorial web experiences.", accent: "#D9C7A2" },
+  { id: "modern-websites", label: "Modern Websites", type: "Focus", x: -0.45, y: 0.65, desc: "Creating high-fidelity, motion-rich editorial web experiences.", accent: "#5C7C9E" },
   { id: "brand-systems", label: "Brand Systems", type: "Focus", x: 0.82, y: -0.52, desc: "Crafting minimalist corporate identities, type systems, and digital guidelines.", accent: "#6E8FB3" },
   { id: "innovation-programs", label: "Innovation Programs", type: "Focus", x: 0.58, y: 0.65, desc: "Designing accelerator tracks, hackathons, and cohort operations.", accent: "#223047" },
-  { id: "student-communities", label: "Student Communities", type: "Focus", x: -0.78, y: -0.42, desc: "Mobilizing tech clubs, developers, and collegiate innovation pipelines.", accent: "#8A8A8A" },
-  { id: "founder-mentorship", label: "Founder Mentorship", type: "Focus", x: -0.80, y: 0.35, desc: "Advising early-stage founders on product-market fit and tech architecture.", accent: "#D9C7A2" },
-  { id: "creative-collabs", label: "Creative Collaborations", type: "Focus", x: 0.05, y: 0.72, desc: "Engaging in cross-disciplinary projects at the intersection of design and tech.", accent: "#8A8A8A" },
+  { id: "student-communities", label: "Student Communities", type: "Focus", x: -0.78, y: -0.42, desc: "Mobilizing tech clubs, developers, and collegiate innovation pipelines.", accent: "#8EA8C3" },
+  { id: "founder-mentorship", label: "Founder Mentorship", type: "Focus", x: -0.80, y: 0.35, desc: "Advising early-stage founders on product-market fit and tech architecture.", accent: "#5C7C9E" },
+  { id: "creative-collabs", label: "Creative Collaborations", type: "Focus", x: 0.05, y: 0.72, desc: "Engaging in cross-disciplinary projects at the intersection of design and tech.", accent: "#8EA8C3" },
   { id: "innovation-events", label: "Innovation Events", type: "Focus", x: 0.15, y: -0.70, desc: "Organizing and producing tech conferences and startup summits.", accent: "#223047" }
 ];
 
@@ -150,11 +150,11 @@ export default function EcosystemGlobe({ onHoverNode, onClickNode, activeNodeId 
           />
         </bufferGeometry>
         <pointsMaterial
-          color="#D1D1D6"
+          color="#6E8FB3"
           size={0.032}
           sizeAttenuation={true}
           transparent={true}
-          opacity={0.35}
+          opacity={0.38}
         />
       </points>
 
@@ -162,7 +162,7 @@ export default function EcosystemGlobe({ onHoverNode, onClickNode, activeNodeId 
       <mesh scale={0.998}>
         <sphereGeometry args={[sphereRadius, 18, 18]} />
         <meshBasicMaterial
-          color="#E2E2DF"
+          color="#6E8FB3"
           wireframe={true}
           transparent={true}
           opacity={0.12}
@@ -174,13 +174,13 @@ export default function EcosystemGlobe({ onHoverNode, onClickNode, activeNodeId 
         <mesh>
           <sphereGeometry args={[0.22, 16, 16]} />
           <meshBasicMaterial
-            color="#223047"
+            color="#6E8FB3"
             transparent
-            opacity={0.06}
+            opacity={0.12}
           />
         </mesh>
         <Html distanceFactor={8} center zIndexRange={[10, 20]}>
-          <div className="bg-white/95 border border-charcoal/10 px-4 py-2 rounded-full shadow-premium-md text-center pointer-events-none select-none min-w-[125px] backdrop-blur-[3px]">
+          <div className="bg-white/95 border border-charcoal/10 px-4 py-2 rounded-full shadow-none text-center pointer-events-none select-none min-w-[125px] backdrop-blur-[3px]">
             <div className="font-display font-extrabold text-[9px] tracking-wider text-charcoal leading-none">
               ADITYA KAPOOR
             </div>
@@ -198,9 +198,9 @@ export default function EcosystemGlobe({ onHoverNode, onClickNode, activeNodeId 
         const isLineActive = isFromActive || isToActive;
 
         // slate blue highlight on active connection
-        const lineColor = isLineActive ? "#6E8FB3" : "#E2E2DF";
-        const lineOpacity = isLineActive ? 0.8 : (activeOrHoveredId ? 0.04 : 0.22);
-        const lineWidth = isLineActive ? 1.5 : 0.6;
+        const lineColor = isLineActive ? "#6E8FB3" : "#8EA8C3";
+        const lineOpacity = isLineActive ? 0.85 : (activeOrHoveredId ? 0.04 : 0.16);
+        const lineWidth = isLineActive ? 1.6 : 0.6;
 
         return (
           <ThreeLine
@@ -252,7 +252,7 @@ export default function EcosystemGlobe({ onHoverNode, onClickNode, activeNodeId 
             >
               <sphereGeometry args={[0.07, 16, 16]} />
               <meshBasicMaterial 
-                color={isActive ? nodeAccent : "#8A8A8A"}
+                color={isActive ? nodeAccent : "#8EA8C3"}
                 transparent
                 opacity={nodeOpacity}
               />
@@ -273,7 +273,7 @@ export default function EcosystemGlobe({ onHoverNode, onClickNode, activeNodeId 
             {/* Spatial text label hovering directly above the node when hovered */}
             {isNodeHovered && (
               <Html distanceFactor={8} position={[0, 0.25, 0]} center zIndexRange={[30, 40]}>
-                <div className="bg-charcoal px-2.5 py-1 rounded-[6px] shadow-premium-lg text-[9px] font-mono tracking-widest uppercase text-white whitespace-nowrap pointer-events-none select-none">
+                <div className="bg-charcoal px-2.5 py-1 rounded-[6px] shadow-none text-[9px] font-mono tracking-widest uppercase text-white whitespace-nowrap pointer-events-none select-none">
                   {node.label}
                 </div>
               </Html>
@@ -286,7 +286,7 @@ export default function EcosystemGlobe({ onHoverNode, onClickNode, activeNodeId 
 }
 
 // Lightweight Native Three.js line helper to avoid heavy custom shader imports
-function ThreeLine({ start, end, color = "#E2E2DF", opacity = 0.2, width = 1 }) {
+function ThreeLine({ start, end, color = "#8EA8C3", opacity = 0.2, width = 1 }) {
   const points = useMemo(() => [
     new THREE.Vector3(...start),
     new THREE.Vector3(...end)

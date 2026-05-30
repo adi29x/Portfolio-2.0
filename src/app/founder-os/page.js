@@ -1,9 +1,11 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import ThreeCanvas from "@/components/three/ThreeCanvas";
+import EcosystemCubes from "@/components/three/EcosystemCubes";
 import { 
   Compass, 
   BookOpen, 
@@ -12,10 +14,20 @@ import {
   Terminal, 
   Map, 
   Briefcase, 
-  Zap 
+  Zap,
+  ArrowDown,
+  ArrowRight
 } from "lucide-react";
 
 export default function FounderOSPage() {
+  const [mounted, setMounted] = useState(false);
+  const goalsSectionRef = useRef(null);
+  const learningSectionRef = useRef(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const activeGoals = [
     { title: "Hexora Strategic Scale", category: "Startup", progress: 75, metric: "10/15 Active Clients", desc: "Expanding Hexora's professional partner base, deploying robust web backends, and refining client dashboards.", icon: Briefcase },
     { title: "Ecosystem Integration", category: "Incubation", progress: 90, metric: "2026 Cohort Launch", desc: "Finalizing the incubation pipeline structures, scheduling events, and conducting startup validation panels.", icon: Compass },
@@ -37,44 +49,111 @@ export default function FounderOSPage() {
     { title: "Zero to One", author: "Peter Thiel", status: "Completed", category: "Startup" }
   ];
 
+  const scrollToGoals = () => {
+    goalsSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToLearning = () => {
+    learningSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <div className="flex flex-col w-full bg-soft-white pt-32 pb-24 px-6 sm:px-12 relative overflow-hidden">
-      {/* Background soft highlights */}
+    <div className="flex flex-col w-full bg-soft-white relative overflow-hidden">
+      {/* Cinematic background layouts */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.012)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.012)_1px,transparent_1px)] bg-[size:3rem_3rem] pointer-events-none" />
       <div className="absolute top-[30%] left-[-15%] w-[60%] h-[60%] rounded-full bg-gradient-to-br from-accent-sand/5 to-transparent blur-[140px] pointer-events-none" />
+      <div className="absolute top-[10%] right-[-5%] w-[45%] h-[50%] rounded-full bg-gradient-to-tr from-accent-blue/4 to-transparent blur-[130px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto w-full relative z-10">
-        {/* Page Header */}
-        <div className="flex flex-col gap-6 max-w-3xl mb-20">
-          <ScrollReveal
-            baseOpacity={0.3}
-            enableBlur={false}
-            baseRotation={0}
-            className="text-xs font-mono font-bold tracking-widest text-soft-gray uppercase block"
-          >
-            [ PERSONAL OPERATING SYSTEM ]
-          </ScrollReveal>
-          <ScrollReveal
-            baseOpacity={0}
-            enableBlur={true}
-            blurStrength={10}
-            baseRotation={1}
-            className="font-display font-bold text-5xl sm:text-6xl lg:text-7xl tracking-tighter text-charcoal leading-none block"
-          >
-            Founder OS
-          </ScrollReveal>
-          <ScrollReveal
-            baseOpacity={0.2}
-            enableBlur={true}
-            blurStrength={4}
-            baseRotation={0}
-            className="font-display font-light text-2xl text-soft-gray leading-relaxed mt-2 block"
-          >
-            A real-time window into my active coordinates, strategic progress logs, and learning schedules.
-          </ScrollReveal>
+      {/* ── HERO SECTION: 3D FOUNDER DESK ───────────────────────────────── */}
+      <section className="pt-32 pb-16 sm:pt-36 sm:pb-20 px-6 sm:px-12 relative z-10 w-full max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center min-h-[500px]">
+          
+          {/* LEFT COLUMN: Premium Editorial Content */}
+          <div className="flex flex-col items-start lg:col-span-5 relative z-30">
+            <motion.span
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-xs font-mono font-bold tracking-widest text-soft-gray uppercase mb-6 block"
+            >
+              [ FOUNDER OS ]
+            </motion.span>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="font-display font-bold text-4xl sm:text-5xl lg:text-[46px] tracking-tight text-charcoal leading-[1.08] mb-6"
+            >
+              Inside the workspace<br />
+              <span className="text-charcoal/50 font-light">behind every venture,</span><br />
+              system and idea.
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="font-sans font-light text-base sm:text-lg text-charcoal/70 leading-relaxed max-w-lg mb-10"
+            >
+              Explore the routines, frameworks, learning systems, projects, and strategic thinking that power my work across startups, innovation ecosystems, and digital products.
+            </motion.p>
+
+            {/* CTA Actions */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="flex flex-wrap items-center gap-4 w-full sm:w-auto"
+            >
+              <button
+                onClick={scrollToGoals}
+                className="group w-full sm:w-auto flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full bg-charcoal text-white hover:bg-accent-navy hover:shadow-premium-md text-xs font-bold uppercase tracking-widest transition-all duration-300 cursor-pointer"
+              >
+                Explore Systems
+                <ArrowDown className="h-3.5 w-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-300" />
+              </button>
+              <button
+                onClick={scrollToLearning}
+                className="group w-full sm:w-auto flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full bg-transparent text-charcoal border border-charcoal/15 hover:border-charcoal/35 hover:bg-white text-xs font-bold uppercase tracking-widest transition-all duration-300 cursor-pointer"
+              >
+                View Roadmaps
+                <ArrowRight className="h-3.5 w-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-300" />
+              </button>
+            </motion.div>
+          </div>
+
+          {/* RIGHT COLUMN: Interactive 3D Desk Canvas */}
+          <div className="w-full h-[400px] sm:h-[480px] lg:h-[540px] lg:col-span-7 relative z-20 flex items-center justify-center select-none mt-6 lg:mt-0">
+            {mounted && (
+              <ThreeCanvas
+                camera={{ position: [0, 0, 8], fov: 45 }}
+                className="w-full h-full"
+              >
+                <ambientLight intensity={1.6} />
+                <pointLight position={[-6, -5, -3]} intensity={1.2} color="#8EA8C3" />
+                <pointLight position={[6, 5, 3]} intensity={1.2} color="#6E8FB3" />
+                <EcosystemCubes />
+              </ThreeCanvas>
+            )}
+
+            {/* Interactive hint */}
+            <div className="absolute top-4 right-4 bg-charcoal/[0.03] backdrop-blur-[3px] border border-charcoal/[0.05] px-3 py-1 rounded-full text-[9px] font-mono tracking-widest uppercase text-soft-gray pointer-events-none">
+              Hover Modules to Explore
+            </div>
+          </div>
+
         </div>
+      </section>
 
+      {/* Divider */}
+      <div className="w-full h-[1px] bg-charcoal/5 mx-auto max-w-7xl px-6 sm:px-12">
+        <div className="w-full h-full bg-gradient-to-r from-transparent via-charcoal/8 to-transparent" />
+      </div>
+
+      <div className="max-w-7xl mx-auto w-full relative z-10 px-6 sm:px-12">
         {/* Section 1: Strategic Goals */}
-        <div className="mb-24">
+        <div ref={goalsSectionRef} className="py-20 sm:py-24 scroll-mt-24">
           <SectionHeading
             label="01 / ACTIVE PIPELINE"
             title="Strategic coordinates and venture progress."
@@ -148,7 +227,7 @@ export default function FounderOSPage() {
         </div>
 
         {/* Section 2: Time Blocking & Reading Systems (Split Grid) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16">
+        <div ref={learningSectionRef} className="py-20 sm:py-24 grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16 scroll-mt-24 border-t border-charcoal/5">
           {/* Time Blocking Column */}
           <div className="lg:col-span-7">
             <SectionHeading

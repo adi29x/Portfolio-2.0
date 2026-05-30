@@ -469,7 +469,6 @@ export default function ContactPage() {
   const [activeTabNode, setActiveTabNode] = useState(null); // Touch support for mobile tap
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const networkRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -738,151 +737,162 @@ export default function ContactPage() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.012)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.012)_1px,transparent_1px)] bg-[size:3rem_3rem] pointer-events-none" />
         <div className="absolute top-1/2 left-2/3 -translate-y-1/2 w-[550px] h-[550px] rounded-full bg-gradient-to-br from-accent-blue/5 to-transparent blur-[140px] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto flex flex-col items-start w-full relative z-10">
-          <ScrollReveal
-            baseOpacity={0.2}
-            enableBlur={false}
-            className="w-full mb-12 sm:mb-16"
-          >
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 w-full">
-              <div className="max-w-3xl">
-                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-widest text-soft-gray uppercase block mb-4">
-                  [ ECOSYSTEM NETWORK ]
-                </span>
-                <h2 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-charcoal leading-[1.05] select-none">
-                  Building connections<br className="hidden sm:inline" /> between people,<br className="hidden sm:inline" /> systems and ideas.
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 w-full relative z-10 items-stretch">
+          
+          {/* LEFT COLUMN: All textual and dashboard card elements */}
+          <div className="flex flex-col items-start lg:col-span-5 justify-between w-full relative z-30 gap-8 min-h-[580px] h-full">
+            {/* Top Text Content */}
+            <div className="flex flex-col items-start w-full">
+              <ScrollReveal
+                baseOpacity={0.2}
+                enableBlur={false}
+                className="text-[10px] sm:text-xs font-mono font-bold tracking-widest text-soft-gray uppercase block mb-4"
+              >
+                [ ECOSYSTEM NETWORK ]
+              </ScrollReveal>
+              <ScrollReveal
+                baseOpacity={0}
+                enableBlur={true}
+                blurStrength={6}
+                className="block mb-6"
+              >
+                <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-[46px] tracking-tight text-charcoal leading-[1.08] select-none">
+                  Building connections<br />between people,<br />systems and ideas.
                 </h2>
-              </div>
-              <div className="flex flex-col gap-4 max-w-sm shrink-0">
-                <p className="text-soft-gray text-xs sm:text-sm lg:text-base leading-relaxed font-light">
+              </ScrollReveal>
+              <ScrollReveal
+                baseOpacity={0.4}
+                blurStrength={3}
+                className="block mb-6"
+              >
+                <p className="text-soft-gray text-xs sm:text-sm leading-relaxed font-light max-w-md">
                   Every venture, initiative, product, and collaboration contributes to a larger ecosystem focused on innovation, learning, technology, and execution.
                 </p>
-                <Link href="/ecosystem" className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-charcoal hover:text-accent-blue transition-colors duration-300 w-fit">
-                  Explore Ecosystem
-                  <span className="h-[1px] w-6 bg-charcoal group-hover:bg-accent-blue group-hover:w-8 transition-colors duration-300" />
+              </ScrollReveal>
+              <ScrollReveal
+                baseOpacity={0.3}
+                enableBlur={false}
+                className="block"
+              >
+                <Link href="/ecosystem" className="group inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-charcoal hover:text-accent-blue transition-colors duration-300 w-fit">
+                  EXPLORE ECOSYSTEM
+                  <span className="h-[1.5px] w-8 bg-charcoal group-hover:bg-accent-blue transition-colors duration-300" />
                 </Link>
-              </div>
+              </ScrollReveal>
             </div>
-          </ScrollReveal>
 
-          {/* Interactive 3D Network Graph Globe Frame */}
-          <div 
-            ref={networkRef}
-            className="w-full h-[600px] bg-white border border-charcoal/[0.06] rounded-[32px] shadow-premium-lg relative overflow-hidden flex items-center justify-center select-none"
-          >
+            {/* Bottom details card (Desktop) */}
+            <div className="hidden md:flex relative w-full mt-auto">
+              <AnimatePresence mode="popLayout">
+                {activeNodeInfo ? (
+                  <motion.div
+                    key={`info-card-${activeNodeInfo.id || hoveredNode}`}
+                    initial={{ opacity: 0, y: 12, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 12, scale: 0.98 }}
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-full bg-white border border-charcoal/[0.08] rounded-3xl p-6 backdrop-blur-md select-none flex flex-col gap-4 shadow-none hover:border-charcoal/15 transition-all duration-300"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span 
+                        className="text-[9px] font-mono font-bold tracking-widest uppercase"
+                        style={{ color: activeNodeInfo.accent || "#6E8FB3" }}
+                      >
+                        [ {activeNodeInfo.type || "DIRECTORY"} ]
+                      </span>
+                      <button 
+                        onClick={() => {
+                          setActiveTabNode(null);
+                          setHoveredNode(null);
+                        }}
+                        className="text-soft-gray hover:text-charcoal text-[10px] font-mono tracking-widest uppercase cursor-pointer"
+                      >
+                        Close
+                      </button>
+                    </div>
+                    <div>
+                      <span className="text-[9px] font-mono text-soft-gray uppercase tracking-wider mb-1 block">
+                        {activeNodeInfo.role}
+                      </span>
+                      <h4 className="font-display font-bold text-lg text-charcoal tracking-tight leading-none mb-1.5 uppercase">
+                        {activeNodeInfo.label}
+                      </h4>
+                      <p className="text-xs text-soft-gray leading-relaxed font-light">
+                        {activeNodeInfo.desc}
+                      </p>
+                    </div>
+                    
+                    {/* Card bottom details link */}
+                    <div className="pt-3 border-t border-charcoal/[0.05] flex items-center justify-between">
+                      <span className="text-[9.5px] font-mono font-bold text-soft-gray/50 uppercase tracking-widest">
+                        {activeNodeInfo.metrics || "01 Active Point"}
+                      </span>
+                      <button 
+                        onClick={() => setIsModalOpen(true)}
+                        className="group inline-flex items-center gap-1.5 text-[9.5px] font-bold text-charcoal hover:text-accent-blue uppercase tracking-widest transition-colors duration-300 cursor-pointer"
+                      >
+                        Explore Details
+                        <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+                      </button>
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="default-directory-card"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="w-full bg-white border border-charcoal/[0.08] rounded-3xl p-6 backdrop-blur-md select-none flex flex-col gap-2 shadow-none"
+                  >
+                    <span className="text-[9px] font-mono font-bold tracking-widest text-soft-gray uppercase">
+                      [ CONSTELLATION DIRECTORY ]
+                    </span>
+                    <h4 className="font-display font-bold text-base text-charcoal tracking-tight mt-1">
+                      Ecosystem 3D Constellation
+                    </h4>
+                    <p className="text-xs text-soft-gray leading-relaxed font-light">
+                      Hover over any focus area or venture node in the 3D constellation globe to explore active initiatives and dynamic connections.
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN: Standalone 3D Ecosystem Globe */}
+          <div className="w-full lg:col-span-7 h-[580px] sm:h-[600px] relative z-20 flex items-center justify-center select-none">
             {/* Very subtle coordinate grid overlay inside */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.015)_1px,transparent_1px)] bg-[size:2rem_2rem] pointer-events-none" />
             <div className="absolute top-[10%] left-[20%] w-[300px] h-[300px] rounded-full bg-accent-blue/[0.02] blur-[110px] pointer-events-none" />
             <div className="absolute bottom-[10%] right-[20%] w-[300px] h-[300px] rounded-full bg-accent-sand/[0.02] blur-[110px] pointer-events-none" />
 
-            {/* Three.js / R3F Canvas Container */}
-            <div className="w-full h-full relative z-20">
-              {mounted && (
-                <ThreeCanvas 
-                  camera={{ position: [0, 0, 7.6], fov: 45 }} 
-                  className="w-full h-full"
-                >
-                  <ambientLight intensity={1.6} />
-                  <directionalLight position={[5, 8, 5]} intensity={1.0} />
-                  <pointLight position={[-8, -5, -3]} intensity={1.5} color="#6E8FB3" />
-                  <spotLight 
-                    position={[2, 10, 2]} 
-                    angle={0.4} 
-                    penumbra={1} 
-                    intensity={2.0} 
-                    color="#D9C7A2" 
-                  />
-                  <EcosystemGlobe
-                    onHoverNode={setHoveredNode}
-                    onClickNode={(id) => {
-                      setActiveTabNode(id);
-                      if (id && !isMobile) {
-                        setIsModalOpen(true);
-                      }
-                    }}
-                    activeNodeId={activeTabNode}
-                  />
-                </ThreeCanvas>
-              )}
-            </div>
-
-            {/* Interactive Info Panel Overlay - Desktop Only */}
-            <AnimatePresence mode="popLayout">
-              {!isMobile && activeNodeInfo && (
-                <motion.div
-                  key={`info-card-${activeNodeInfo.id || hoveredNode}`}
-                  initial={{ opacity: 0, y: 15, scale: 0.97 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 15, scale: 0.97 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute bottom-6 left-6 right-6 sm:right-auto sm:max-w-sm bg-white/95 border border-charcoal/[0.08] rounded-2xl shadow-premium-xl p-5 backdrop-blur-md z-30 select-none flex flex-col gap-2.5 hover:border-charcoal/15 transition-all duration-300"
-                >
-                  <div className="flex items-center justify-between">
-                    <span 
-                      className="text-[9px] font-mono font-bold tracking-widest uppercase"
-                      style={{ color: activeNodeInfo.accent || "#6E8FB3" }}
-                    >
-                      [ {activeNodeInfo.type || "DIRECTORY"} ]
-                    </span>
-                    <button 
-                      onClick={() => {
-                        setActiveTabNode(null);
-                        setHoveredNode(null);
-                      }}
-                      className="text-soft-gray hover:text-charcoal text-[10px] font-mono tracking-widest uppercase cursor-pointer"
-                    >
-                      Close
-                    </button>
-                  </div>
-                  <div>
-                    <span className="text-[9px] font-mono text-soft-gray uppercase tracking-wider mb-1 block">
-                      {activeNodeInfo.role}
-                    </span>
-                    <h4 className="font-display font-bold text-lg text-charcoal tracking-tight leading-none mb-1.5 uppercase">
-                      {activeNodeInfo.label}
-                    </h4>
-                    <p className="text-xs text-soft-gray leading-relaxed font-light">
-                      {activeNodeInfo.desc}
-                    </p>
-                  </div>
-                  
-                  {/* Card bottom details link */}
-                  <div className="pt-3 border-t border-charcoal/[0.05] flex items-center justify-between">
-                    <span className="text-[9.5px] font-mono font-bold text-soft-gray/50 uppercase tracking-widest">
-                      {activeNodeInfo.metrics || "01 Active Point"}
-                    </span>
-                    <button 
-                      onClick={() => setIsModalOpen(true)}
-                      className="group inline-flex items-center gap-1.5 text-[9.5px] font-bold text-charcoal hover:text-accent-blue uppercase tracking-widest transition-colors duration-300 cursor-pointer"
-                    >
-                      Explore Details
-                      <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
-                    </button>
-                  </div>
-                </motion.div>
-              )}
-
-              {/* Default directory instruction card - Desktop Only */}
-              {!isMobile && !activeNodeInfo && (
-                <motion.div
-                  key="default-directory-card"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="absolute bottom-6 left-6 right-6 sm:right-auto sm:max-w-sm bg-white/95 border border-charcoal/[0.08] rounded-2xl shadow-premium-md p-5 backdrop-blur-md z-30 select-none hidden sm:flex flex-col gap-2"
-                >
-                  <span className="text-[9px] font-mono font-bold tracking-widest text-soft-gray uppercase">
-                    [ CONSTELLATION DIRECTORY ]
-                  </span>
-                  <h4 className="font-display font-bold text-base text-charcoal tracking-tight mt-1">
-                    Ecosystem 3D Constellation
-                  </h4>
-                  <p className="text-xs text-soft-gray leading-relaxed font-light">
-                    Hover over any focus area or venture node in the 3D constellation globe to explore active initiatives and dynamic connections.
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {mounted && (
+              <ThreeCanvas 
+                camera={{ position: [0, 0, 7.6], fov: 45 }} 
+                className="w-full h-full"
+              >
+                <ambientLight intensity={1.6} />
+                <directionalLight position={[5, 8, 5]} intensity={1.0} />
+                <pointLight position={[-8, -5, -3]} intensity={1.5} color="#6E8FB3" />
+                <spotLight 
+                  position={[2, 10, 2]} 
+                  angle={0.4} 
+                  penumbra={1} 
+                  intensity={2.0} 
+                  color="#D9C7A2" 
+                />
+                <EcosystemGlobe
+                  onHoverNode={setHoveredNode}
+                  onClickNode={(id) => {
+                    setActiveTabNode(id);
+                    if (id && !isMobile) {
+                      setIsModalOpen(true);
+                    }
+                  }}
+                  activeNodeId={activeTabNode}
+                />
+              </ThreeCanvas>
+            )}
 
             {/* Mobile panning overlay info badge */}
             <div className="absolute top-4 right-4 sm:hidden bg-charcoal/5 px-2.5 py-1 rounded-full text-[9px] font-mono tracking-widest uppercase text-soft-gray pointer-events-none z-30">
@@ -907,7 +917,7 @@ export default function ContactPage() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 15 }}
               transition={{ type: "spring", stiffness: 350, damping: 26 }}
-              className="bg-white border border-charcoal/10 rounded-[32px] shadow-premium-2xl max-w-lg w-full p-8 relative overflow-hidden select-none"
+              className="bg-white border border-charcoal/10 rounded-[32px] shadow-none max-w-lg w-full p-8 relative overflow-hidden select-none"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Subtle coordinate grid pattern inside */}
@@ -1010,7 +1020,7 @@ export default function ContactPage() {
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 320 }}
-            className="fixed bottom-0 left-0 right-0 rounded-t-[32px] bg-white border-t border-charcoal/10 shadow-premium-2xl p-6 z-[100] flex flex-col gap-4 select-none pb-10"
+            className="fixed bottom-0 left-0 right-0 rounded-t-[32px] bg-white border-t border-charcoal/10 shadow-none p-6 z-[100] flex flex-col gap-4 select-none pb-10"
           >
             {/* Grab drag indicator */}
             <div className="w-12 h-1 rounded-full bg-charcoal/10 mx-auto mb-1" />
