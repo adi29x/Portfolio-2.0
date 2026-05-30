@@ -381,6 +381,10 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             {CONNECT_CHANNELS.map((channel, i) => {
               const Icon = channel.icon;
+              const isLinkedin = channel.id === "linkedin";
+              const cardClass = isLinkedin
+                ? "group flex flex-col justify-between p-6 sm:p-7 rounded-[20px] bg-white border border-charcoal/6 hover:border-transparent hover:bg-gradient-to-br hover:from-[#0A66C2] hover:to-[#004182] hover:text-white shadow-premium-sm hover:shadow-[0_12px_40px_rgba(10,102,194,0.25)] transition-all duration-500 ease-out h-full min-h-[240px] cursor-pointer"
+                : "group flex flex-col justify-between p-6 sm:p-7 rounded-[20px] bg-white border border-charcoal/6 hover:border-charcoal/12 shadow-premium-sm hover:shadow-premium-lg transition-all duration-500 ease-out h-full min-h-[240px] cursor-pointer";
               return (
                 <motion.div
                   key={channel.id}
@@ -394,14 +398,14 @@ export default function ContactPage() {
                       href={channel.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group flex flex-col justify-between p-6 sm:p-7 rounded-[20px] bg-white border border-charcoal/6 hover:border-charcoal/12 shadow-premium-sm hover:shadow-premium-lg transition-all duration-500 ease-out h-full min-h-[240px] cursor-pointer"
+                      className={cardClass}
                     >
                       <ChannelCardContent channel={channel} Icon={Icon} />
                     </a>
                   ) : (
                     <Link
                       href={channel.href}
-                      className="group flex flex-col justify-between p-6 sm:p-7 rounded-[20px] bg-white border border-charcoal/6 hover:border-charcoal/12 shadow-premium-sm hover:shadow-premium-lg transition-all duration-500 ease-out h-full min-h-[240px] cursor-pointer"
+                      className={cardClass}
                     >
                       <ChannelCardContent channel={channel} Icon={Icon} />
                     </Link>
@@ -629,7 +633,7 @@ export default function ContactPage() {
                 href="https://www.linkedin.com/in/aditya-kapoor-168914290"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group w-full sm:w-auto flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-charcoal text-soft-white text-xs font-bold uppercase tracking-widest hover:bg-charcoal/85 transition-all duration-300 ease-out shadow-premium-md hover:shadow-premium-lg"
+                className="group w-full sm:w-auto flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-charcoal text-soft-white text-xs font-bold uppercase tracking-widest hover:bg-[#0A66C2] hover:shadow-[0_8px_30px_rgba(10,102,194,0.35)] transition-all duration-300 ease-out shadow-premium-md"
               >
                 <LinkedInIcon className="h-4 w-4" />
                 Connect on LinkedIn
@@ -653,25 +657,47 @@ export default function ContactPage() {
 
 // ─── Channel Card Content (inner) ────────────────────────────────────────────
 function ChannelCardContent({ channel, Icon }) {
+  const isLinkedin = channel.id === "linkedin";
+  
   return (
     <>
       <div>
         <div className="flex items-center gap-2 mb-5">
-          <div className="w-8 h-8 rounded-full bg-charcoal/5 group-hover:bg-charcoal/8 flex items-center justify-center transition-colors duration-300">
-            <Icon className="h-4 w-4 text-charcoal" />
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
+            isLinkedin 
+              ? "bg-charcoal/5 group-hover:bg-white/15 text-charcoal group-hover:text-white" 
+              : "bg-charcoal/5 group-hover:bg-charcoal/8 text-charcoal"
+          }`}>
+            <Icon className="h-4 w-4" />
           </div>
-          <span className="text-[9px] font-mono font-bold tracking-widest text-soft-gray uppercase">
+          <span className={`text-[9px] font-mono font-bold tracking-widest uppercase transition-colors duration-300 ${
+            isLinkedin 
+              ? "text-soft-gray group-hover:text-white/70" 
+              : "text-soft-gray"
+          }`}>
             {channel.label}
           </span>
         </div>
-        <h3 className="font-display font-bold text-xl text-charcoal tracking-tight mb-3 leading-tight">
+        <h3 className={`font-display font-bold text-xl tracking-tight mb-3 leading-tight transition-colors duration-300 ${
+          isLinkedin 
+            ? "text-charcoal group-hover:text-white" 
+            : "text-charcoal"
+        }`}>
           {channel.title}
         </h3>
-        <p className="text-sm text-soft-gray leading-relaxed font-light">
+        <p className={`text-sm leading-relaxed font-light transition-colors duration-300 ${
+          isLinkedin 
+            ? "text-soft-gray group-hover:text-white/80" 
+            : "text-soft-gray"
+        }`}>
           {channel.description}
         </p>
       </div>
-      <div className="mt-6 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-charcoal group-hover:text-charcoal transition-colors duration-300">
+      <div className={`mt-6 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest transition-colors duration-300 ${
+        isLinkedin 
+          ? "text-charcoal group-hover:text-white" 
+          : "text-charcoal group-hover:text-charcoal"
+      }`}>
         {channel.cta}
         <ArrowUpRight className="h-3.5 w-3.5 opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
       </div>
