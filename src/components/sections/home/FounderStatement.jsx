@@ -168,14 +168,16 @@ export default function FounderStatement() {
             enableBlur={true}
             blurStrength={4}
             baseRotation={0}
-            className="flex flex-col items-start w-full border-t border-charcoal/10 pt-6 max-w-xs block"
+            className="block"
           >
-            <span className="font-display font-bold text-sm sm:text-base text-charcoal tracking-tight block">
-              Aditya Kapoor
-            </span>
-            <span className="text-[9px] font-mono font-bold tracking-widest text-soft-gray uppercase mt-1.5 block leading-relaxed">
-              Founder, Designer & Ecosystem Builder
-            </span>
+            <div className="flex flex-col items-start w-full border-t border-charcoal/10 pt-6 max-w-xs">
+              <span className="font-display font-bold text-sm sm:text-base text-charcoal tracking-tight block">
+                Aditya Kapoor
+              </span>
+              <span className="text-[9px] font-mono font-bold tracking-widest text-soft-gray uppercase mt-1.5 block leading-relaxed">
+                Founder, Designer & Ecosystem Builder
+              </span>
+            </div>
           </ScrollReveal>
         </div>
 

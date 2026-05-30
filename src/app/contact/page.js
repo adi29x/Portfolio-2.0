@@ -324,15 +324,17 @@ export default function ContactPage() {
             <ScrollReveal
               baseOpacity={0.3}
               enableBlur={false}
-              className="flex items-center gap-2.5 block"
+              className="block"
             >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
-              </span>
-              <span className="text-xs font-bold text-charcoal tracking-widest uppercase select-none">
-                Founder Inbox — Open for Collaborations
-              </span>
+              <div className="flex items-center gap-2.5">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+                </span>
+                <span className="text-xs font-bold text-charcoal tracking-widest uppercase select-none">
+                  Founder Inbox — Open for Collaborations
+                </span>
+              </div>
             </ScrollReveal>
           </div>
 
@@ -431,15 +433,17 @@ export default function ContactPage() {
           <ScrollReveal
             baseOpacity={0.3}
             enableBlur={false}
-            className="flex flex-col items-center gap-1 block"
+            className="block"
           >
-            <div className="w-12 h-[1px] bg-white/20 mb-4 mx-auto" />
-            <span className="font-display font-bold text-sm text-white/90 tracking-tight">
-              Aditya Kapoor
-            </span>
-            <span className="text-[10px] font-mono font-bold tracking-widest text-white/40 uppercase">
-              Founder, Designer & Ecosystem Builder
-            </span>
+            <div className="flex flex-col items-center gap-1">
+              <div className="w-12 h-[1px] bg-white/20 mb-4 mx-auto" />
+              <span className="font-display font-bold text-sm text-white/90 tracking-tight">
+                Aditya Kapoor
+              </span>
+              <span className="text-[10px] font-mono font-bold tracking-widest text-white/40 uppercase">
+                Founder, Designer & Ecosystem Builder
+              </span>
+            </div>
           </ScrollReveal>
         </div>
       </section>
@@ -580,26 +584,28 @@ export default function ContactPage() {
             baseOpacity={0}
             enableBlur={true}
             blurStrength={4}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 block"
+            className="block"
           >
-            <a
-              href="https://www.linkedin.com/in/aditya-kapoor-168914290"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group w-full sm:w-auto flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-charcoal text-soft-white text-xs font-bold uppercase tracking-widest hover:bg-charcoal/85 transition-all duration-300 ease-out shadow-premium-md hover:shadow-premium-lg"
-            >
-              <LinkedInIcon className="h-4 w-4" />
-              Connect on LinkedIn
-              <ArrowUpRight className="h-3.5 w-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
-            </a>
-            <a
-              href="mailto:aditya@hexora.in"
-              className="group w-full sm:w-auto flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-transparent text-charcoal text-xs font-bold uppercase tracking-widest border border-charcoal/15 hover:border-charcoal/35 hover:bg-white transition-all duration-300 ease-out shadow-premium-sm hover:shadow-premium-md"
-            >
-              <Mail className="h-4 w-4" />
-              Send an Email
-              <ArrowRight className="h-3.5 w-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-300" />
-            </a>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
+              <a
+                href="https://www.linkedin.com/in/aditya-kapoor-168914290"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group w-full sm:w-auto flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-charcoal text-soft-white text-xs font-bold uppercase tracking-widest hover:bg-charcoal/85 transition-all duration-300 ease-out shadow-premium-md hover:shadow-premium-lg"
+              >
+                <LinkedInIcon className="h-4 w-4" />
+                Connect on LinkedIn
+                <ArrowUpRight className="h-3.5 w-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+              </a>
+              <a
+                href="mailto:aditya@hexora.in"
+                className="group w-full sm:w-auto flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-transparent text-charcoal text-xs font-bold uppercase tracking-widest border border-charcoal/15 hover:border-charcoal/35 hover:bg-white transition-all duration-300 ease-out shadow-premium-sm hover:shadow-premium-md"
+              >
+                <Mail className="h-4 w-4" />
+                Send an Email
+                <ArrowRight className="h-3.5 w-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-300" />
+              </a>
+            </div>
           </ScrollReveal>
         </div>
       </section>
