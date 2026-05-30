@@ -2,10 +2,12 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, ArrowRight, Mail, Calendar, Compass } from "lucide-react";
+import { ArrowUpRight, ArrowRight, Mail, Calendar, Compass, X } from "lucide-react";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { GradualBlur } from "@/components/ui/GradualBlur";
+import ThreeCanvas from "@/components/three/ThreeCanvas";
+import EcosystemGlobe from "@/components/three/EcosystemGlobe";
 
 // ─── Inline LinkedIn SVG ──────────────────────────────────────────────────────
 const LinkedInIcon = (props) => (
@@ -268,7 +270,14 @@ const POSITIONS = [
 const CENTER_NODE = {
   id: "center",
   label: "ADITYA KAPOOR",
-  subtitle: "Founder Ecosystem",
+  role: "Founder Ecosystem",
+  desc: "Root coordinator linking startup ecosystems, digital studios, and collegiate pipelines.",
+  type: "Root Node",
+  accent: "#223047",
+  overview: "Direct connection headquarters representing Aditya's active ventures, digital assets, and advisor coordinates.",
+  contributions: "Guiding PU-iNCENT advisors, running Hexora operations, and scaling venture studio spin-offs.",
+  metrics: "All Initiatives Active",
+  related: "HEXORA, EVOLVE, PU-iNCENT",
   x: 0,
   y: 0
 };
@@ -319,15 +328,152 @@ const CONNECTIONS = [
   { from: "brand-systems", to: "innovation-events" }
 ];
 
+const NODE_CARDS = {
+  hexora: {
+    label: "HEXORA",
+    role: "Founder & CEO",
+    desc: "Building modern websites, digital systems, branding frameworks, and startup solutions.",
+    type: "Venture Hub",
+    accent: "#6E8FB3",
+    overview: "Leading development teams to deliver enterprise systems, custom branding systems, and startup solutions.",
+    contributions: "Architected modern design systems, built secure SaaS structures, guided seed-stage funding operations.",
+    metrics: "25+ Deployed Systems",
+    related: "EVOLVE, Modern Websites, Brand Systems"
+  },
+  evolve: {
+    label: "EVOLVE",
+    role: "Founder & CEO",
+    desc: "Building future-focused ventures, creative systems, and growth platforms.",
+    type: "Venture Studio",
+    accent: "#D9C7A2",
+    overview: "Forming high-growth startup ideas, investing in creative developer pipelines, and incubating innovation platforms.",
+    contributions: "Accelerated brand-creation frameworks, coached startup operations, built community partnerships.",
+    metrics: "5+ Active Spin-offs",
+    related: "HEXORA, Startup Ecosystems, Founder Mentorship"
+  },
+  "pu-incent": {
+    label: "PU-iNCENT",
+    role: "Chief Student Advisor",
+    desc: "Leading startup incubation initiatives, founder programs, and innovation ecosystems.",
+    type: "Incubation Portal",
+    accent: "#223047",
+    overview: "Managing the official student incubator, cohort operational targets, and venture advisor programs at Poornima University.",
+    contributions: "Coordinated regional pitch pipelines, guided collegiate incubation platforms, scaled bootcamp cohorts.",
+    metrics: "50+ Guidances Completed",
+    related: "Student Communities, Innovation Programs"
+  },
+  "startup-ecosystems": {
+    label: "Startup Ecosystems",
+    role: "Ecosystem Architect",
+    desc: "Fostering regional entrepreneurship and scaling incubator models.",
+    type: "Focus Node",
+    accent: "#8A8A8A",
+    overview: "Structuring incubation frameworks to foster startup ecosystems, seed funding pipelines, and student entrepreneurship.",
+    contributions: "Co-authored incubation blueprints, designed regional tech clubs, built investor relationships.",
+    metrics: "10+ Incubators Guided",
+    related: "EVOLVE, Innovation Programs"
+  },
+  "digital-products": {
+    label: "Digital Products",
+    role: "Lead Product Designer",
+    desc: "Designing and engineering robust SaaS, dashboards, and complex web systems.",
+    type: "Focus Node",
+    accent: "#6E8FB3",
+    overview: "Designing secure client dashboards, enterprise SaaS platforms, and optimized visual structures.",
+    contributions: "Customized state management pipelines, unified interface guidelines, created visual telemetry components.",
+    metrics: "15+ Deployed Dashboards",
+    related: "HEXORA, Brand Systems"
+  },
+  "modern-websites": {
+    label: "Modern Websites",
+    role: "Creative Technologist",
+    desc: "Creating high-fidelity, motion-rich editorial web experiences.",
+    type: "Focus Node",
+    accent: "#D9C7A2",
+    overview: "Engineering motion-heavy portfolio frameworks, custom 3D point systems, and interactive spatial websites.",
+    contributions: "Engineered high-performance scroll-linked stacking layers, fluid Lenis smooth scroll models, custom R3F canvases.",
+    metrics: "40+ Portals Built",
+    related: "HEXORA, Creative Collaborations"
+  },
+  "brand-systems": {
+    label: "Brand Systems",
+    role: "Brand Strategist",
+    desc: "Crafting minimalist corporate identities, type systems, and digital guidelines.",
+    type: "Focus Node",
+    accent: "#6E8FB3",
+    overview: "Curating minimal editorial guidelines, responsive color theories, typography grids, and spatial templates.",
+    contributions: "Created signature visual parameters for Hexora and PU-iNCENT, structured architectural design systems.",
+    metrics: "30+ Identities Built",
+    related: "HEXORA, Digital Products"
+  },
+  "innovation-programs": {
+    label: "Innovation Programs",
+    role: "Program Director",
+    desc: "Designing accelerator tracks, hackathons, and cohort operations.",
+    type: "Focus Node",
+    accent: "#223047",
+    overview: "Coordinating cohort tracks, competitive bootcamps, startup summits, and hackathon schedules.",
+    contributions: "Coordinated Lakshya 2026 and regional incubation tracks, designed pitch blueprints.",
+    metrics: "150+ Cohort Graduates",
+    related: "PU-iNCENT, Startup Ecosystems"
+  },
+  "student-communities": {
+    label: "Student Communities",
+    role: "Community Lead",
+    desc: "Mobilizing tech clubs, developers, and collegiate innovation pipelines.",
+    type: "Focus Node",
+    accent: "#8A8A8A",
+    overview: "Unifying student developer pipelines, incubation captains, and high-performance tech squads.",
+    contributions: "Organized regional developer circles, coached high-performance hackathon squads.",
+    metrics: "1200+ Members Engaged",
+    related: "PU-iNCENT, Founder Mentorship"
+  },
+  "founder-mentorship": {
+    label: "Founder Mentorship",
+    role: "Venture Mentor",
+    desc: "Advising early-stage founders on product-market fit and tech architecture.",
+    type: "Focus Node",
+    accent: "#D9C7A2",
+    overview: "Giving hours to early-stage student founders on code structures, pitch prep, and early operations.",
+    contributions: "Advised 50+ student ventures on minimum viable products and technical architectures.",
+    metrics: "100+ Hours Contributed",
+    related: "EVOLVE, Student Communities"
+  },
+  "creative-collabs": {
+    label: "Creative Collaborations",
+    role: "Creative Director",
+    desc: "Engaging in cross-disciplinary projects at the intersection of design and tech.",
+    type: "Focus Node",
+    accent: "#8A8A8A",
+    overview: "Synthesizing cross-disciplinary projects combining spatial graphics, code architectures, and tactile web models.",
+    contributions: "Partnered with visual artists, illustrative designers, and next-generation agencies.",
+    metrics: "12+ Labs Active",
+    related: "EVOLVE, Modern Websites"
+  },
+  "innovation-events": {
+    label: "Innovation Events",
+    role: "Lead Coordinator",
+    desc: "Organizing and producing tech conferences and startup summits.",
+    type: "Focus Node",
+    accent: "#223047",
+    overview: "Orchestrating regional technology conferences, startup pitch summits, and hackathons.",
+    contributions: "Directed department conferences and regional startup coordinate tracks.",
+    metrics: "40+ Summits Coordinated",
+    related: "PU-iNCENT, Brand Systems"
+  }
+};
+
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function ContactPage() {
   const [hoveredNode, setHoveredNode] = useState(null);
   const [activeTabNode, setActiveTabNode] = useState(null); // Touch support for mobile tap
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const networkRef = useRef(null);
-  const [parallax, setParallax] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -336,27 +482,9 @@ export default function ContactPage() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const handleMouseMoveNetwork = (e) => {
-    if (isMobile || !networkRef.current) return;
-    const rect = networkRef.current.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width - 0.5;
-    const py = (e.clientY - rect.top) / rect.height - 0.5;
-    setParallax({ x: px * 35, y: py * 35 });
-  };
-
-  const handleMouseLeaveNetwork = () => {
-    setParallax({ x: 0, y: 0 });
-  };
-
   const activeNodeInfo = hoveredNode 
-    ? (hoveredNode === "center" ? CENTER_NODE : SURROUNDING_NODES.find(n => n.id === hoveredNode))
-    : (activeTabNode ? (activeTabNode === "center" ? CENTER_NODE : SURROUNDING_NODES.find(n => n.id === activeTabNode)) : null);
-
-  const virtualWidth = 1000;
-  const virtualHeight = 550;
-  const centerX = virtualWidth / 2;
-  const centerY = virtualHeight / 2;
-  const scaleFactor = 320;
+    ? (hoveredNode === "center" ? CENTER_NODE : NODE_CARDS[hoveredNode])
+    : (activeTabNode ? (activeTabNode === "center" ? CENTER_NODE : NODE_CARDS[activeTabNode]) : null);
   return (
     <div className="flex flex-col w-full bg-soft-white relative overflow-hidden">
 
@@ -637,185 +765,105 @@ export default function ContactPage() {
             </div>
           </ScrollReveal>
 
-          {/* Interactive Network Graph Frame */}
+          {/* Interactive 3D Network Graph Globe Frame */}
           <div 
             ref={networkRef}
-            onMouseMove={handleMouseMoveNetwork}
-            onMouseLeave={handleMouseLeaveNetwork}
             className="w-full h-[600px] bg-white border border-charcoal/[0.06] rounded-[32px] shadow-premium-lg relative overflow-hidden flex items-center justify-center select-none"
           >
-            {/* Very subtle graph grid overlay inside */}
+            {/* Very subtle coordinate grid overlay inside */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.015)_1px,transparent_1px)] bg-[size:2rem_2rem] pointer-events-none" />
-            <div className="absolute top-[10%] left-[20%] w-[300px] h-[300px] rounded-full bg-accent-blue/[0.03] blur-[110px] pointer-events-none" />
-            <div className="absolute bottom-[10%] right-[20%] w-[300px] h-[300px] rounded-full bg-accent-sand/[0.03] blur-[110px] pointer-events-none" />
+            <div className="absolute top-[10%] left-[20%] w-[300px] h-[300px] rounded-full bg-accent-blue/[0.02] blur-[110px] pointer-events-none" />
+            <div className="absolute bottom-[10%] right-[20%] w-[300px] h-[300px] rounded-full bg-accent-sand/[0.02] blur-[110px] pointer-events-none" />
 
-            {/* Float and Parallax Wrapper */}
-            <motion.div
-              drag={isMobile}
-              dragConstraints={{ left: -100, right: 100, top: -50, bottom: 50 }}
-              dragElastic={0.2}
-              animate={isMobile ? undefined : {
-                x: parallax.x,
-                y: parallax.y
-              }}
-              transition={isMobile ? undefined : {
-                type: "spring",
-                stiffness: 75,
-                damping: 20
-              }}
-              className="absolute flex items-center justify-center select-none flex-shrink-0"
-              style={{
-                width: `${virtualWidth}px`,
-                height: `${virtualHeight}px`,
-                cursor: isMobile ? "grab" : "default"
-              }}
-            >
-              {/* SVG Connecting Lines Constellation */}
-              <svg className="absolute inset-0 pointer-events-none w-full h-full z-10">
-                {CONNECTIONS.map((conn, idx) => {
-                  const fromNode = conn.from === "center" ? CENTER_NODE : SURROUNDING_NODES.find(n => n.id === conn.from);
-                  const toNode = SURROUNDING_NODES.find(n => n.id === conn.to);
-                  if (!fromNode || !toNode) return null;
-
-                  const fromX = centerX + fromNode.x * scaleFactor;
-                  const fromY = centerY + fromNode.y * scaleFactor;
-                  const toX = centerX + toNode.x * scaleFactor;
-                  const toY = centerY + toNode.y * scaleFactor;
-
-                  const activeNodeId = hoveredNode || activeTabNode;
-                  const isActive = activeNodeId === fromNode.id || activeNodeId === toNode.id;
-                  
-                  // Get accent line color if active
-                  const strokeColor = isActive 
-                    ? (fromNode.accent || toNode.accent || "#6E8FB3") 
-                    : "rgba(17, 17, 17, 0.08)";
-                  
-                  return (
-                    <motion.line
-                      key={`${conn.from}-${conn.to}-${idx}`}
-                      x1={fromX}
-                      y1={fromY}
-                      x2={toX}
-                      y2={toY}
-                      initial={{
-                        stroke: "rgba(17, 17, 17, 0.08)",
-                        strokeWidth: 1,
-                        strokeDasharray: "none",
-                        opacity: 0.6
-                      }}
-                      animate={{
-                        stroke: strokeColor,
-                        strokeWidth: isActive ? 2 : 1,
-                        strokeDasharray: isActive ? "5, 5" : "none",
-                        opacity: activeNodeId ? (isActive ? 1 : 0.25) : 0.6
-                      }}
-                      transition={{ duration: 0.35 }}
-                    />
-                  );
-                })}
-              </svg>
-
-              {/* Center Root Node (Aditya Kapoor) */}
-              <motion.div
-                onHoverStart={() => setHoveredNode("center")}
-                onHoverEnd={() => setHoveredNode(null)}
-                onClick={() => setActiveTabNode(activeTabNode === "center" ? null : "center")}
-                className="absolute z-20 cursor-pointer"
-                style={{
-                  left: `${centerX}px`,
-                  top: `${centerY}px`,
-                  transform: "translate(-50%, -50%)"
-                }}
-                whileHover={{ scale: 1.08 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              >
-                <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-white border-2 border-charcoal/15 shadow-premium-lg hover:shadow-premium-xl hover:border-accent-blue/40 flex flex-col items-center justify-center text-center p-3 select-none transition-all duration-300">
-                  <span className="font-display font-bold text-xs sm:text-sm text-charcoal tracking-tight leading-none">
-                    ADITYA KAPOOR
-                  </span>
-                  <span className="text-[7px] sm:text-[8px] font-mono font-bold text-soft-gray uppercase tracking-[0.2em] mt-1.5 leading-none">
-                    Founder Ecosystem
-                  </span>
-                </div>
-              </motion.div>
-
-              {/* Surrounding Nodes Constellation */}
-              {SURROUNDING_NODES.map((node, i) => {
-                const nodeX = centerX + node.x * scaleFactor;
-                const nodeY = centerY + node.y * scaleFactor;
-                
-                const activeNodeId = hoveredNode || activeTabNode;
-                const isHovered = activeNodeId === node.id;
-                const isDimmed = activeNodeId && activeNodeId !== node.id && activeNodeId !== "center" && !CONNECTIONS.some(c => (c.from === activeNodeId && c.to === node.id) || (c.to === activeNodeId && c.from === node.id));
-
-                return (
-                  <motion.div
-                    key={node.id}
-                    onHoverStart={() => setHoveredNode(node.id)}
-                    onHoverEnd={() => setHoveredNode(null)}
-                    onClick={() => setActiveTabNode(activeTabNode === node.id ? null : node.id)}
-                    className="absolute z-20 cursor-pointer"
-                    style={{
-                      left: `${nodeX}px`,
-                      top: `${nodeY}px`,
-                      transform: "translate(-50%, -50%)"
+            {/* Three.js / R3F Canvas Container */}
+            <div className="w-full h-full relative z-20">
+              {mounted && (
+                <ThreeCanvas 
+                  camera={{ position: [0, 0, 7.6], fov: 45 }} 
+                  className="w-full h-full"
+                >
+                  <ambientLight intensity={1.6} />
+                  <directionalLight position={[5, 8, 5]} intensity={1.0} />
+                  <pointLight position={[-8, -5, -3]} intensity={1.5} color="#6E8FB3" />
+                  <spotLight 
+                    position={[2, 10, 2]} 
+                    angle={0.4} 
+                    penumbra={1} 
+                    intensity={2.0} 
+                    color="#D9C7A2" 
+                  />
+                  <EcosystemGlobe
+                    onHoverNode={setHoveredNode}
+                    onClickNode={(id) => {
+                      setActiveTabNode(id);
+                      if (id && !isMobile) {
+                        setIsModalOpen(true);
+                      }
                     }}
-                    whileHover={{ scale: 1.08 }}
-                    animate={{
-                      opacity: isDimmed ? 0.35 : 1,
-                    }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  >
-                    <div className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-full border bg-white select-none transition-all duration-300 flex items-center justify-center gap-1.5 shadow-premium-sm ${
-                      isHovered 
-                        ? "border-charcoal shadow-premium-md" 
-                        : "border-charcoal/[0.06] hover:border-charcoal/20"
-                    }`}>
-                      {node.isHub && (
-                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                      )}
-                      <span className={`font-display tracking-tight leading-none whitespace-nowrap transition-colors duration-300 text-xs ${
-                        node.isHub 
-                          ? "font-bold text-charcoal" 
-                          : "font-semibold text-charcoal/80"
-                      } ${isHovered ? "text-accent-blue" : ""}`}>
-                        {node.label}
-                      </span>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
+                    activeNodeId={activeTabNode}
+                  />
+                </ThreeCanvas>
+              )}
+            </div>
 
-            {/* Interactive Info Panel Overlay */}
+            {/* Interactive Info Panel Overlay - Desktop Only */}
             <AnimatePresence mode="popLayout">
-              {activeNodeInfo ? (
+              {!isMobile && activeNodeInfo && (
                 <motion.div
+                  key={`info-card-${activeNodeInfo.id || hoveredNode}`}
                   initial={{ opacity: 0, y: 15, scale: 0.97 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 15, scale: 0.97 }}
-                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute bottom-6 left-6 right-6 sm:right-auto sm:max-w-sm bg-white/95 border border-charcoal/[0.08] rounded-2xl shadow-premium-xl p-5 backdrop-blur-md z-30 select-none flex flex-col gap-2"
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute bottom-6 left-6 right-6 sm:right-auto sm:max-w-sm bg-white/95 border border-charcoal/[0.08] rounded-2xl shadow-premium-xl p-5 backdrop-blur-md z-30 select-none flex flex-col gap-2.5 hover:border-charcoal/15 transition-all duration-300"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[9px] font-mono font-bold tracking-widest text-accent-blue uppercase">
+                    <span 
+                      className="text-[9px] font-mono font-bold tracking-widest uppercase"
+                      style={{ color: activeNodeInfo.accent || "#6E8FB3" }}
+                    >
                       [ {activeNodeInfo.type || "DIRECTORY"} ]
                     </span>
                     <button 
-                      onClick={() => setActiveTabNode(null)}
+                      onClick={() => {
+                        setActiveTabNode(null);
+                        setHoveredNode(null);
+                      }}
                       className="text-soft-gray hover:text-charcoal text-[10px] font-mono tracking-widest uppercase cursor-pointer"
                     >
                       Close
                     </button>
                   </div>
-                  <h4 className="font-display font-bold text-xl text-charcoal tracking-tight mt-1">
-                    {activeNodeInfo.label}
-                  </h4>
-                  <p className="text-xs text-soft-gray leading-relaxed font-light mt-1">
-                    {activeNodeInfo.desc || "Root focus node coordinating startups, venture engineering, and collegiate incubator pipelines."}
-                  </p>
+                  <div>
+                    <span className="text-[9px] font-mono text-soft-gray uppercase tracking-wider mb-1 block">
+                      {activeNodeInfo.role}
+                    </span>
+                    <h4 className="font-display font-bold text-lg text-charcoal tracking-tight leading-none mb-1.5 uppercase">
+                      {activeNodeInfo.label}
+                    </h4>
+                    <p className="text-xs text-soft-gray leading-relaxed font-light">
+                      {activeNodeInfo.desc}
+                    </p>
+                  </div>
+                  
+                  {/* Card bottom details link */}
+                  <div className="pt-3 border-t border-charcoal/[0.05] flex items-center justify-between">
+                    <span className="text-[9.5px] font-mono font-bold text-soft-gray/50 uppercase tracking-widest">
+                      {activeNodeInfo.metrics || "01 Active Point"}
+                    </span>
+                    <button 
+                      onClick={() => setIsModalOpen(true)}
+                      className="group inline-flex items-center gap-1.5 text-[9.5px] font-bold text-charcoal hover:text-accent-blue uppercase tracking-widest transition-colors duration-300 cursor-pointer"
+                    >
+                      Explore Details
+                      <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
+                    </button>
+                  </div>
                 </motion.div>
-              ) : (
+              )}
+
+              {/* Default directory instruction card - Desktop Only */}
+              {!isMobile && !activeNodeInfo && (
                 <motion.div
                   key="default-directory-card"
                   initial={{ opacity: 0 }}
@@ -827,22 +875,216 @@ export default function ContactPage() {
                     [ CONSTELLATION DIRECTORY ]
                   </span>
                   <h4 className="font-display font-bold text-base text-charcoal tracking-tight mt-1">
-                    Ecosystem Constellation
+                    Ecosystem 3D Constellation
                   </h4>
                   <p className="text-xs text-soft-gray leading-relaxed font-light">
-                    Hover over any focus area or venture node in the constellation network map to explore active initiatives and connections.
+                    Hover over any focus area or venture node in the 3D constellation globe to explore active initiatives and dynamic connections.
                   </p>
                 </motion.div>
               )}
             </AnimatePresence>
 
             {/* Mobile panning overlay info badge */}
-            <div className="absolute top-4 right-4 sm:hidden bg-charcoal/5 px-2.5 py-1 rounded-full text-[9px] font-mono tracking-widest uppercase text-soft-gray pointer-events-none">
-              Swipe to Pan
+            <div className="absolute top-4 right-4 sm:hidden bg-charcoal/5 px-2.5 py-1 rounded-full text-[9px] font-mono tracking-widest uppercase text-soft-gray pointer-events-none z-30">
+              Drag to Orbit • Tap Nodes
             </div>
           </div>
         </div>
       </section>
+
+      {/* ── HIGH-FIDELITY SPATIAL OVERLAY MODAL ── */}
+      <AnimatePresence>
+        {isModalOpen && activeNodeInfo && !isMobile && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-charcoal/30 backdrop-blur-md"
+            onClick={() => setIsModalOpen(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 15 }}
+              transition={{ type: "spring", stiffness: 350, damping: 26 }}
+              className="bg-white border border-charcoal/10 rounded-[32px] shadow-premium-2xl max-w-lg w-full p-8 relative overflow-hidden select-none"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Subtle coordinate grid pattern inside */}
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.012)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.012)_1px,transparent_1px)] bg-[size:2rem_2rem] pointer-events-none" />
+              
+              {/* Close Button */}
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="absolute top-6 right-6 p-2 rounded-full border border-charcoal/10 hover:border-charcoal/30 bg-white text-soft-gray hover:text-charcoal transition-all cursor-pointer z-10"
+              >
+                <X className="h-4 w-4" />
+              </button>
+
+              {/* Content Panel */}
+              <div className="relative z-10 flex flex-col gap-6">
+                <div>
+                  <span 
+                    className="text-[9px] font-mono font-bold tracking-widest uppercase"
+                    style={{ color: activeNodeInfo.accent || "#6E8FB3" }}
+                  >
+                    [ {activeNodeInfo.type || "VENTURE PORTAL"} ]
+                  </span>
+                  <div className="flex flex-col gap-1 mt-2">
+                    <span className="text-xs font-mono text-soft-gray uppercase tracking-widest leading-none">
+                      {activeNodeInfo.role}
+                    </span>
+                    <h3 className="font-display font-extrabold text-3xl text-charcoal tracking-tight leading-none uppercase mt-1">
+                      {activeNodeInfo.label}
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="h-[1px] bg-charcoal/[0.06] w-full" />
+
+                {/* Details layout Grid */}
+                <div className="grid grid-cols-1 gap-5">
+                  <div>
+                    <span className="text-[9.5px] font-mono font-bold tracking-widest text-soft-gray uppercase mb-1 block">
+                      Overview
+                    </span>
+                    <p className="text-sm text-charcoal/80 font-light leading-relaxed">
+                      {activeNodeInfo.overview || activeNodeInfo.desc}
+                    </p>
+                  </div>
+
+                  <div>
+                    <span className="text-[9.5px] font-mono font-bold tracking-widest text-soft-gray uppercase mb-1 block">
+                      Core Contributions
+                    </span>
+                    <p className="text-sm text-charcoal/80 font-light leading-relaxed">
+                      {activeNodeInfo.contributions || "Coordinating pipeline frameworks, designing brand systems, and developing digital venture platforms."}
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 pt-1">
+                    <div>
+                      <span className="text-[9.5px] font-mono font-bold tracking-widest text-soft-gray uppercase mb-1 block">
+                        Impact metrics
+                      </span>
+                      <span className="text-sm font-semibold text-charcoal tracking-tight uppercase">
+                        {activeNodeInfo.metrics || "01 ACTIVE HUB"}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-[9.5px] font-mono font-bold tracking-widest text-soft-gray uppercase mb-1 block">
+                        Related focus nodes
+                      </span>
+                      <span className="text-[11px] font-mono text-soft-gray block leading-snug">
+                        {activeNodeInfo.related || "N/A"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="h-[1px] bg-charcoal/[0.06] w-full" />
+
+                {/* Footer CTA */}
+                <div className="flex items-center justify-between pt-1">
+                  <span className="text-[9px] font-mono font-bold text-soft-gray/40 uppercase tracking-widest">
+                    SYSTEM INDEX INDEXED
+                  </span>
+                  <button 
+                    onClick={() => setIsModalOpen(false)}
+                    className="px-6 py-2.5 rounded-full bg-charcoal text-white hover:bg-[#6E8FB3] text-[9.5px] font-bold uppercase tracking-widest transition-all duration-300 shadow-premium-sm cursor-pointer"
+                  >
+                    Acknowledge Node
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── MOBILE SLIDE-UP BOTTOM SHEET ── */}
+      <AnimatePresence>
+        {isMobile && activeNodeInfo && (
+          <motion.div
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "100%" }}
+            transition={{ type: "spring", damping: 30, stiffness: 320 }}
+            className="fixed bottom-0 left-0 right-0 rounded-t-[32px] bg-white border-t border-charcoal/10 shadow-premium-2xl p-6 z-[100] flex flex-col gap-4 select-none pb-10"
+          >
+            {/* Grab drag indicator */}
+            <div className="w-12 h-1 rounded-full bg-charcoal/10 mx-auto mb-1" />
+            
+            <div className="flex items-center justify-between">
+              <span 
+                className="text-[9px] font-mono font-bold tracking-widest uppercase"
+                style={{ color: activeNodeInfo.accent || "#6E8FB3" }}
+              >
+                [ {activeNodeInfo.type || "VENTURE CONSTELLATION"} ]
+              </span>
+              <button 
+                onClick={() => {
+                  setActiveTabNode(null);
+                  setHoveredNode(null);
+                }}
+                className="p-1.5 rounded-full bg-charcoal/5 text-soft-gray hover:text-charcoal transition-all cursor-pointer"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <span className="text-[9px] font-mono text-soft-gray uppercase tracking-wider leading-none">
+                {activeNodeInfo.role}
+              </span>
+              <h4 className="font-display font-extrabold text-2xl text-charcoal tracking-tight leading-none uppercase mt-1">
+                {activeNodeInfo.label}
+              </h4>
+            </div>
+
+            <div className="h-[1px] bg-charcoal/[0.05] w-full" />
+
+            <div className="flex flex-col gap-4 max-h-[50vh] overflow-y-auto pr-1">
+              <div>
+                <span className="text-[8px] font-mono font-bold tracking-widest text-soft-gray/60 uppercase block mb-1">
+                  Overview
+                </span>
+                <p className="text-xs text-charcoal/80 font-light leading-relaxed">
+                  {activeNodeInfo.overview || activeNodeInfo.desc}
+                </p>
+              </div>
+
+              <div>
+                <span className="text-[8px] font-mono font-bold tracking-widest text-soft-gray/60 uppercase block mb-1">
+                  Core Contributions
+                </span>
+                <p className="text-xs text-charcoal/80 font-light leading-relaxed">
+                  {activeNodeInfo.contributions || "Designing pipeline frameworks, coordinating ecosystems, launching platform spun-offs."}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <span className="text-[8px] font-mono font-bold tracking-widest text-soft-gray/60 uppercase mb-0.5 block">
+                    Impact Metrics
+                  </span>
+                  <span className="text-xs font-semibold text-charcoal tracking-tight uppercase">
+                    {activeNodeInfo.metrics || "Active Node"}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-[8px] font-mono font-bold tracking-widest text-soft-gray/60 uppercase mb-0.5 block">
+                    Related
+                  </span>
+                  <span className="text-[10px] font-mono text-soft-gray whitespace-nowrap overflow-hidden text-ellipsis block leading-none pt-0.5">
+                    {activeNodeInfo.related || "N/A"}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── FINAL CTA SECTION ────────────────────────────────────────────── */}
       <section className="py-24 sm:py-32 px-6 sm:px-12 relative z-10 overflow-hidden">
